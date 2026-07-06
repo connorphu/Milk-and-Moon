@@ -1,27 +1,14 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { QuickLogPanel } from '../quick-log-panel/quick-log-panel';
+import { DailySummary } from '../daily-summary/daily-summary';
 
 @Component({
   selector: 'app-today-page',
-  imports: [MatButtonModule],
+  imports: [QuickLogPanel, DailySummary],
   templateUrl: './today-page.html',
   styleUrl: './today-page.css',
 })
 export class TodayPage {
 
-  public feed() {
-    console.log('feed');
-  }
 
-  public diaper() {
-    console.log('diaper');
-  }
-
-  public sleep() {
-    console.log('sleep');
-  }
-
-  public pump() {
-    console.log('pump');
-  }
 }
