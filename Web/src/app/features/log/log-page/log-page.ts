@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { FeedingForm } from '../feeding-form/feeding-form';
-import { DiaperForm } from '../diaper-form/diaper-form';
-import { SleepForm } from '../sleep-form/sleep-form';
-import { PumpingForm } from '../pumping-form/pumping-form';
+import { FeedingTrackerForm } from '../feeding-tracker/form/feeding-tracker-form';
+import { DiaperTrackerForm } from '../diaper-tracker/diaper-form';
+import { PumpingTrackerForm } from '../pumping-tracker/pumping-form';
+import { SleepTrackerForm } from '../sleep-tracker/sleep-form';
 @Component({
   selector: 'app-log-page',
-  imports: [FeedingForm, DiaperForm, SleepForm, PumpingForm],
+  imports: [FeedingTrackerForm, DiaperTrackerForm, SleepTrackerForm, PumpingTrackerForm],
   templateUrl: './log-page.html',
   styleUrl: './log-page.css',
 })
