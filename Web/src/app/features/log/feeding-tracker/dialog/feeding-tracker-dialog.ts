@@ -3,6 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";4
 import { MatSliderModule } from "@angular/material/slider";
+import { MatChipsModule } from "@angular/material/chips";
 
 export interface DialogData {
   name: string;
@@ -14,6 +15,7 @@ export interface DialogData {
     MatFormFieldModule,
     FormsModule,
     MatSliderModule,
+    MatChipsModule,
   ],
   templateUrl: './feeding-tracker-dialog.html',
   styleUrl: './feeding-tracker-dialog.css',
