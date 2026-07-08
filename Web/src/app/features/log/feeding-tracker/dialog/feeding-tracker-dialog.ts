@@ -21,11 +21,11 @@ export interface DialogData {
     MatDialogClose,
     MatInputModule
   ],
-  templateUrl: './feeding-dialog.html',
-  styleUrl: './feeding-dialog.css',
+  templateUrl: './feeding-tracker-dialog.html',
+  styleUrl: './feeding-tracker-dialog.css',
 })
-export class FeedingDialog {
-  readonly dialogRef = inject(MatDialogRef<FeedingDialog>);
+export class FeedingTrackerDialog {
+  readonly dialogRef = inject(MatDialogRef<FeedingTrackerDialog>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
   onNoClick(): void {

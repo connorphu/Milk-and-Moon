@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './sleep-form.html',
   styleUrl: './sleep-form.css',
 })
-export class SleepForm {}
+export class SleepTrackerForm {}

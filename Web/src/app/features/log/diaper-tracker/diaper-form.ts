@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './diaper-form.html',
   styleUrl: './diaper-form.css',
 })
-export class DiaperForm {}
+export class DiaperTrackerForm {}

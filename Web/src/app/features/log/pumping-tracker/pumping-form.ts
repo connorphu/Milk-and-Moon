@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './pumping-form.html',
   styleUrl: './pumping-form.css',
 })
-export class PumpingForm {}
+export class PumpingTrackerForm {}

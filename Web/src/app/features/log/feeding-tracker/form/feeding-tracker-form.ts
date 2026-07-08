@@ -4,19 +4,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatDialog } from '@angular/material/dialog';
-import { FeedingDialog } from './dialog/feeding-dialog';
+import { FeedingTrackerDialog } from '../dialog/feeding-tracker-dialog';
 
 @Component({
   selector: 'app-feeding-form',
   imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatTimepickerModule],
-  templateUrl: './feeding-form.html',
-  styleUrl: './feeding-form.css',
+  templateUrl: './feeding-tracker-form.html',
+  styleUrl: './feeding-tracker-form.css',
 })
-export class FeedingForm {
+export class FeedingTrackerForm {
   dialog = inject(MatDialog);
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(FeedingDialog, {
+    const dialogRef = this.dialog.open(FeedingTrackerDialog, {
       height: '100%',
       width: '100%',
       data: {name: 'Populata'},
