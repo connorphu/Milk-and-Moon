@@ -22,10 +22,6 @@ export class FeedingTrackerDialog {
   readonly dialogRef = inject(MatDialogRef<FeedingTrackerDialog>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
-  formatLabel(value: number): string {
-    return `${value}oz`;
-  }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
