@@ -1,10 +1,9 @@
-<h2 mat-dialog-title>Hi </h2>
+<h2 mat-dialog-title>Dialog working with data</h2>
 <mat-dialog-content>
-  <p>What's your favorite animal?</p>
   <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="data.name" />
+    <input matInput [(ngModel)]="data.name">
   </mat-form-field>
+  <p>{{data.name}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton (click)="onNoClick()">No Thanks</button>

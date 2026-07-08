@@ -8,7 +8,7 @@ import { FeedingDialog } from './dialog/feeding-dialog';
 
 @Component({
   selector: 'app-feeding-form',
-  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatTimepickerModule, FeedingDialog],
+  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatTimepickerModule],
   templateUrl: './feeding-form.html',
   styleUrl: './feeding-form.css',
 })
@@ -17,6 +17,8 @@ export class FeedingForm {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FeedingDialog, {
+      height: '100%',
+      width: '100%',
       data: {name: 'Populata'},
     });
 
