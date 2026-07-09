@@ -19,7 +19,6 @@ export class FeedingTrackerForm {
     const dialogRef = this.dialog.open(FeedingTrackerDialog, {
       height: '100%',
       width: '100%',
-      data: {name: 'Populata'},
     });
 
     dialogRef.afterClosed().subscribe(result => {
