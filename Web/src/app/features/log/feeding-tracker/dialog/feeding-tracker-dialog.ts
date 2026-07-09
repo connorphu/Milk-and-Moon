@@ -4,17 +4,19 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSliderModule } from "@angular/material/slider";
-import { MatChipsModule } from "@angular/material/chips";
+import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
 import { MatTimepickerModule } from "@angular/material/timepicker";
 import { MatStepperModule } from "@angular/material/stepper";
 import { provideNativeDateAdapter } from "@angular/material/core";
 
 export interface FeedingTrackerData {
   bottleSize: number
+
+  type: 'breast' | 'bottle'
   breastSide: 'left' | 'right'
+  bottleType: 'formula' | 'breastmilk'
   startTime: Date
   endTime: Date
-  milkType: 'breastmilk' | 'formula' | 'donor milk'
   notes: string
 }
 
@@ -37,11 +39,12 @@ export class FeedingTrackerDialog {
   readonly dialogRef = inject(MatDialogRef<FeedingTrackerDialog>);
   readonly feedingModel = signal<FeedingTrackerData>({
     bottleSize: 0,
-    breastSide: null,
+    type: '',
+    breastSide: '',
+    bottleType: '',
     startTime: null,
     endTime: null,
-    milkType: null,
-    notes: null
+    notes: ''
   } as unknown as FeedingTrackerData);
 
   protected feedingForm = form(this.feedingModel);

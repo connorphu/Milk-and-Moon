@@ -11,7 +11,7 @@
     </mat-step>
     <mat-step>
       <mat-label>Breast Side</mat-label>
-      <mat-chip-listbox [formField]="feedingForm.breastSide" aria-label="Breast side">
+      <mat-chip-listbox multiple [formField]="feedingForm.breastSide" aria-label="Breast side">
         <mat-chip-option value="left">Left</mat-chip-option>
         <mat-chip-option value="right">Right</mat-chip-option>
       </mat-chip-listbox>
