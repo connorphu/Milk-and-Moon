@@ -1,24 +1,42 @@
-<mat-label>Bottle Size (oz)</mat-label>
-<mat-slider min="0" max="10" step=".5" showTickMarks discrete>
-  <input matSliderThumb>
-</mat-slider>
-
-<mat-label>Breast Side</mat-label>
-<mat-chip-listbox aria-label="Breast side">
-  <mat-chip-option>Left</mat-chip-option>
-  <mat-chip-option>Right</mat-chip-option>
-</mat-chip-listbox>
-
-<mat-label>Time</mat-label>
-<mat-form-field>
-  <mat-label>Start Time</mat-label>
-  <input matInput [matTimepicker]="startTime">
-  <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
-  <mat-timepicker #startTime/>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>End Time</mat-label>
-  <input matInput [matTimepicker]="endTime">
-  <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
-  <mat-timepicker #endTime/>
-</mat-form-field>
+<form>
+  <mat-stepper>
+    <mat-step >
+      <mat-label>Bottle Size (oz)</mat-label>
+      <mat-slider min="0" max="10" step=".5" showTickMarks discrete>
+        <input matSliderThumb [formField]="feedingForm.bottleSize">
+      </mat-slider>
+      <div>
+        <button matButton matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <mat-label>Breast Side</mat-label>
+      <mat-chip-listbox [formField]="feedingForm.breastSide" aria-label="Breast side">
+        <mat-chip-option value="left">Left</mat-chip-option>
+        <mat-chip-option value="right">Right</mat-chip-option>
+      </mat-chip-listbox>
+      <div>
+        <button matButton matStepperPrevious type="button">Back</button>
+        <button matButton matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <mat-label>Time</mat-label>
+      <mat-form-field>
+        <mat-label>Start Time</mat-label>
+        <input matInput [matTimepicker]="startTime" [formField]="feedingForm.startTime">
+        <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
+        <mat-timepicker #startTime/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>End Time</mat-label>
+        <input matInput [matTimepicker]="endTime" [formField]="feedingForm.endTime">
+        <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
+        <mat-timepicker #endTime/>
+      </mat-form-field>
+      <div>
+        <button matButton matStepperPrevious type="button">Back</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form>
