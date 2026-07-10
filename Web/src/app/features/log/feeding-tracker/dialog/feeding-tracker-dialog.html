@@ -29,9 +29,20 @@
   </mat-slider>
 </ng-template>
 
-<ng-template template-name="milkType"></ng-template>
+<ng-template template-name="milkType">
+  <mat-label>Milk Type(s)</mat-label>
+  <mat-chip-listbox multiple [formField]="feedingForm.milkType" aria-label="Feeding type">
+    <mat-chip-option value="breastmilk">Breastmilk</mat-chip-option>
+    <mat-chip-option value="formula">Formula</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
 
-<ng-template template-name="milkConsumed"></ng-template>
+<ng-template template-name="milkConsumed">
+  <mat-label>Milk Consumed (oz)</mat-label>
+  <mat-slider min="0" max="10" step=".5" showTickMarks discrete>
+    <input matSliderThumb [formField]="feedingForm.milkConsumed">
+  </mat-slider>
+</ng-template>
 
 <ng-template template-name="notes"></ng-template>
 

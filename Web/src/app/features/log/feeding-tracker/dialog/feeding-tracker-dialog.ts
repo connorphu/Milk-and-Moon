@@ -14,8 +14,8 @@ import { TemplateName } from "../../../../shared/directives/template-name";
 export interface FeedingTrackerData {
   bottleSize: number
   feedingType: string
-  breastSide: string
-  milkType: string
+  breastSide: 'left' | 'right'
+  milkType: string[]
   milkConsumed: number
   startTime: Date | null
   endTime: Date | null
@@ -65,7 +65,7 @@ export class FeedingTrackerDialog {
     bottleSize: 0,
     feedingType: '',
     breastSide: '',
-    milkType: '',
+    milkType: [],
     milkConsumed: 0,
     startTime: null,
     endTime: null,
@@ -76,7 +76,7 @@ export class FeedingTrackerDialog {
   protected stepType: FeedingStep[] = []
 
   onFeedingTypeChange(event: MatChipListboxChange) {
-    this.feedingForm.feedingType().value.set(event.value ? event.value : '')
+    this.feedingForm.feedingType().value.set(event.value ?? '')
     this.stepType = event.value === 'breast' ? this.breastSteps : event.value === 'bottle' ? this.bottleSteps : [];
     this.stepType.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
