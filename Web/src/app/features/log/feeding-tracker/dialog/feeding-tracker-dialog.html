@@ -47,25 +47,24 @@
 <ng-template template-name="notes"></ng-template>
 
 <form>
-  <mat-stepper>
+  <mat-stepper #stepper>
     <mat-step>
       <mat-label>Feeding Type</mat-label>
       <mat-chip-listbox (change)="onFeedingTypeChange($event)" aria-label="Feeding type">
         <mat-chip-option value="breast">Breast</mat-chip-option>
         <mat-chip-option value="bottle">Bottle</mat-chip-option>
       </mat-chip-listbox>
-      <button mat-button matStepperNext type="button">Next</button>
     </mat-step>
-    @for (step of stepType; track step.name; let last = $last) {
+    @for (step of stepType; track step.name;) {
       <mat-step>
         <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
-        @if (last) {
-          <button mat-button matStepperPrevious type="button">Back</button>
-        } @else {
-          <button mat-button matStepperPrevious type="button">Back</button>
-          <button mat-button matStepperNext type="button">Next</button>
-        }
       </mat-step>
     }
   </mat-stepper>
 </form>
+<br>
+<div>
+  <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
+  <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
+</div>
+
