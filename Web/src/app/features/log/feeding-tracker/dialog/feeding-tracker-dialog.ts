@@ -1,7 +1,7 @@
 import { Component, inject, signal, TemplateRef, viewChild, viewChildren } from "@angular/core";
 import { NgTemplateOutlet } from "@angular/common";
 import { form, FormField } from "@angular/forms/signals";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogActions, MatDialogClose, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSliderModule } from "@angular/material/slider";
@@ -34,6 +34,8 @@ interface FeedingStep {
   imports: [
     TemplateName,
     NgTemplateOutlet,
+    MatDialogActions,
+    MatDialogClose,
     MatInputModule,
     MatFormFieldModule,
     FormField,
@@ -92,6 +94,20 @@ export class FeedingTrackerDialog {
     this.stepType.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
     });
+  }
+
+  onQuickNotesChange(event: MatChipListboxChange) {
+    if (!event.value.length) {
+      this.feedingForm.notes().value.set('')
+      return
+    }
+
+    const quickNotes: string[] = event.value
+    if (quickNotes) {
+      this.feedingForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
+        return finalNote.concat(`, ${currentNote}`)
+      }))
+    }
   }
 
   onNoClick(): void {

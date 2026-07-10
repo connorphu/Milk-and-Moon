@@ -44,7 +44,21 @@
   </mat-slider>
 </ng-template>
 
-<ng-template template-name="notes"></ng-template>
+<ng-template template-name="notes">
+  <mat-form-field class="example-full-width">
+    <mat-label>Notes</mat-label>
+    <input matInput [formField]="feedingForm.notes" placeholder="Fast feed, spit up, etc.">
+  </mat-form-field>
+  <div>
+    <mat-label>Quick Notes</mat-label>
+    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Feeding type">
+      <mat-chip-option>fast feed</mat-chip-option>
+      <mat-chip-option>slow feed</mat-chip-option>
+      <mat-chip-option>spit up</mat-chip-option>
+      <mat-chip-option>no latch/refusal</mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+</ng-template>
 
 <form>
   <mat-stepper #stepper>
@@ -67,4 +81,9 @@
   <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
   <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
 </div>
-
+<div>
+  <mat-dialog-actions>
+    <button matButton mat-dialog-close>Cancel</button>
+    <button matButton mat-dialog-close>Save</button>
+  </mat-dialog-actions>
+</div>
