@@ -20,10 +20,6 @@ export class FeedingTrackerForm {
       height: '100%',
       width: '100%',
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed: ' + result);
-    });
   }
 }
 
