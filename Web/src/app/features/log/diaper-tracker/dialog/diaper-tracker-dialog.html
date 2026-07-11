@@ -1,0 +1,122 @@
+<ng-template template-name="peeColor">
+  <mat-label>Pee Color</mat-label>
+  <mat-chip-listbox (change)="onPeeColorChange($event)" aria-label="Pee color">
+    <mat-chip-option>clear</mat-chip-option>
+    <mat-chip-option>light yellow</mat-chip-option>
+    <mat-chip-option>dark yellow</mat-chip-option>
+    <mat-chip-option>orange</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
+
+<ng-template template-name="stoolColor">
+  <mat-label>Stool Color</mat-label>
+  <mat-chip-listbox multiple [formField]="diaperForm.stoolColor" aria-label="Stool color">
+    <mat-chip-option>black</mat-chip-option>
+    <mat-chip-option>yellow</mat-chip-option>
+    <mat-chip-option>green</mat-chip-option>
+    <mat-chip-option>brown</mat-chip-option>
+    <mat-chip-option>red</mat-chip-option>
+    <mat-chip-option>white</mat-chip-option>
+    <mat-chip-option>other</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
+
+<ng-template template-name="stoolTexture">
+  <mat-label>Stool Texture</mat-label>
+  <mat-chip-listbox multiple [formField]="diaperForm.stoolTexture" aria-label="Stool texture">
+    <mat-chip-option>seedy</mat-chip-option>
+    <mat-chip-option>soft</mat-chip-option>
+    <mat-chip-option>loose</mat-chip-option>
+    <mat-chip-option>watery</mat-chip-option>
+    <mat-chip-option>mucus</mat-chip-option>
+    <mat-chip-option>hard</mat-chip-option>
+    <mat-chip-option>other</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
+
+<ng-template template-name="rash">
+  <mat-label>Rash</mat-label>
+  <mat-chip-listbox (change)="onRashChange($event)" aria-label="Rash">
+    <mat-chip-option value="">None</mat-chip-option>
+    <mat-chip-option value="mild">Mild</mat-chip-option>
+    <mat-chip-option value="moderate">Moderate</mat-chip-option>
+    <mat-chip-option value="severe">Severe</mat-chip-option>
+  </mat-chip-listbox>
+  <!-- @if (diaperForm.rash().value()) {
+    <div>
+      <mat-label>Location</mat-label>
+      <mat-chip-listbox multiple [formField]="diaperForm.rashLocation" aria-label="Rash">
+        <mat-chip-option value="front">Front</mat-chip-option>
+        <mat-chip-option value="back">Back</mat-chip-option>
+        <mat-chip-option value="folds">Folds</mat-chip-option>
+        <mat-chip-option value="aroundAnus">Around anus</mat-chip-option>
+        <mat-chip-option value="other">Other</mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+  } -->
+</ng-template>
+
+<ng-template template-name="rashLocation">
+  <mat-label>Rash Location</mat-label>
+  <mat-chip-listbox multiple [formField]="diaperForm.rashLocation" aria-label="Rash">
+    <mat-chip-option value="front">Front</mat-chip-option>
+    <mat-chip-option value="back">Back</mat-chip-option>
+    <mat-chip-option value="folds">Folds</mat-chip-option>
+    <mat-chip-option value="aroundAnus">Around anus</mat-chip-option>
+    <mat-chip-option value="other">Other</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
+
+<ng-template template-name="time">
+  <mat-form-field>
+    <mat-label>Time</mat-label>
+    <input matInput [matTimepicker]="time" [formField]="diaperForm.time">
+    <mat-timepicker-toggle matIconSuffix [for]="time"/>
+    <mat-timepicker #time/>
+  </mat-form-field>
+</ng-template>
+
+<ng-template template-name="notes">
+  <mat-form-field>
+    <mat-label>Notes</mat-label>
+    <input matInput [formField]="diaperForm.notes">
+  </mat-form-field>
+  <div>
+    <mat-label>Quick Notes</mat-label>
+    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Diaper quick notes">
+    @for ( note of quickNotes; track note.description ) {
+      <mat-chip-option>{{ note.description }}</mat-chip-option>
+    }
+    </mat-chip-listbox>
+  </div>
+</ng-template>
+
+<form>
+  <mat-stepper #stepper>
+    <mat-step>
+      <mat-label>Diaper Content Type</mat-label>
+      <mat-chip-listbox (change)="onDiaperTypeChange($event)" aria-label="Diaper content type">
+        <mat-chip-option value="wet">Wet</mat-chip-option>
+        <mat-chip-option value="poopy">Poopy</mat-chip-option>
+        <mat-chip-option value="both">Both</mat-chip-option>
+      </mat-chip-listbox>
+    </mat-step>
+    @for (step of allSteps; track step.name;) {
+      <mat-step>
+        <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
+      </mat-step>
+    }
+  </mat-stepper>
+</form>
+
+<div>
+  <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
+  <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
+</div>
+<br>
+<div>
+  <mat-dialog-actions>
+    <button matButton mat-dialog-close>Cancel</button>
+    <button matButton mat-dialog-close>Save</button>
+  </mat-dialog-actions>
+</div>

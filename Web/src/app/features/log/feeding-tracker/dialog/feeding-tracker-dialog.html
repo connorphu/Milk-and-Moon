@@ -31,7 +31,7 @@
 
 <ng-template template-name="milkType">
   <mat-label>Milk Type(s)</mat-label>
-  <mat-chip-listbox multiple [formField]="feedingForm.milkType" aria-label="Feeding type">
+  <mat-chip-listbox multiple [formField]="feedingForm.milkType" aria-label="Milk type">
     <mat-chip-option value="breastmilk">Breastmilk</mat-chip-option>
     <mat-chip-option value="formula">Formula</mat-chip-option>
   </mat-chip-listbox>
@@ -45,17 +45,16 @@
 </ng-template>
 
 <ng-template template-name="notes">
-  <mat-form-field class="example-full-width">
+  <mat-form-field>
     <mat-label>Notes</mat-label>
-    <input matInput [formField]="feedingForm.notes" placeholder="Fast feed, spit up, etc.">
+    <input matInput [formField]="feedingForm.notes">
   </mat-form-field>
   <div>
     <mat-label>Quick Notes</mat-label>
-    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Feeding type">
-      <mat-chip-option>fast feed</mat-chip-option>
-      <mat-chip-option>slow feed</mat-chip-option>
-      <mat-chip-option>spit up</mat-chip-option>
-      <mat-chip-option>no latch/refusal</mat-chip-option>
+    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Feeding quick notes">
+    @for ( note of quickNotes; track note.description ) {
+      <mat-chip-option>{{ note.description }}</mat-chip-option>
+    }
     </mat-chip-listbox>
   </div>
 </ng-template>
@@ -69,7 +68,7 @@
         <mat-chip-option value="bottle">Bottle</mat-chip-option>
       </mat-chip-listbox>
     </mat-step>
-    @for (step of stepType; track step.name;) {
+    @for (step of allSteps; track step.name;) {
       <mat-step>
         <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
       </mat-step>

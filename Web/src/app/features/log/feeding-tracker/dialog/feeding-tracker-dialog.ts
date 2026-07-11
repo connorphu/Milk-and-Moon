@@ -1,7 +1,7 @@
 import { Component, inject, signal, TemplateRef, viewChild, viewChildren } from "@angular/core";
 import { NgTemplateOutlet } from "@angular/common";
 import { form, FormField } from "@angular/forms/signals";
-import { MatDialogActions, MatDialogClose, MatDialogRef } from "@angular/material/dialog";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSliderModule } from "@angular/material/slider";
@@ -9,8 +9,8 @@ import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
 import { MatTimepickerModule } from "@angular/material/timepicker";
 import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { provideNativeDateAdapter } from "@angular/material/core";
-import { TemplateName } from "../../../../shared/directives/template-name";
 import { MatButtonModule } from "@angular/material/button";
+import { TemplateName } from "../../../../shared/directives/template-name";
 
 export interface FeedingTrackerData {
   bottleSize: number
@@ -28,14 +28,17 @@ interface FeedingStep {
   templateRef?: TemplateRef<any>
 }
 
+interface QuickNote {
+  description: string
+}
+
 @Component({
   selector: 'app-feeding-form-dialog',
   providers: [provideNativeDateAdapter()],
   imports: [
     TemplateName,
     NgTemplateOutlet,
-    MatDialogActions,
-    MatDialogClose,
+    MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
     FormField,
@@ -66,6 +69,12 @@ export class FeedingTrackerDialog {
     { name: 'milkConsumed' },
     { name: 'notes' }
   ];
+  readonly quickNotes: QuickNote[] = [
+    { description: 'fast feed' },
+    { description: 'slow feed' },
+    { description: 'spit up' },
+    { description: 'no latch/refusal' }
+  ]
   readonly feedingModel = signal<FeedingTrackerData>({
     bottleSize: 0,
     feedingType: '',
@@ -78,7 +87,7 @@ export class FeedingTrackerDialog {
   } as unknown as FeedingTrackerData);
 
   protected feedingForm = form(this.feedingModel);
-  protected stepType: FeedingStep[] = []
+  protected allSteps: FeedingStep[] = []
 
   goBack() {
     this.feedingStepper().previous()
@@ -90,8 +99,10 @@ export class FeedingTrackerDialog {
 
   onFeedingTypeChange(event: MatChipListboxChange) {
     this.feedingForm.feedingType().value.set(event.value ?? '')
-    this.stepType = event.value === 'breast' ? this.breastSteps : event.value === 'bottle' ? this.bottleSteps : [];
-    this.stepType.forEach(step => {
+    this.allSteps = event.value === 'breast' ? this.breastSteps
+                    : event.value === 'bottle' ? this.bottleSteps
+                    : [];
+    this.allSteps.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
     });
   }
