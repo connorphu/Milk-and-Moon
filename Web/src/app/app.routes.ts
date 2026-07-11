@@ -11,10 +11,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/today/today-page/today-page').then(m => m.TodayPage)
   },
   {
-    path: 'log',
-    loadComponent: () => import('./features/log/log-page/log-page').then(m => m.LogPage)
-  },
-  {
     path: 'trends',
     loadComponent: () => import('./features/trends/trends-page/trends-page').then(m => m.TrendsPage)
   },
