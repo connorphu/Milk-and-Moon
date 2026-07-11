@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuickLogPanel } from './quick-log-panel';
+import { LogPanel } from './log-panel';
 
-describe('QuickLogPanel', () => {
-  let component: QuickLogPanel;
-  let fixture: ComponentFixture<QuickLogPanel>;
+describe('LogPanel', () => {
+  let component: LogPanel;
+  let fixture: ComponentFixture<LogPanel>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuickLogPanel],
+      imports: [LogPanel],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(QuickLogPanel);
+    fixture = TestBed.createComponent(LogPanel);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
