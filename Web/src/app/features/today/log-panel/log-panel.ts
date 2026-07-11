@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FeedingTrackerForm } from '../../log/feeding-tracker/form/feeding-tracker-form';
-import { DiaperTrackerForm } from '../../log/diaper-tracker/form/diaper-tracker-form';
-import { PumpingTrackerForm } from '../../log/pumping-tracker/pumping-form';
-import { SleepTrackerForm } from '../../log/sleep-tracker/sleep-form';
+import { FeedingTrackerForm } from '../../trackers/feeding-tracker/form/feeding-tracker-form';
+import { DiaperTrackerForm } from '../../trackers/diaper-tracker/form/diaper-tracker-form';
+import { PumpingTrackerForm } from '../../trackers/pumping-tracker/pumping-form';
+import { SleepTrackerForm } from '../../trackers/sleep-tracker/sleep-form';
 
 @Component({
   selector: 'app-log-panel',
