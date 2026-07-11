@@ -1,0 +1,35 @@
+<ng-template template-name="diaperType"></ng-template>
+
+<ng-template template-name="time"></ng-template>
+
+<ng-template template-name="color"></ng-template>
+
+<ng-template template-name="texture"></ng-template>
+
+<ng-template template-name="rash"></ng-template>
+
+<ng-template template-name="notes"></ng-template>
+
+<form>
+  <mat-stepper #stepper>
+    <mat-step>
+      <mat-label>Feeding Type</mat-label>
+      <mat-chip-listbox aria-label="Feeding type">
+        <mat-chip-option value="breast">Breast</mat-chip-option>
+        <mat-chip-option value="bottle">Bottle</mat-chip-option>
+      </mat-chip-listbox>
+    </mat-step>
+    @for (step of stepType; track step.name;) {
+      <mat-step>
+        <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
+      </mat-step>
+    }
+  </mat-stepper>
+</form>
+<br>
+<div>
+  <mat-dialog-actions>
+    <button matButton mat-dialog-close>Cancel</button>
+    <button matButton mat-dialog-close>Save</button>
+  </mat-dialog-actions>
+</div>
