@@ -1,0 +1,69 @@
+<ng-template template-name="time">
+  <div>
+    <mat-label>Time</mat-label>
+  </div>
+  <mat-form-field>
+    <mat-label>Start Time</mat-label>
+    <input matInput [matTimepicker]="startTime" [formField]="pumpingForm.startTime">
+    <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
+    <mat-timepicker #startTime/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>End Time</mat-label>
+    <input matInput [matTimepicker]="endTime" [formField]="pumpingForm.endTime">
+    <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
+    <mat-timepicker #endTime/>
+  </mat-form-field>
+</ng-template>
+
+<ng-template template-name="amount">
+  <div>
+    <mat-label>Left Amount (oz)</mat-label>
+  </div>
+  <mat-slider min="0" max="10" step=".5" showTickMarks discrete>
+    <input matSliderThumb [formField]="pumpingForm.leftAmount">
+  </mat-slider>
+  <div>
+    <mat-label>Right Amount (oz)</mat-label>
+  </div>
+  <mat-slider min="0" max="10" step=".5" showTickMarks discrete>
+    <input matSliderThumb [formField]="pumpingForm.rightAmount">
+  </mat-slider>
+</ng-template>
+
+<ng-template template-name="notes">
+  <mat-form-field>
+    <mat-label>Notes</mat-label>
+    <input matInput [formField]="pumpingForm.notes">
+  </mat-form-field>
+  <div>
+    <mat-label>Quick Notes</mat-label>
+    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Pumping quick notes">
+    @for ( note of quickNotes; track note.description ) {
+      <mat-chip-option>{{ note.description }}</mat-chip-option>
+    }
+    </mat-chip-listbox>
+  </div>
+</ng-template>
+
+<form>
+  <mat-stepper #stepper>
+    @for (step of allSteps; track step.name;) {
+      <mat-step>
+        <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
+      </mat-step>
+    }
+  </mat-stepper>
+</form>
+
+<div>
+  <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
+  <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
+</div>
+<br>
+<div>
+  <mat-dialog-actions>
+    <button matButton mat-dialog-close>Cancel</button>
+    <button matButton mat-dialog-close>Save</button>
+  </mat-dialog-actions>
+</div>
