@@ -13,7 +13,7 @@ export class DiaperTrackerForm {
   dialog = inject(MatDialog);
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DiaperTrackerDialog, {
+    this.dialog.open(DiaperTrackerDialog, {
       height: '100%',
       width: '100%',
     });

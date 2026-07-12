@@ -16,7 +16,7 @@ export class FeedingTrackerForm {
   dialog = inject(MatDialog);
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(FeedingTrackerDialog, {
+    this.dialog.open(FeedingTrackerDialog, {
       height: '100%',
       width: '100%',
     });
