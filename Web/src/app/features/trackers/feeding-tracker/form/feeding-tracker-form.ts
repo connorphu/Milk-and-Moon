@@ -16,13 +16,9 @@ export class FeedingTrackerForm {
   dialog = inject(MatDialog);
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(FeedingTrackerDialog, {
+    this.dialog.open(FeedingTrackerDialog, {
       height: '100%',
       width: '100%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed: ' + result);
     });
   }
 }

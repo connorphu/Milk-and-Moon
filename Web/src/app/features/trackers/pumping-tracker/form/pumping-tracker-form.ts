@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
+import { PumpingTrackerDialog } from '../dialog/pumping-tracker-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { DiaperTrackerDialog } from '../dialog/diaper-tracker-dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-diaper-form',
+  selector: 'app-pumping-form',
   imports: [MatButtonModule],
-  templateUrl: './diaper-tracker-form.html',
-  styleUrl: './diaper-tracker-form.css',
+  templateUrl: './pumping-tracker-form.html',
+  styleUrl: './pumping-tracker-form.css',
 })
-export class DiaperTrackerForm {
+export class PumpingTrackerForm {
   dialog = inject(MatDialog);
 
   openDialog(): void {
-    this.dialog.open(DiaperTrackerDialog, {
+    this.dialog.open(PumpingTrackerDialog, {
       height: '100%',
       width: '100%',
     });

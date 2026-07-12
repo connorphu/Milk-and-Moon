@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FeedingTrackerForm } from '../../trackers/feeding-tracker/form/feeding-tracker-form';
 import { DiaperTrackerForm } from '../../trackers/diaper-tracker/form/diaper-tracker-form';
-import { PumpingTrackerForm } from '../../trackers/pumping-tracker/pumping-form';
+import { PumpingTrackerForm } from '../../trackers/pumping-tracker/form/pumping-tracker-form';
 import { SleepTrackerForm } from '../../trackers/sleep-tracker/sleep-form';
 
 @Component({
