@@ -61,9 +61,9 @@ export class PumpingTrackerDialog implements AfterViewInit {
     { name: 'notes' }
   ];
   readonly quickNotes: QuickNote[] = [
-    { description: 'painful' },
-    { description: 'low amount' },
-    { description: 'high amount' }
+    { description: 'Painful' },
+    { description: 'Low amount' },
+    { description: 'High amount' }
   ]
   readonly pumpingModel = signal<PumpingTrackerData>({
     startTime: null,
