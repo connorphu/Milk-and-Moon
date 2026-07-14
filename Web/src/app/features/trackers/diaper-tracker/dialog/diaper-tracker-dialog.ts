@@ -73,9 +73,9 @@ export class DiaperTrackerDialog {
     { name: 'notes' }
   ]
   readonly quickNotes: QuickNote[] = [
-    { description: 'weird smell' },
-    { description: 'weird mark/bruise' },
-    { description: 'bleeding '}
+    { description: 'Weird smell' },
+    { description: 'Weird mark/bruise' },
+    { description: 'Bleeding '}
   ]
   readonly diaperModel = signal<DiaperTrackerData>({
     type: '',
@@ -100,7 +100,6 @@ export class DiaperTrackerDialog {
   }
 
   updateSteps() {
-    console.log('updateSteps')
     this.allSteps.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
     });

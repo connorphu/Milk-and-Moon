@@ -12,15 +12,15 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
 
-export interface PumpingTrackerData {
+export interface SleepTrackerData {
   startTime: Date
   endTime: Date
-  leftAmount: number
-  rightAmount: number
+  location: string
+  wakeReason: string
   notes: string
 }
 
-interface PumpingStep {
+interface SleepStep {
   name: string
   templateRef?: TemplateRef<any>
 }
@@ -30,7 +30,7 @@ interface QuickNote {
 }
 
 @Component({
-  selector: 'app-pumping-tracker-dialog',
+  selector: 'app-sleep-tracker-dialog',
   providers: [provideNativeDateAdapter()],
   imports: [
     NgTemplateOutlet,
@@ -46,34 +46,34 @@ interface QuickNote {
     MatTimepickerModule,
     MatSliderModule
   ],
-  templateUrl: './pumping-tracker-dialog.html',
-  styleUrl: './pumping-tracker-dialog.css',
+  templateUrl: './sleep-tracker-dialog.html',
+  styleUrl: './sleep-tracker-dialog.css',
 })
-export class PumpingTrackerDialog implements AfterViewInit {
-  readonly dialogRef = inject(MatDialogRef<PumpingTrackerDialog>);
+export class SleepTrackerDialog implements AfterViewInit{
+  readonly dialogRef = inject(MatDialogRef<SleepTrackerDialog>);
   readonly allTemplateRefs = viewChildren(TemplateName);
-  readonly pumpingStepper = viewChild.required<MatStepper>('stepper')
+  readonly sleepStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly allSteps: PumpingStep[] = [
+  readonly allSteps: SleepStep[] = [
     { name: 'time' },
-    { name: 'amount' },
+    { name: 'location' },
+    { name: 'wakeReason' },
     { name: 'notes' }
   ];
   readonly quickNotes: QuickNote[] = [
-    { description: 'Painful' },
-    { description: 'Low amount' },
-    { description: 'High amount' }
+    { description: 'Frequent wakes' },
+    { description: 'Slept all night' },
   ]
-  readonly pumpingModel = signal<PumpingTrackerData>({
+  readonly sleepModel = signal<SleepTrackerData>({
     startTime: null,
     endTime: null,
-    leftAmount: 0,
-    rightAmount: 0,
+    location: '',
+    wakeReason: '',
     notes: ''
-  } as unknown as PumpingTrackerData);
+  } as unknown as SleepTrackerData);
 
-  protected pumpingForm = form(this.pumpingModel);
+  protected sleepForm = form(this.sleepModel);
 
   ngAfterViewInit(): void {
     this.allSteps.forEach(step => {
@@ -82,25 +82,32 @@ export class PumpingTrackerDialog implements AfterViewInit {
   }
 
   goBack() {
-    this.pumpingStepper().previous()
+    this.sleepStepper().previous()
   }
 
   goForward() {
-    this.pumpingStepper().next()
+    this.sleepStepper().next()
+  }
+
+  onLocationChange(event: MatChipListboxChange) {
+    this.sleepForm.location().value.set(event.value ?? '')
+  }
+
+  onExplaination(event: InputEvent) {
+
   }
 
   onQuickNotesChange(event: MatChipListboxChange) {
     if (!event.value.length) {
-      this.pumpingForm.notes().value.set('')
+      this.sleepForm.notes().value.set('')
       return
     }
 
     const quickNotes: string[] = event.value
     if (quickNotes) {
-      this.pumpingForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
+      this.sleepForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
         return finalNote.concat(`, ${currentNote}`)
       }))
     }
   }
-
 }

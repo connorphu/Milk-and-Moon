@@ -70,10 +70,10 @@ export class FeedingTrackerDialog {
     { name: 'notes' }
   ];
   readonly quickNotes: QuickNote[] = [
-    { description: 'fast feed' },
-    { description: 'slow feed' },
-    { description: 'spit up' },
-    { description: 'no latch/refusal' }
+    { description: 'Fast feed' },
+    { description: 'Slow feed' },
+    { description: 'Spit up' },
+    { description: 'No latch/refusal' }
   ]
   readonly feedingModel = signal<FeedingTrackerData>({
     bottleSize: 0,
