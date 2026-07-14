@@ -100,7 +100,6 @@ export class DiaperTrackerDialog {
   }
 
   updateSteps() {
-    console.log('updateSteps')
     this.allSteps.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
     });

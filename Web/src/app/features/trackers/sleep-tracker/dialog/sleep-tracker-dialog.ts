@@ -91,7 +91,6 @@ export class SleepTrackerDialog implements AfterViewInit{
 
   onLocationChange(event: MatChipListboxChange) {
     this.sleepForm.location().value.set(event.value ?? '')
-    console.log(this.sleepForm.location().value() === 'other')
   }
 
   onExplaination(event: InputEvent) {
