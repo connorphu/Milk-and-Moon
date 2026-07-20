@@ -14,8 +14,7 @@ export class PumpingTrackerForm {
 
   openDialog(): void {
     this.dialog.open(PumpingTrackerDialog, {
-      height: '100%',
-      width: '100%',
+      panelClass: 'tracker-dialog'
     });
   }
 }

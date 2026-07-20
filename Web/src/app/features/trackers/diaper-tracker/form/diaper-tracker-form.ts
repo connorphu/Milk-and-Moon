@@ -14,8 +14,7 @@ export class DiaperTrackerForm {
 
   openDialog(): void {
     this.dialog.open(DiaperTrackerDialog, {
-      height: '100%',
-      width: '100%',
+      panelClass: 'tracker-dialog'
     });
   }
 }

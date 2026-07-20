@@ -14,8 +14,7 @@ export class SleepTrackerForm {
 
   openDialog(): void {
     this.dialog.open(SleepTrackerDialog, {
-      height: '100%',
-      width: '100%',
+      panelClass: 'tracker-dialog'
     });
   }
 }

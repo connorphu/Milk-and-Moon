@@ -2,18 +2,22 @@
   <div>
     <mat-label>Time</mat-label>
   </div>
-  <mat-form-field>
-    <mat-label>Start Time</mat-label>
-    <input matInput [matTimepicker]="startTime" [formField]="pumpingForm.startTime">
-    <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
-    <mat-timepicker #startTime/>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>End Time</mat-label>
-    <input matInput [matTimepicker]="endTime" [formField]="pumpingForm.endTime">
-    <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
-    <mat-timepicker #endTime/>
-  </mat-form-field>
+  <div>
+    <mat-form-field>
+      <mat-label>Start Time</mat-label>
+      <input matInput [matTimepicker]="startTime" [formField]="pumpingForm.startTime">
+      <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
+      <mat-timepicker #startTime/>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>End Time</mat-label>
+      <input matInput [matTimepicker]="endTime" [formField]="pumpingForm.endTime">
+      <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
+      <mat-timepicker #endTime/>
+    </mat-form-field>
+  </div>
 </ng-template>
 
 <ng-template template-name="amount">
@@ -46,24 +50,24 @@
   </div>
 </ng-template>
 
-<form>
-  <mat-stepper #stepper>
-    @for (step of allSteps; track step.name;) {
-      <mat-step>
-        <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
-      </mat-step>
-    }
-  </mat-stepper>
-</form>
-
-<div>
-  <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
-  <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
-</div>
-<br>
-<div>
-  <mat-dialog-actions>
-    <button matButton mat-dialog-close>Cancel</button>
-    <button matButton mat-dialog-close>Save</button>
+<h2 mat-dialog-title>Pumping Tracker</h2>
+<div class="flex-1 flex flex-col">
+  <form>
+    <mat-stepper #stepper>
+      @for (step of allSteps; track step.name;) {
+        <mat-step>
+          <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
+        </mat-step>
+      }
+    </mat-stepper>
+  </form>
+  <mat-dialog-actions align="start">
+    <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
+    <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
   </mat-dialog-actions>
 </div>
+
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton mat-dialog-close>Save</button>
+</mat-dialog-actions>
