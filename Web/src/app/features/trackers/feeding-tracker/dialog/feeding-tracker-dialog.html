@@ -2,18 +2,22 @@
   <div>
     <mat-label>Time</mat-label>
   </div>
-  <mat-form-field>
+  <div>
+    <mat-form-field>
     <mat-label>Start Time</mat-label>
     <input matInput [matTimepicker]="startTime" [formField]="feedingForm.startTime">
     <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
     <mat-timepicker #startTime/>
-  </mat-form-field>
-  <mat-form-field>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
     <mat-label>End Time</mat-label>
     <input matInput [matTimepicker]="endTime" [formField]="feedingForm.endTime">
     <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
     <mat-timepicker #endTime/>
-  </mat-form-field>
+    </mat-form-field>
+  </div>
 </ng-template>
 
 <ng-template template-name="breastSide">
@@ -65,30 +69,31 @@
   </div>
 </ng-template>
 
-<form>
-  <mat-stepper #stepper>
-    <mat-step>
-      <mat-label>Feeding Type</mat-label>
-      <mat-chip-listbox (change)="onFeedingTypeChange($event)" aria-label="Feeding type">
-        <mat-chip-option value="breast">Breast</mat-chip-option>
-        <mat-chip-option value="bottle">Bottle</mat-chip-option>
-      </mat-chip-listbox>
-    </mat-step>
-    @for (step of allSteps; track step.name;) {
+<h2 mat-dialog-title>Feeding Tracker</h2>
+<div class="flex-1 flex flex-col">
+  <form>
+    <mat-stepper #stepper>
       <mat-step>
-        <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
+        <mat-label>Feeding Type</mat-label>
+        <mat-chip-listbox (change)="onFeedingTypeChange($event)" aria-label="Feeding type">
+          <mat-chip-option value="breast">Breast</mat-chip-option>
+          <mat-chip-option value="bottle">Bottle</mat-chip-option>
+        </mat-chip-listbox>
       </mat-step>
-    }
-  </mat-stepper>
-</form>
-<br>
-<div>
-  <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
-  <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
-</div>
-<div>
-  <mat-dialog-actions>
-    <button matButton mat-dialog-close>Cancel</button>
-    <button matButton mat-dialog-close>Save</button>
+      @for (step of allSteps; track step.name;) {
+        <mat-step>
+          <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
+        </mat-step>
+      }
+    </mat-stepper>
+  </form>
+  <mat-dialog-actions align="start">
+    <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
+    <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
   </mat-dialog-actions>
 </div>
+
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton mat-dialog-close>Save</button>
+</mat-dialog-actions>

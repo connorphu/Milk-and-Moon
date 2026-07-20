@@ -17,8 +17,7 @@ export class FeedingTrackerForm {
 
   openDialog(): void {
     this.dialog.open(FeedingTrackerDialog, {
-      height: '100%',
-      width: '100%',
+      panelClass: 'tracker-dialog'
     });
   }
 }
