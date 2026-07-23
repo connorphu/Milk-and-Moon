@@ -72,12 +72,6 @@ export class FeedingTrackerDialog {
   protected feedingForm = form(this.feedingModel);
   protected allSteps: FeedingStep[] = []
 
-  private babyLogService = inject(BabyLog)
-
-  constructor() {
-    this.babyLogService.loadData().subscribe(res => console.log(res))
-  }
-
   goBack() {
     this.feedingStepper().previous()
   }
