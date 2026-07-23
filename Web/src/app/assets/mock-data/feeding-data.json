@@ -1,0 +1,52 @@
+[
+  {
+    "bottleSize": 4,
+    "feedingType": "bottle",
+    "breastSide": [],
+    "milkType": ["breastmilk"],
+    "milkConsumed": 3,
+    "startTime": "2026-07-23T07:30:00",
+    "endTime": "2026-07-23T07:45:00",
+    "notes": "Finished most of the bottle. Slight spit-up after burping."
+  },
+  {
+    "bottleSize": 5,
+    "feedingType": "bottle",
+    "breastSide": [],
+    "milkType": ["formula"],
+    "milkConsumed": 4,
+    "startTime": "2026-07-23T10:15:00",
+    "endTime": "2026-07-23T10:35:00",
+    "notes": "Fed calmly and finished the full feeding."
+  },
+  {
+    "bottleSize": 0,
+    "feedingType": "breast",
+    "breastSide": ["left"],
+    "milkType": [],
+    "milkConsumed": 0,
+    "startTime": "2026-07-23T13:00:00",
+    "endTime": "2026-07-23T13:18:00",
+    "notes": "Nursed on left side. Baby seemed sleepy near the end."
+  },
+  {
+    "bottleSize": 0,
+    "feedingType": "breast",
+    "breastSide": ["left", "right"],
+    "milkType": [],
+    "milkConsumed": 0,
+    "startTime": "2026-07-23T16:20:00",
+    "endTime": "2026-07-23T16:42:00",
+    "notes": "Combination feeding. Needed a short break halfway through."
+  },
+  {
+    "bottleSize": 4,
+    "feedingType": "bottle",
+    "breastSide": [],
+    "milkType": ["breastmilk"],
+    "milkConsumed": 2.5,
+    "startTime": "2026-07-23T20:10:00",
+    "endTime": "2026-07-23T20:25:00",
+    "notes": "Did not finish bottle. Baby became fussy after 2.5 oz."
+  }
+]
