@@ -55,7 +55,7 @@ export class SleepTrackerDialog implements AfterViewInit{
     startTime: null,
     endTime: null,
     location: '',
-    wakeReason: '',
+    wakeReason: [],
     notes: ''
   } as unknown as SleepTrackerData);
 

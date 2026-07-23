@@ -62,10 +62,10 @@ export class DiaperTrackerDialog {
   readonly diaperModel = signal<DiaperTrackerData>({
     type: '',
     peeColor: '',
-    stoolColor: '',
-    stoolTexture: '',
-    rash: '',
-    rashLocation: '',
+    stoolColor: [],
+    stoolTexture: [],
+    rash: [],
+    rashLocation: [],
     time: null,
     notes: ''
   } as unknown as DiaperTrackerData);

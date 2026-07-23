@@ -13,6 +13,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { TemplateName } from "../../../../shared/directives/template-name";
 import { FeedingStep, FeedingTrackerData } from "../../../../core/models/feeding-log.model";
 import { QuickNote } from "../../../../core/models/model";
+import { BabyLog } from "../../../../core/services/baby-log";
 
 @Component({
   selector: 'app-feeding-form-dialog',
@@ -60,7 +61,7 @@ export class FeedingTrackerDialog {
   readonly feedingModel = signal<FeedingTrackerData>({
     bottleSize: 0,
     feedingType: '',
-    breastSide: '',
+    breastSide: [],
     milkType: [],
     milkConsumed: 0,
     startTime: null,
@@ -70,6 +71,12 @@ export class FeedingTrackerDialog {
 
   protected feedingForm = form(this.feedingModel);
   protected allSteps: FeedingStep[] = []
+
+  private babyLogService = inject(BabyLog)
+
+  constructor() {
+    this.babyLogService.loadData().subscribe(res => console.log(res))
+  }
 
   goBack() {
     this.feedingStepper().previous()
