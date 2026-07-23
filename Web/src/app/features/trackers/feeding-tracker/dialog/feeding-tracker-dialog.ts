@@ -11,26 +11,8 @@ import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatButtonModule } from "@angular/material/button";
 import { TemplateName } from "../../../../shared/directives/template-name";
-
-export interface FeedingTrackerData {
-  bottleSize: number
-  feedingType: string
-  breastSide: 'left' | 'right'
-  milkType: string[]
-  milkConsumed: number
-  startTime: Date | null
-  endTime: Date | null
-  notes: string
-}
-
-interface FeedingStep {
-  name: string
-  templateRef?: TemplateRef<any>
-}
-
-interface QuickNote {
-  description: string
-}
+import { FeedingStep, FeedingTrackerData } from "../../../../core/models/feeding-log.model";
+import { QuickNote } from "../../../../core/models/model";
 
 @Component({
   selector: 'app-feeding-form-dialog',

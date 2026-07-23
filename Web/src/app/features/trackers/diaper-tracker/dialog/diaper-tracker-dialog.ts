@@ -10,26 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
-
-export interface DiaperTrackerData {
-  type: string
-  peeColor: string
-  stoolColor: string
-  stoolTexture: string
-  rash: string
-  rashLocation: string
-  time: Date
-  notes: string
-}
-
-interface DiaperStep {
-  name: string
-  templateRef?: TemplateRef<any>
-}
-
-interface QuickNote {
-  description: string
-}
+import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log.model';
+import { QuickNote } from '../../../../core/models/model';
 
 @Component({
   selector: 'app-diaper-tracker-dialog',

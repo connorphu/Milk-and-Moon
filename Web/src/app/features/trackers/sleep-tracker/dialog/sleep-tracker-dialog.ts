@@ -11,23 +11,9 @@ import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
+import { QuickNote } from '../../../../core/models/model';
+import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log.model';
 
-export interface SleepTrackerData {
-  startTime: Date
-  endTime: Date
-  location: string
-  wakeReason: string
-  notes: string
-}
-
-interface SleepStep {
-  name: string
-  templateRef?: TemplateRef<any>
-}
-
-interface QuickNote {
-  description: string
-}
 
 @Component({
   selector: 'app-sleep-tracker-dialog',
