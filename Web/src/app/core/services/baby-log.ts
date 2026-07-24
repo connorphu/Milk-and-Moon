@@ -6,7 +6,7 @@ import { SleepTrackerData } from '../models/sleep-log.model';
 import { HttpClient } from '@angular/common/http';
 
 interface BabyLogModel {
-  id: string
+  id?: string
   trackerType: 'feeding' | 'diaper' | 'pumping' | 'sleep'
   createdAt: Date
   updatedAt: Date
@@ -15,25 +15,24 @@ interface BabyLogModel {
 
 @Service()
 export class BabyLog {
+  private readonly url = 'http://localhost:3000/baby-log'
   private http = inject(HttpClient)
 
-  loadData() {
-    return this.http.get('/assets/mock-data/baby-log.json')
+  loadData(id?: string) {
+    return this.http.get(`${this.url}${id ? `/${id}` : ''}`)
   }
-  // trackFeeding(data: FeedingTrackerData): BabyLogModel {
 
-  // }
+  editData(data: any) {
+    return this.http.put(this.url, data)
+  }
 
-  // trackDiaper(data: DiaperTrackerData): BabyLogModel {
-
-  // }
-
-  // trackPumping(data: PumpingTrackerData): BabyLogModel {
-
-  // }
-
-  // trackSleep(data: SleepTrackerData): BabyLogModel {
-
-  // }
-
+  track(type: 'feeding' | 'diaper' | 'pumping' | 'sleep', data: any) {
+    const log: BabyLogModel = {
+      trackerType: type,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      data: data
+    }
+    return this.http.post(this.url, log)
+  }
 }
