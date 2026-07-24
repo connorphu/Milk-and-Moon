@@ -11,23 +11,8 @@ import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
-
-export interface PumpingTrackerData {
-  startTime: Date
-  endTime: Date
-  leftAmount: number
-  rightAmount: number
-  notes: string
-}
-
-interface PumpingStep {
-  name: string
-  templateRef?: TemplateRef<any>
-}
-
-interface QuickNote {
-  description: string
-}
+import { QuickNote } from '../../../../core/models/model';
+import { PumpingStep, PumpingTrackerData } from '../../../../core/models/pumping-log.model';
 
 @Component({
   selector: 'app-pumping-tracker-dialog',
