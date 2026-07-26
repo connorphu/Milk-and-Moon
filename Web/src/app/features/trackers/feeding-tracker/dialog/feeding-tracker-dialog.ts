@@ -72,6 +72,8 @@ export class FeedingTrackerDialog {
   protected feedingForm = form(this.feedingModel);
   protected allSteps: FeedingStep[] = []
 
+  private babyLogService = inject(BabyLog)
+
   goBack() {
     this.feedingStepper().previous()
   }
@@ -106,6 +108,12 @@ export class FeedingTrackerDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  onSave() {
+    this.babyLogService.track('feeding', this.feedingForm().value()).subscribe(succeed => {
+      // TODO: add toasts?
+    })
   }
 }
 
