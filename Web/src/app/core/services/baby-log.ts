@@ -41,4 +41,14 @@ export class BabyLog {
       return of(false);
     }))
   }
+
+  deleteData(id: string) {
+    return this.http.delete(`${this.url}/${id}`).pipe(
+      map(() => true),
+      catchError((error) => {
+        console.log(error);
+        return of(false);
+      })
+    )
+  }
 }
