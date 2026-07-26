@@ -4,6 +4,7 @@ import { DiaperTrackerData } from '../models/diaper-log.model';
 import { PumpingTrackerData } from '../models/pumping-log.model';
 import { SleepTrackerData } from '../models/sleep-log.model';
 import { HttpClient } from '@angular/common/http';
+import { catchError, map, of } from 'rxjs';
 
 interface BabyLogModel {
   id?: string
@@ -33,6 +34,11 @@ export class BabyLog {
       updatedAt: new Date(),
       data: data
     }
-    return this.http.post(this.url, log)
+    return this.http.post(this.url, log).pipe(
+    map(() => true),
+    catchError((error) => {
+      console.log(error);
+      return of(false);
+    }))
   }
 }
