@@ -13,6 +13,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
 import { QuickNote } from '../../../../core/models/model';
 import { PumpingStep, PumpingTrackerData } from '../../../../core/models/pumping-log.model';
+import { BabyLog } from '../../../../core/services/baby-log';
 
 @Component({
   selector: 'app-pumping-tracker-dialog',
@@ -60,6 +61,8 @@ export class PumpingTrackerDialog implements AfterViewInit {
 
   protected pumpingForm = form(this.pumpingModel);
 
+  private babyLogService = inject(BabyLog)
+
   ngAfterViewInit(): void {
     this.allSteps.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
@@ -88,4 +91,9 @@ export class PumpingTrackerDialog implements AfterViewInit {
     }
   }
 
+  onSave() {
+    this.babyLogService.track('pumping', this.pumpingForm().value()).subscribe(succeed => {
+      // TODO: add toasts?
+    })
+  }
 }

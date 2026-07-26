@@ -13,6 +13,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
 import { QuickNote } from '../../../../core/models/model';
 import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log.model';
+import { BabyLog } from '../../../../core/services/baby-log';
 
 
 @Component({
@@ -61,6 +62,8 @@ export class SleepTrackerDialog implements AfterViewInit{
 
   protected sleepForm = form(this.sleepModel);
 
+  private babyLogService = inject(BabyLog)
+
   ngAfterViewInit(): void {
     this.allSteps.forEach(step => {
       step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
@@ -95,5 +98,11 @@ export class SleepTrackerDialog implements AfterViewInit{
         return finalNote.concat(`, ${currentNote}`)
       }))
     }
+  }
+
+  onSave() {
+    this.babyLogService.track('sleep', this.sleepForm().value()).subscribe(succeed => {
+      // TODO: add toasts?
+    })
   }
 }
