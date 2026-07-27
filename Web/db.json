@@ -139,8 +139,8 @@
     {
       "id": "log-9",
       "trackerType": "sleep",
-      "createdAt": "2026-07-23T07:46:00",
-      "updatedAt": "2026-07-23T07:46:00",
+      "createdAt": "2026-07-27T07:46:00",
+      "updatedAt": "2026-07-27T07:46:00",
       "data": {
         "startTime": "2026-07-23T12:05:00.000Z",
         "endTime": "2026-07-23T13:50:00.000Z",
@@ -180,15 +180,15 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T07:15:00.000Z",
+        "startTime": "2026-07-23T07:15:00.000Z",
         "notes": "Moderately wet diaper."
       }
     },
     {
       "id": "log-12",
       "trackerType": "diaper",
-      "createdAt": "2026-07-23T07:46:00",
-      "updatedAt": "2026-07-23T07:46:00",
+      "createdAt": "2026-07-27T07:46:00",
+      "updatedAt": "2026-07-27T07:46:00",
       "data": {
         "type": "both",
         "peeColor": "light yellow",
@@ -202,7 +202,7 @@
           "mild"
         ],
         "rashLocation": "around anus",
-        "time": "2026-07-23T10:40:00.000Z",
+        "startTime": "2026-07-23T10:40:00.000Z",
         "notes": "Applied diaper cream after changing."
       }
     },
@@ -225,7 +225,7 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T13:25:00.000Z",
+        "startTime": "2026-07-23T13:25:00.000Z",
         "notes": "Normal bowel movement."
       }
     },
@@ -245,7 +245,7 @@
         "rashLocation": [
           "left buttock"
         ],
-        "time": "2026-07-23T16:50:00.000Z",
+        "startTime": "2026-07-23T16:50:00.000Z",
         "notes": "Skin looked slightly irritated."
       }
     },
@@ -269,7 +269,7 @@
         "rashLocation": [
           "diaper line"
         ],
-        "time": "2026-07-23T20:10:00.000Z",
+        "startTime": "2026-07-23T20:10:00.000Z",
         "notes": "Monitor stool color and hydration."
       }
     },
@@ -287,7 +287,7 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T07:15:00.000Z",
+        "startTime": "2026-07-23T07:15:00.000Z",
         "notes": "Moderately wet diaper."
       }
     },
@@ -309,7 +309,7 @@
           "mild"
         ],
         "rashLocation": "around anus",
-        "time": "2026-07-23T10:40:00.000Z",
+        "startTime": "2026-07-23T10:40:00.000Z",
         "notes": "Applied diaper cream after changing."
       }
     },
@@ -332,7 +332,7 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T13:25:00.000Z",
+        "startTime": "2026-07-23T13:25:00.000Z",
         "notes": "Normal bowel movement."
       }
     },
@@ -352,7 +352,7 @@
         "rashLocation": [
           "left buttock"
         ],
-        "time": "2026-07-23T16:50:00.000Z",
+        "startTime": "2026-07-23T16:50:00.000Z",
         "notes": "Skin looked slightly irritated."
       }
     },
@@ -376,7 +376,7 @@
         "rashLocation": [
           "diaper line"
         ],
-        "time": "2026-07-23T20:10:00.000Z",
+        "startTime": "2026-07-23T20:10:00.000Z",
         "notes": "Monitor stool color and hydration."
       }
     },
@@ -463,8 +463,8 @@
     },
     {
       "trackerType": "feeding",
-      "createdAt": "2026-07-26T21:35:49.072Z",
-      "updatedAt": "2026-07-26T21:35:49.072Z",
+      "createdAt": "2026-07-27T21:35:49.072Z",
+      "updatedAt": "2026-07-27T21:35:49.072Z",
       "data": {
         "bottleSize": 0,
         "feedingType": "",
@@ -476,6 +476,24 @@
         "notes": ""
       },
       "id": "w8wbshV"
+    },
+    {
+      "trackerType": "feeding",
+      "createdAt": "2026-07-27T16:41:02.723Z",
+      "updatedAt": "2026-07-27T16:41:02.723Z",
+      "data": {
+        "bottleSize": 4,
+        "feedingType": "bottle",
+        "breastSide": [],
+        "milkType": [
+          "breastmilk"
+        ],
+        "milkConsumed": 4,
+        "startTime": "2026-07-27T05:00:00.000Z",
+        "endTime": "2026-07-27T05:30:00.000Z",
+        "notes": ""
+      },
+      "id": "h-gWzxw"
     }
   ]
 }
