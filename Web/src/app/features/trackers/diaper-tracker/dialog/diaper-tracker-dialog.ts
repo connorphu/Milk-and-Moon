@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log.model';
+import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log';
 import { QuickNote } from '../../../../core/models/model';
 import { BabyLog } from '../../../../core/services/baby-log';
 
@@ -52,7 +52,7 @@ export class DiaperTrackerDialog {
   ]
   readonly staticSteps: DiaperStep[] = [
     { name: 'rash' },
-    { name: 'time' },
+    { name: 'startTime' },
     { name: 'notes' }
   ]
   readonly quickNotes: QuickNote[] = [
@@ -67,7 +67,7 @@ export class DiaperTrackerDialog {
     stoolTexture: [],
     rash: [],
     rashLocation: [],
-    time: null,
+    startTime: null,
     notes: ''
   } as unknown as DiaperTrackerData);
 

@@ -12,7 +12,7 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
 import { QuickNote } from '../../../../core/models/model';
-import { PumpingStep, PumpingTrackerData } from '../../../../core/models/pumping-log.model';
+import { PumpingStep, PumpingTrackerData } from '../../../../core/models/pumping-log';
 import { BabyLog } from '../../../../core/services/baby-log';
 
 @Component({

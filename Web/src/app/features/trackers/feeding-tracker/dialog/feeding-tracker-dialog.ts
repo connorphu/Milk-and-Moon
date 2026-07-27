@@ -11,7 +11,7 @@ import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatButtonModule } from "@angular/material/button";
 import { TemplateName } from "../../../../shared/directives/template-name";
-import { FeedingStep, FeedingTrackerData } from "../../../../core/models/feeding-log.model";
+import { FeedingStep, FeedingTrackerData } from "../../../../core/models/feeding-log";
 import { QuickNote } from "../../../../core/models/model";
 import { BabyLog } from "../../../../core/services/baby-log";
 

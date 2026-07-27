@@ -7,7 +7,7 @@ export interface DiaperTrackerData {
   stoolTexture: string
   rash: string
   rashLocation: string
-  time: Date
+  startTime: Date
   notes: string
 }
 
