@@ -63,11 +63,11 @@ async function main() {
     : path.join(projectRoot, 'src/app/assets/mock-data/baby-log.json');
   const sourcePath = args[1]
     ? path.resolve(projectRoot, args[1])
-    : path.join(projectRoot, 'src/app/assets/mock-data/feeding-data.json');
+    : path.join(projectRoot, 'src/app/assets/mock-data/feed-data.json');
   const outputPath = args[2]
     ? path.resolve(projectRoot, args[2])
     : path.join(projectRoot, 'src/app/assets/mock-data/mapped-log.json');
-  const trackerType = args[3] || 'feeding';
+  const trackerType = args[3] || 'feed';
   const idPrefix = args[4];
 
   await generateMappedLogFile({

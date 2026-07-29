@@ -1,6 +1,6 @@
 import { TemplateRef } from "@angular/core"
 
-export interface FeedingTrackerData {
+export interface FeedTrackerData {
   bottleSize: number
   feedingType: string
   breastSide: 'left' | 'right'
@@ -11,7 +11,7 @@ export interface FeedingTrackerData {
   notes: string
 }
 
-export interface FeedingStep {
+export interface FeedStep {
   name: string
   templateRef?: TemplateRef<any>
 }

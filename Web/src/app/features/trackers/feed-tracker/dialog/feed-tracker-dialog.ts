@@ -11,12 +11,12 @@ import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatButtonModule } from "@angular/material/button";
 import { TemplateName } from "../../../../shared/directives/template-name";
-import { FeedingStep, FeedingTrackerData } from "../../../../core/models/feeding-log";
+import { FeedStep, FeedTrackerData } from "../../../../core/models/feed-log";
 import { QuickNote } from "../../../../core/models/model";
 import { BabyLog } from "../../../../core/services/baby-log";
 
 @Component({
-  selector: 'app-feeding-form-dialog',
+  selector: 'app-feed-form-dialog',
   providers: [provideNativeDateAdapter()],
   imports: [
     TemplateName,
@@ -31,21 +31,21 @@ import { BabyLog } from "../../../../core/services/baby-log";
     MatTimepickerModule,
     MatButtonModule
 ],
-  templateUrl: './feeding-tracker-dialog.html',
-  styleUrl: './feeding-tracker-dialog.css',
+  templateUrl: './feed-tracker-dialog.html',
+  styleUrl: './feed-tracker-dialog.css',
 })
-export class FeedingTrackerDialog {
-  readonly dialogRef = inject(MatDialogRef<FeedingTrackerDialog>);
+export class FeedTrackerDialog {
+  readonly dialogRef = inject(MatDialogRef<FeedTrackerDialog>);
   readonly allTemplateRefs = viewChildren(TemplateName);
   readonly feedingStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly breastSteps: FeedingStep[] = [
+  readonly breastSteps: FeedStep[] = [
     { name: 'time' },
     { name: 'breastSide' },
     { name: 'notes' }
   ];
-  readonly bottleSteps: FeedingStep[] = [
+  readonly bottleSteps: FeedStep[] = [
     { name: 'bottleSize' },
     { name: 'milkType' },
     { name: 'time' },
@@ -58,7 +58,7 @@ export class FeedingTrackerDialog {
     { description: 'Spit up' },
     { description: 'No latch/refusal' }
   ]
-  readonly feedingModel = signal<FeedingTrackerData>({
+  readonly feedingModel = signal<FeedTrackerData>({
     bottleSize: 0,
     feedingType: '',
     breastSide: [],
@@ -67,10 +67,10 @@ export class FeedingTrackerDialog {
     startTime: null,
     endTime: null,
     notes: ''
-  } as unknown as FeedingTrackerData);
+  } as unknown as FeedTrackerData);
 
   protected feedingForm = form(this.feedingModel);
-  protected allSteps: FeedingStep[] = []
+  protected allSteps: FeedStep[] = []
 
   private babyLogService = inject(BabyLog)
 
@@ -111,7 +111,7 @@ export class FeedingTrackerDialog {
   }
 
   onSave() {
-    this.babyLogService.track('feeding', this.feedingForm().value()).subscribe(succeed => {
+    this.babyLogService.track('feed', this.feedingForm().value()).subscribe(succeed => {
       // TODO: add toasts?
     })
   }
