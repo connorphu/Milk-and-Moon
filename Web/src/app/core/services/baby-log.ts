@@ -9,11 +9,11 @@ export class BabyLog {
   private http = inject(HttpClient)
 
   loadData(id?: string, opts?: any) {
-    return this.http.get(`${this.url}${id ? `/${id}` : ''}`, opts).pipe(
-    catchError((error) => {
-      console.log(error);
-      return of(false);
-    }))
+    return this.http.get<BabyLogModel[]>(`${this.url}${id ? `/${id}` : ''}`, opts).pipe(
+      catchError((error) => {
+        console.log(error);
+        return of(false);
+      }))
   }
 
   editData(data: BabyLogModel) {
@@ -25,7 +25,7 @@ export class BabyLog {
     }))
   }
 
-  track(type: 'feeding' | 'diaper' | 'pumping' | 'sleep', data: any) {
+  track(type: 'feed' | 'diaper' | 'pump' | 'sleep', data: any) {
     const model: BabyLogModel = {
       trackerType: type,
       createdAt: new Date(),
