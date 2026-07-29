@@ -37,7 +37,7 @@ import { BabyLog } from "../../../../core/services/baby-log";
 export class FeedTrackerDialog {
   readonly dialogRef = inject(MatDialogRef<FeedTrackerDialog>);
   readonly allTemplateRefs = viewChildren(TemplateName);
-  readonly feedingStepper = viewChild.required<MatStepper>('stepper')
+  readonly feedStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
   readonly breastSteps: FeedStep[] = [
@@ -58,9 +58,9 @@ export class FeedTrackerDialog {
     { description: 'Spit up' },
     { description: 'No latch/refusal' }
   ]
-  readonly feedingModel = signal<FeedTrackerData>({
+  readonly feedModel = signal<FeedTrackerData>({
     bottleSize: 0,
-    feedingType: '',
+    feedType: '',
     breastSide: [],
     milkType: [],
     milkConsumed: 0,
@@ -69,21 +69,21 @@ export class FeedTrackerDialog {
     notes: ''
   } as unknown as FeedTrackerData);
 
-  protected feedingForm = form(this.feedingModel);
+  protected feedForm = form(this.feedModel);
   protected allSteps: FeedStep[] = []
 
   private babyLogService = inject(BabyLog)
 
   goBack() {
-    this.feedingStepper().previous()
+    this.feedStepper().previous()
   }
 
   goForward() {
-    this.feedingStepper().next()
+    this.feedStepper().next()
   }
 
-  onFeedingTypeChange(event: MatChipListboxChange) {
-    this.feedingForm.feedingType().value.set(event.value ?? '')
+  onFeedTypeChange(event: MatChipListboxChange) {
+    this.feedForm.feedType().value.set(event.value ?? '')
     this.allSteps = event.value === 'breast' ? this.breastSteps
                     : event.value === 'bottle' ? this.bottleSteps
                     : [];
@@ -94,13 +94,13 @@ export class FeedTrackerDialog {
 
   onQuickNotesChange(event: MatChipListboxChange) {
     if (!event.value.length) {
-      this.feedingForm.notes().value.set('')
+      this.feedForm.notes().value.set('')
       return
     }
 
     const quickNotes: string[] = event.value
     if (quickNotes) {
-      this.feedingForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
+      this.feedForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
         return finalNote.concat(`, ${currentNote}`)
       }))
     }
@@ -111,7 +111,7 @@ export class FeedTrackerDialog {
   }
 
   onSave() {
-    this.babyLogService.track('feed', this.feedingForm().value()).subscribe(succeed => {
+    this.babyLogService.track('feed', this.feedForm().value()).subscribe(succeed => {
       // TODO: add toasts?
     })
   }

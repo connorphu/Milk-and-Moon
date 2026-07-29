@@ -7,7 +7,7 @@
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 4,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "breastmilk"
@@ -25,7 +25,7 @@
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 5,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "formula"
@@ -43,7 +43,7 @@
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 0,
-        "feedingType": "breast",
+        "feedType": "breast",
         "breastSide": [
           "left"
         ],
@@ -61,7 +61,7 @@
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 0,
-        "feedingType": "breast",
+        "feedType": "breast",
         "breastSide": [
           "left",
           "right"
@@ -80,7 +80,7 @@
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 4,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "breastmilk"
@@ -451,7 +451,7 @@
       "updatedAt": "2026-07-26T21:18:23.359Z",
       "data": {
         "bottleSize": 0,
-        "feedingType": "",
+        "feedType": "",
         "breastSide": [],
         "milkType": [],
         "milkConsumed": 0,
@@ -467,7 +467,7 @@
       "updatedAt": "2026-07-27T21:35:49.072Z",
       "data": {
         "bottleSize": 0,
-        "feedingType": "",
+        "feedType": "",
         "breastSide": [],
         "milkType": [],
         "milkConsumed": 0,
@@ -483,7 +483,7 @@
       "updatedAt": "2026-07-27T16:41:02.723Z",
       "data": {
         "bottleSize": 4,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "breastmilk"
@@ -501,7 +501,7 @@
       "updatedAt": "2026-07-29T20:50:15.031Z",
       "data": {
         "bottleSize": 0,
-        "feedingType": "",
+        "feedType": "",
         "breastSide": [],
         "milkType": [],
         "milkConsumed": 0,
@@ -517,7 +517,7 @@
       "updatedAt": "2026-07-29T20:50:41.273Z",
       "data": {
         "bottleSize": 3.5,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "formula"

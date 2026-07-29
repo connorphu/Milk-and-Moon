@@ -10,7 +10,7 @@ test('maps source entries into the baby-log shape for feed data', () => {
     updatedAt: '2026-07-23T07:46:00',
     data: {
       bottleSize: 4,
-      feedingType: 'bottle',
+      feedType: 'bottle',
       breastSide: [],
       milkType: ['breastmilk'],
       milkConsumed: 3,
@@ -23,7 +23,7 @@ test('maps source entries into the baby-log shape for feed data', () => {
   const sourceEntries = [
     {
       bottleSize: 4,
-      feedingType: 'bottle',
+      feedType: 'bottle',
       breastSide: [],
       milkType: ['breastmilk'],
       milkConsumed: 3,
@@ -33,7 +33,7 @@ test('maps source entries into the baby-log shape for feed data', () => {
     },
     {
       bottleSize: 5,
-      feedingType: 'bottle',
+      feedType: 'bottle',
       breastSide: [],
       milkType: ['formula'],
       milkConsumed: 4,

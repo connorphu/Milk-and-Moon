@@ -6,7 +6,7 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "bottleSize": 4,
-      "feedingType": "bottle",
+      "feedType": "bottle",
       "breastSide": [],
       "milkType": [
         "breastmilk"
@@ -24,7 +24,7 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "bottleSize": 5,
-      "feedingType": "bottle",
+      "feedType": "bottle",
       "breastSide": [],
       "milkType": [
         "formula"
@@ -42,7 +42,7 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "bottleSize": 0,
-      "feedingType": "breast",
+      "feedType": "breast",
       "breastSide": [
         "left"
       ],
@@ -60,7 +60,7 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "bottleSize": 0,
-      "feedingType": "breast",
+      "feedType": "breast",
       "breastSide": [
         "left",
         "right"
@@ -79,7 +79,7 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "bottleSize": 4,
-      "feedingType": "bottle",
+      "feedType": "bottle",
       "breastSide": [],
       "milkType": [
         "breastmilk"
