@@ -382,7 +382,7 @@
     },
     {
       "id": "log-21",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -395,7 +395,7 @@
     },
     {
       "id": "log-22",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -408,7 +408,7 @@
     },
     {
       "id": "log-23",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -421,7 +421,7 @@
     },
     {
       "id": "log-24",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -434,7 +434,7 @@
     },
     {
       "id": "log-25",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {

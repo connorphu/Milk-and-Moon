@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PumpingTrackerDialog } from './pumping-tracker-dialog';
+import { PumpTrackerDialog } from './pump-tracker-dialog';
 
-describe('PumpingTrackerDialog', () => {
-  let component: PumpingTrackerDialog;
-  let fixture: ComponentFixture<PumpingTrackerDialog>;
+describe('PumpTrackerDialog', () => {
+  let component: PumpTrackerDialog;
+  let fixture: ComponentFixture<PumpTrackerDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PumpingTrackerDialog],
+      imports: [PumpTrackerDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PumpingTrackerDialog);
+    fixture = TestBed.createComponent(PumpTrackerDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

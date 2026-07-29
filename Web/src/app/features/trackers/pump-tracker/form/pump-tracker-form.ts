@@ -1,19 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { PumpingTrackerDialog } from '../dialog/pumping-tracker-dialog';
+import { PumpTrackerDialog as PumpTrackerDialog } from '../dialog/pump-tracker-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-pumping-form',
+  selector: 'app-pump-form',
   imports: [MatButtonModule],
-  templateUrl: './pumping-tracker-form.html',
-  styleUrl: './pumping-tracker-form.css',
+  templateUrl: './pump-tracker-form.html',
+  styleUrl: './pump-tracker-form.css',
 })
-export class PumpingTrackerForm {
+export class PumpTrackerForm {
   dialog = inject(MatDialog);
 
   openDialog(): void {
-    this.dialog.open(PumpingTrackerDialog, {
+    this.dialog.open(PumpTrackerDialog, {
       panelClass: 'tracker-dialog'
     });
   }
