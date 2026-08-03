@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:Web": "node dist/Web/server/server.mjs",
+    "postinstall": "node scripts/init-db.mjs",
     "map-log-data": "node ./scripts/map-log-data.mjs",
     "db": "npx json-server --watch db.json"
   },
