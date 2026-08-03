@@ -1,8 +1,8 @@
 import { TemplateRef } from "@angular/core"
 
 export interface SleepTrackerData {
-  startTime: Date
-  endTime: Date
+  startTime: string
+  endTime: string
   location: string
   wakeReason: string
   notes: string

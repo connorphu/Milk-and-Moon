@@ -8,7 +8,8 @@
   </mat-chip-listbox>
 </ng-template>
 
-<ng-template template-name="stoolColor">
+<!-- Might cause panic more than calming/knowledge -->
+<!-- <ng-template template-name="stoolColor">
   <mat-label>Stool Color</mat-label>
   <mat-chip-listbox multiple [formField]="diaperForm.stoolColor" aria-label="Stool color">
     <mat-chip-option>black</mat-chip-option>
@@ -32,7 +33,7 @@
     <mat-chip-option>hard</mat-chip-option>
     <mat-chip-option>other</mat-chip-option>
   </mat-chip-listbox>
-</ng-template>
+</ng-template> -->
 
 <ng-template template-name="rash">
   <mat-label>Rash</mat-label>
@@ -42,6 +43,7 @@
     <mat-chip-option value="moderate">Moderate</mat-chip-option>
     <mat-chip-option value="severe">Severe</mat-chip-option>
   </mat-chip-listbox>
+  <!-- Rash location in same step or separate step??? -->
   <!-- @if (diaperForm.rash().value()) {
     <div>
       <mat-label>Location</mat-label>

@@ -1,8 +1,8 @@
 import { TemplateRef } from "@angular/core"
 
 export interface PumpTrackerData {
-  startTime: Date
-  endTime: Date
+  startTime: string
+  endTime: string
   leftAmount: number
   rightAmount: number
   notes: string
