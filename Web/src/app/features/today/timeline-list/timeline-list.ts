@@ -17,15 +17,16 @@ export class TimelineList {
   private data = toSignal(this.babyLogService.loadData('', { params: { createdAt_like: DateTime.utc().toISODate() } }), { initialValue: []})
 
   readonly visibleData = computed(() => {
-    return this.data().map(log => {
+    const visibleData = this.data().map(log => {
       const id = log.id || ''
-      const createdAt = DateTime.fromISO(log.createdAt).toFormat('HH:mm a')
+      const time = DateTime.fromISO(log.data.startTime).toFormat('HH:mm a')
       const type = log.trackerType.charAt(0).toUpperCase() + log.trackerType.slice(1)
       return {
         id,
-        createdAt,
+        time,
         type
       }
     })
+    return visibleData.sort((a, b) => a.time.localeCompare(b.time))
   })
 }

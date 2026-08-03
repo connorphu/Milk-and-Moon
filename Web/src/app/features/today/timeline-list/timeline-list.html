@@ -6,7 +6,7 @@
     @if (visibleData().length > 0) {
     <mat-list>
       @for (log of visibleData(); track log.id) {
-        <mat-list-item>{{log.createdAt}} - {{log.type}} </mat-list-item>
+        <mat-list-item>{{log.time}} - {{log.type}} </mat-list-item>
       }
     </mat-list>
     } @else {
