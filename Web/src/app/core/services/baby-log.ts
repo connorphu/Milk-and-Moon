@@ -2,6 +2,7 @@ import { inject, Service } from '@angular/core';
 import { BabyLogModel } from '../models/baby-log';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
+import { DateTime } from 'luxon';
 
 @Service()
 export class BabyLog {
@@ -35,8 +36,8 @@ export class BabyLog {
   track(type: 'feed' | 'diaper' | 'pump' | 'sleep', data: any) {
     const model: BabyLogModel = {
       trackerType: type,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: DateTime.utc().toISO(),
+      updatedAt: DateTime.utc().toISO(),
       data: data
     }
     return this.http.post(this.url, model).pipe(
