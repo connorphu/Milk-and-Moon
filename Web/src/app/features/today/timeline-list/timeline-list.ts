@@ -21,13 +21,11 @@ export class TimelineList {
       const id = log.id || ''
       const createdAt = DateTime.fromISO(log.createdAt).toFormat('HH:mm a')
       const type = log.trackerType.charAt(0).toUpperCase() + log.trackerType.slice(1)
-      const thisLog = {
+      return {
         id,
         createdAt,
         type
       }
-      console.log('thisLog', thisLog)
-      return thisLog
     })
   })
 }
