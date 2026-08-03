@@ -12,11 +12,11 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSliderModule } from '@angular/material/slider';
 import { TemplateName } from '../../../../shared/directives/template-name';
 import { QuickNote } from '../../../../core/models/model';
-import { PumpingStep, PumpingTrackerData } from '../../../../core/models/pumping-log.model';
+import { PumpStep, PumpTrackerData } from '../../../../core/models/pump-log';
 import { BabyLog } from '../../../../core/services/baby-log';
 
 @Component({
-  selector: 'app-pumping-tracker-dialog',
+  selector: 'app-pump-tracker-dialog',
   providers: [provideNativeDateAdapter()],
   imports: [
     NgTemplateOutlet,
@@ -32,16 +32,16 @@ import { BabyLog } from '../../../../core/services/baby-log';
     MatTimepickerModule,
     MatSliderModule
   ],
-  templateUrl: './pumping-tracker-dialog.html',
-  styleUrl: './pumping-tracker-dialog.css',
+  templateUrl: './pump-tracker-dialog.html',
+  styleUrl: './pump-tracker-dialog.css',
 })
-export class PumpingTrackerDialog implements AfterViewInit {
-  readonly dialogRef = inject(MatDialogRef<PumpingTrackerDialog>);
+export class PumpTrackerDialog implements AfterViewInit {
+  readonly dialogRef = inject(MatDialogRef<PumpTrackerDialog>);
   readonly allTemplateRefs = viewChildren(TemplateName);
-  readonly pumpingStepper = viewChild.required<MatStepper>('stepper')
+  readonly pumpStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly allSteps: PumpingStep[] = [
+  readonly allSteps: PumpStep[] = [
     { name: 'time' },
     { name: 'amount' },
     { name: 'notes' }
@@ -51,15 +51,15 @@ export class PumpingTrackerDialog implements AfterViewInit {
     { description: 'Low amount' },
     { description: 'High amount' }
   ]
-  readonly pumpingModel = signal<PumpingTrackerData>({
+  readonly pumpModel = signal<PumpTrackerData>({
     startTime: null,
     endTime: null,
     leftAmount: 0,
     rightAmount: 0,
     notes: ''
-  } as unknown as PumpingTrackerData);
+  } as unknown as PumpTrackerData);
 
-  protected pumpingForm = form(this.pumpingModel);
+  protected pumpForm = form(this.pumpModel);
 
   private babyLogService = inject(BabyLog)
 
@@ -70,29 +70,29 @@ export class PumpingTrackerDialog implements AfterViewInit {
   }
 
   goBack() {
-    this.pumpingStepper().previous()
+    this.pumpStepper().previous()
   }
 
   goForward() {
-    this.pumpingStepper().next()
+    this.pumpStepper().next()
   }
 
   onQuickNotesChange(event: MatChipListboxChange) {
     if (!event.value.length) {
-      this.pumpingForm.notes().value.set('')
+      this.pumpForm.notes().value.set('')
       return
     }
 
     const quickNotes: string[] = event.value
     if (quickNotes) {
-      this.pumpingForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
+      this.pumpForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
         return finalNote.concat(`, ${currentNote}`)
       }))
     }
   }
 
   onSave() {
-    this.babyLogService.track('pumping', this.pumpingForm().value()).subscribe(succeed => {
+    this.babyLogService.track('pump', this.pumpForm().value()).subscribe(succeed => {
       // TODO: add toasts?
     })
   }

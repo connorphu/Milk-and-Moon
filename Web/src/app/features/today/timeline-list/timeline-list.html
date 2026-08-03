@@ -3,10 +3,14 @@
     <mat-card-title>Timeline</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    @if (data().length > 0) {
     <mat-list>
-      <mat-list-item>8:00 AM — Bottle — 3 oz</mat-list-item>
-      <mat-list-item>8:45 AM — Wet diaper</mat-list-item>
-      <mat-list-item>9:20 AM — Nap started</mat-list-item>
+      @for (log of data(); track log.id) {
+        <mat-list-item>{{log.data.startTime}} {{log.trackerType}} </mat-list-item>
+      }
     </mat-list>
+    } @else {
+      No logs today
+    }
   </mat-card-content>
 </mat-card>

@@ -1,7 +1,7 @@
 [
   {
     "bottleSize": 4,
-    "feedingType": "bottle",
+    "feedType": "bottle",
     "breastSide": [],
     "milkType": ["breastmilk"],
     "milkConsumed": 3,
@@ -11,7 +11,7 @@
   },
   {
     "bottleSize": 5,
-    "feedingType": "bottle",
+    "feedType": "bottle",
     "breastSide": [],
     "milkType": ["formula"],
     "milkConsumed": 4,
@@ -21,7 +21,7 @@
   },
   {
     "bottleSize": 0,
-    "feedingType": "breast",
+    "feedType": "breast",
     "breastSide": ["left"],
     "milkType": [],
     "milkConsumed": 0,
@@ -31,7 +31,7 @@
   },
   {
     "bottleSize": 0,
-    "feedingType": "breast",
+    "feedType": "breast",
     "breastSide": ["left", "right"],
     "milkType": [],
     "milkConsumed": 0,
@@ -41,7 +41,7 @@
   },
   {
     "bottleSize": 4,
-    "feedingType": "bottle",
+    "feedType": "bottle",
     "breastSide": [],
     "milkType": ["breastmilk"],
     "milkConsumed": 2.5,

@@ -1,6 +1,6 @@
 import { TemplateRef } from "@angular/core"
 
-export interface PumpingTrackerData {
+export interface PumpTrackerData {
   startTime: Date
   endTime: Date
   leftAmount: number
@@ -8,7 +8,7 @@ export interface PumpingTrackerData {
   notes: string
 }
 
-export interface PumpingStep {
+export interface PumpStep {
   name: string
   templateRef?: TemplateRef<any>
 }

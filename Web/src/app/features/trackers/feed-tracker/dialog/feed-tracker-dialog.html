@@ -5,7 +5,7 @@
   <div>
     <mat-form-field>
       <mat-label>Start Time</mat-label>
-      <input matInput [matTimepicker]="startTime" [formField]="pumpingForm.startTime">
+      <input matInput [matTimepicker]="startTime" [formField]="feedForm.startTime">
       <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
       <mat-timepicker #startTime/>
     </mat-form-field>
@@ -13,36 +13,55 @@
   <div>
     <mat-form-field>
       <mat-label>End Time</mat-label>
-      <input matInput [matTimepicker]="endTime" [formField]="pumpingForm.endTime">
+      <input matInput [matTimepicker]="endTime" [formField]="feedForm.endTime">
       <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
       <mat-timepicker #endTime/>
     </mat-form-field>
   </div>
 </ng-template>
 
-<ng-template template-name="amount">
+<ng-template template-name="breastSide">
+  <mat-label>Breast Side(s)</mat-label>
+  <mat-chip-listbox multiple [formField]="feedForm.breastSide" aria-label="Breast side">
+    <mat-chip-option value="left">Left</mat-chip-option>
+    <mat-chip-option value="right">Right</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
+
+<ng-template template-name="bottleSize">
   <div>
-    <mat-label>Left Amount (oz)</mat-label>
+    <mat-label>Bottle Size (oz)</mat-label>
   </div>
   <mat-slider min="0" max="10" step=".5" showTickMarks discrete>
-    <input matSliderThumb [formField]="pumpingForm.leftAmount">
+    <input matSliderThumb [formField]="feedForm.bottleSize">
   </mat-slider>
+</ng-template>
+
+<ng-template template-name="milkType">
+  <mat-label>Milk Type(s)</mat-label>
+  <mat-chip-listbox multiple [formField]="feedForm.milkType" aria-label="Milk type">
+    <mat-chip-option value="breastmilk">Breastmilk</mat-chip-option>
+    <mat-chip-option value="formula">Formula</mat-chip-option>
+  </mat-chip-listbox>
+</ng-template>
+
+<ng-template template-name="milkConsumed">
   <div>
-    <mat-label>Right Amount (oz)</mat-label>
+    <mat-label>Milk Consumed (oz)</mat-label>
   </div>
   <mat-slider min="0" max="10" step=".5" showTickMarks discrete>
-    <input matSliderThumb [formField]="pumpingForm.rightAmount">
+    <input matSliderThumb [formField]="feedForm.milkConsumed">
   </mat-slider>
 </ng-template>
 
 <ng-template template-name="notes">
   <mat-form-field>
     <mat-label>Notes</mat-label>
-    <input matInput [formField]="pumpingForm.notes">
+    <input matInput [formField]="feedForm.notes">
   </mat-form-field>
   <div>
     <mat-label>Quick Notes</mat-label>
-    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Pumping quick notes">
+    <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Feed quick notes">
     @for ( note of quickNotes; track note.description ) {
       <mat-chip-option>{{ note.description }}</mat-chip-option>
     }
@@ -50,10 +69,17 @@
   </div>
 </ng-template>
 
-<h2 mat-dialog-title>Pumping Tracker</h2>
+<h2 mat-dialog-title>Feed Tracker</h2>
 <div class="flex-1 flex flex-col">
   <form>
     <mat-stepper #stepper>
+      <mat-step>
+        <mat-label>Feeding Type</mat-label>
+        <mat-chip-listbox (change)="onFeedTypeChange($event)" aria-label="Feed type">
+          <mat-chip-option value="breast">Breast</mat-chip-option>
+          <mat-chip-option value="bottle">Bottle</mat-chip-option>
+        </mat-chip-listbox>
+      </mat-step>
       @for (step of allSteps; track step.name;) {
         <mat-step>
           <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>

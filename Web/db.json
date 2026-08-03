@@ -2,12 +2,12 @@
   "baby-log": [
     {
       "id": "log-1",
-      "trackerType": "feeding",
+      "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 4,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "breastmilk"
@@ -20,12 +20,12 @@
     },
     {
       "id": "log-2",
-      "trackerType": "feeding",
+      "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 5,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "formula"
@@ -38,12 +38,12 @@
     },
     {
       "id": "log-3",
-      "trackerType": "feeding",
+      "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 0,
-        "feedingType": "breast",
+        "feedType": "breast",
         "breastSide": [
           "left"
         ],
@@ -56,12 +56,12 @@
     },
     {
       "id": "log-4",
-      "trackerType": "feeding",
+      "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 0,
-        "feedingType": "breast",
+        "feedType": "breast",
         "breastSide": [
           "left",
           "right"
@@ -75,12 +75,12 @@
     },
     {
       "id": "log-5",
-      "trackerType": "feeding",
+      "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
         "bottleSize": 4,
-        "feedingType": "bottle",
+        "feedType": "bottle",
         "breastSide": [],
         "milkType": [
           "breastmilk"
@@ -139,8 +139,8 @@
     {
       "id": "log-9",
       "trackerType": "sleep",
-      "createdAt": "2026-07-23T07:46:00",
-      "updatedAt": "2026-07-23T07:46:00",
+      "createdAt": "2026-07-27T07:46:00",
+      "updatedAt": "2026-07-27T07:46:00",
       "data": {
         "startTime": "2026-07-23T12:05:00.000Z",
         "endTime": "2026-07-23T13:50:00.000Z",
@@ -180,15 +180,15 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T07:15:00.000Z",
+        "startTime": "2026-07-23T07:15:00.000Z",
         "notes": "Moderately wet diaper."
       }
     },
     {
       "id": "log-12",
       "trackerType": "diaper",
-      "createdAt": "2026-07-23T07:46:00",
-      "updatedAt": "2026-07-23T07:46:00",
+      "createdAt": "2026-07-27T07:46:00",
+      "updatedAt": "2026-07-27T07:46:00",
       "data": {
         "type": "both",
         "peeColor": "light yellow",
@@ -202,7 +202,7 @@
           "mild"
         ],
         "rashLocation": "around anus",
-        "time": "2026-07-23T10:40:00.000Z",
+        "startTime": "2026-07-23T10:40:00.000Z",
         "notes": "Applied diaper cream after changing."
       }
     },
@@ -225,7 +225,7 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T13:25:00.000Z",
+        "startTime": "2026-07-23T13:25:00.000Z",
         "notes": "Normal bowel movement."
       }
     },
@@ -245,7 +245,7 @@
         "rashLocation": [
           "left buttock"
         ],
-        "time": "2026-07-23T16:50:00.000Z",
+        "startTime": "2026-07-23T16:50:00.000Z",
         "notes": "Skin looked slightly irritated."
       }
     },
@@ -269,7 +269,7 @@
         "rashLocation": [
           "diaper line"
         ],
-        "time": "2026-07-23T20:10:00.000Z",
+        "startTime": "2026-07-23T20:10:00.000Z",
         "notes": "Monitor stool color and hydration."
       }
     },
@@ -287,7 +287,7 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T07:15:00.000Z",
+        "startTime": "2026-07-23T07:15:00.000Z",
         "notes": "Moderately wet diaper."
       }
     },
@@ -309,7 +309,7 @@
           "mild"
         ],
         "rashLocation": "around anus",
-        "time": "2026-07-23T10:40:00.000Z",
+        "startTime": "2026-07-23T10:40:00.000Z",
         "notes": "Applied diaper cream after changing."
       }
     },
@@ -332,7 +332,7 @@
           "none"
         ],
         "rashLocation": [],
-        "time": "2026-07-23T13:25:00.000Z",
+        "startTime": "2026-07-23T13:25:00.000Z",
         "notes": "Normal bowel movement."
       }
     },
@@ -352,7 +352,7 @@
         "rashLocation": [
           "left buttock"
         ],
-        "time": "2026-07-23T16:50:00.000Z",
+        "startTime": "2026-07-23T16:50:00.000Z",
         "notes": "Skin looked slightly irritated."
       }
     },
@@ -376,13 +376,13 @@
         "rashLocation": [
           "diaper line"
         ],
-        "time": "2026-07-23T20:10:00.000Z",
+        "startTime": "2026-07-23T20:10:00.000Z",
         "notes": "Monitor stool color and hydration."
       }
     },
     {
       "id": "log-21",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -395,7 +395,7 @@
     },
     {
       "id": "log-22",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -408,7 +408,7 @@
     },
     {
       "id": "log-23",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -421,7 +421,7 @@
     },
     {
       "id": "log-24",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -434,7 +434,7 @@
     },
     {
       "id": "log-25",
-      "trackerType": "pumping",
+      "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
       "data": {
@@ -444,38 +444,6 @@
         "rightAmount": "2",
         "notes": "Last pumping session before bed."
       }
-    },
-    {
-      "trackerType": "feeding",
-      "createdAt": "2026-07-26T21:18:23.359Z",
-      "updatedAt": "2026-07-26T21:18:23.359Z",
-      "data": {
-        "bottleSize": 0,
-        "feedingType": "",
-        "breastSide": [],
-        "milkType": [],
-        "milkConsumed": 0,
-        "startTime": null,
-        "endTime": null,
-        "notes": ""
-      },
-      "id": "AVPlsCI"
-    },
-    {
-      "trackerType": "feeding",
-      "createdAt": "2026-07-26T21:35:49.072Z",
-      "updatedAt": "2026-07-26T21:35:49.072Z",
-      "data": {
-        "bottleSize": 0,
-        "feedingType": "",
-        "breastSide": [],
-        "milkType": [],
-        "milkConsumed": 0,
-        "startTime": null,
-        "endTime": null,
-        "notes": ""
-      },
-      "id": "w8wbshV"
     }
   ]
 }
