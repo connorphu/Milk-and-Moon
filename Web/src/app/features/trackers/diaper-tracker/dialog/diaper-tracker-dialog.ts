@@ -67,7 +67,7 @@ export class DiaperTrackerDialog {
     stoolTexture: [],
     rash: [],
     rashLocation: [],
-    startTime: null,
+    startTime: '',
     notes: ''
   } as unknown as DiaperTrackerData);
 

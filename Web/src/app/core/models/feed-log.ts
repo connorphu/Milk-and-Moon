@@ -6,8 +6,8 @@ export interface FeedTrackerData {
   breastSide: 'left' | 'right'
   milkType: string[]
   milkConsumed: number
-  startTime: Date | null
-  endTime: Date | null
+  startTime: string
+  endTime: string
   notes: string
 }
 

@@ -64,8 +64,8 @@ export class FeedTrackerDialog {
     breastSide: [],
     milkType: [],
     milkConsumed: 0,
-    startTime: null,
-    endTime: null,
+    startTime: '',
+    endTime: '',
     notes: ''
   } as unknown as FeedTrackerData);
 

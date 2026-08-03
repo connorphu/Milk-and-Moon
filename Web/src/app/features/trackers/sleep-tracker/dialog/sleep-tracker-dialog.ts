@@ -53,8 +53,8 @@ export class SleepTrackerDialog implements AfterViewInit{
     { description: 'Slept all night' },
   ]
   readonly sleepModel = signal<SleepTrackerData>({
-    startTime: null,
-    endTime: null,
+    startTime: '',
+    endTime: '',
     location: '',
     wakeReason: [],
     notes: ''
