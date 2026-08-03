@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop'
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { DateTime } from 'luxon';
@@ -11,18 +12,8 @@ import { BabyLogModel } from '../../../core/models/baby-log';
   templateUrl: './timeline-list.html',
   styleUrl: './timeline-list.css',
 })
-export class TimelineList implements OnInit {
+export class TimelineList {
   private babyLogService = inject(BabyLog)
 
-  public data: BabyLogModel[] = []
-
-  public ngOnInit(): void {
-    const today = DateTime.now().toISODate()
-    this.babyLogService.loadData('', { params: { createdAt_like: today } }).subscribe((res) => {
-      if (res) {
-        this.data = res as unknown as BabyLogModel[]
-        console.log('data: ', this.data)
-      }
-    })
-  }
+  public data = toSignal(this.babyLogService.loadData('', { params: { createdAt_like: DateTime.now().toISODate() } }), { initialValue: []})
 }

@@ -3,9 +3,9 @@
     <mat-card-title>Timeline</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    @if (data.length > 0) {
+    @if (data().length > 0) {
     <mat-list>
-      @for (log of data; track log.id) {
+      @for (log of data(); track log.id) {
         <mat-list-item>{{log.data.startTime}} {{log.trackerType}} </mat-list-item>
       }
     </mat-list>
