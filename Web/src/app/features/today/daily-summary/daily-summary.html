@@ -3,9 +3,9 @@
     <mat-card-title>Daily Summary</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div>Feed: 3 bottles</div>
-    <div>Diapers: 5</div>
-    <div>Sleep: 12 hours</div>
-    <div>Pump: 2 sessions</div>
+    <div>Feed: {{ feedData().bottles }} bottle(s), {{ feedData().breastFeeds }} breast feed(s)</div>
+    <div>Diapers: {{ diaperData().length }} diaper change(s)</div>
+    <div>Sleep: {{ sleepData().totalHours }} hour(s), {{ sleepData().totalMinutes }} minute(s)</div>
+    <div>Pump: {{ pumpData().length }} session(s)</div>
   </mat-card-content>
 </mat-card>
