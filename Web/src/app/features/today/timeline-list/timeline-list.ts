@@ -1,10 +1,8 @@
-import { Component, inject, computed } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop'
+import { Component, computed, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { DateTime } from 'luxon';
-import { BabyLog } from '../../../core/services/baby-log';
 import { BabyLogModel } from '../../../core/models/baby-log';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-timeline-list',
@@ -13,8 +11,7 @@ import { BabyLogModel } from '../../../core/models/baby-log';
   styleUrl: './timeline-list.css',
 })
 export class TimelineList {
-  private babyLogService = inject(BabyLog)
-  private data = toSignal(this.babyLogService.loadData('', { params: { createdAt_like: DateTime.utc().toISODate() } }), { initialValue: []})
+  public data = input<BabyLogModel[]>([]);
 
   readonly visibleData = computed(() => {
     const visibleData = this.data().map(log => {
