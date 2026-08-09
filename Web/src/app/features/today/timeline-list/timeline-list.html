@@ -3,7 +3,7 @@
     <mat-card-title>Timeline</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    @if (visibleData().length > 0) {
+    @if (data().length > 0) {
     <mat-list>
       @for (log of visibleData(); track log.id) {
         <mat-list-item>{{log.time}} - {{log.type}} </mat-list-item>
