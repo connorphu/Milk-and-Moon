@@ -10,6 +10,7 @@ import { MatTimepickerModule } from "@angular/material/timepicker";
 import { MatStepper, MatStepperModule } from "@angular/material/stepper";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { TemplateName } from "../../../../shared/directives/template-name";
 import { FeedStep, FeedTrackerData } from "../../../../core/models/feed-log";
 import { QuickNote } from "../../../../core/models/model";
@@ -29,7 +30,8 @@ import { BabyLog } from "../../../../core/services/baby-log";
     MatSliderModule,
     MatChipsModule,
     MatTimepickerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
 ],
   templateUrl: './feed-tracker-dialog.html',
   styleUrl: './feed-tracker-dialog.css',
