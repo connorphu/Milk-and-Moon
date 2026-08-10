@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { PumpTrackerDialog as PumpTrackerDialog } from '../dialog/pump-tracker-dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-pump-form',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule],
   templateUrl: './pump-tracker-form.html',
   styleUrl: './pump-tracker-form.css',
 })
