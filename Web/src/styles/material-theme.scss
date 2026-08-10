@@ -12,6 +12,10 @@ html {
       color: (
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
+        // Softer, calmer alternative palette for a "Milk and Moon" mood.
+        // Swap the two lines above for these to try it out:
+        // // primary: mat.$violet-palette,
+        // // tertiary: mat.$rose-palette,
       ),
       typography: Roboto,
       density: 0,
@@ -28,11 +32,12 @@ body {
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
+  background-color: var(--mat-sys-surface-container-lowest);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
 
   // Reset the user agent margin.
   margin: 0;
   height: 100%;
+  -webkit-tap-highlight-color: transparent;
 }

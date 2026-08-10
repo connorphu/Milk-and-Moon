@@ -1,12 +1,11 @@
 import { Component, computed, input } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { BabyLogModel } from '../../../core/models/baby-log';
 import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-timeline-list',
-  imports: [MatListModule, MatCardModule],
+  imports: [MatIconModule],
   templateUrl: './timeline-list.html',
   styleUrl: './timeline-list.css',
 })
@@ -21,7 +20,8 @@ export class TimelineList {
       return {
         id,
         time,
-        type
+        type,
+        trackerType: log.trackerType
       }
     })
     return visibleData.sort((a, b) => a.time.localeCompare(b.time))

@@ -2,6 +2,80 @@
 
 @import 'tailwindcss';
 
+/* Calm, soft accent colors for each tracker type, shared across the app */
+:root {
+  --tracker-feed: #c97a4a;
+  --tracker-feed-bg: #fbe9de;
+  --tracker-diaper: #4b8a72;
+  --tracker-diaper-bg: #e1f0e9;
+  --tracker-sleep: #6a63b6;
+  --tracker-sleep-bg: #e8e6f9;
+  --tracker-pump: #b3548a;
+  --tracker-pump-bg: #f8e3ee;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tracker-feed: #f0b48c;
+    --tracker-feed-bg: color-mix(in srgb, var(--tracker-feed) 20%, transparent);
+    --tracker-diaper: #8fd3ba;
+    --tracker-diaper-bg: color-mix(in srgb, var(--tracker-diaper) 20%, transparent);
+    --tracker-sleep: #b3aef0;
+    --tracker-sleep-bg: color-mix(in srgb, var(--tracker-sleep) 20%, transparent);
+    --tracker-pump: #eaa9cc;
+    --tracker-pump-bg: color-mix(in srgb, var(--tracker-pump) 20%, transparent);
+  }
+}
+
+/* Quick-log buttons used by the four tracker "form" buttons on the Today page */
+.tracker-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  min-height: 4.25rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 1rem;
+  background: var(--tracker-bg);
+  color: var(--tracker-color);
+  font: var(--mat-sys-label-medium);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.tracker-btn mat-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.tracker-btn:active {
+  transform: scale(0.96);
+}
+
+.tracker-btn.feed {
+  --tracker-bg: var(--tracker-feed-bg);
+  --tracker-color: var(--tracker-feed);
+}
+
+.tracker-btn.diaper {
+  --tracker-bg: var(--tracker-diaper-bg);
+  --tracker-color: var(--tracker-diaper);
+}
+
+.tracker-btn.sleep {
+  --tracker-bg: var(--tracker-sleep-bg);
+  --tracker-color: var(--tracker-sleep);
+}
+
+.tracker-btn.pump {
+  --tracker-bg: var(--tracker-pump-bg);
+  --tracker-color: var(--tracker-pump);
+}
+
 /* Make only tracker dialogs fullscreen */
 .cdk-overlay-pane.tracker-dialog {
   max-width: 100vw !important;
@@ -15,4 +89,45 @@
   max-width: 100vw !important;
   max-height: 100vh !important;
   border-radius: 0 !important;
+}
+
+.tracker-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem 0 1rem;
+}
+
+.tracker-dialog-header h2[mat-dialog-title] {
+  margin: 0;
+  padding: 0;
+}
+
+.tracker-dialog-body {
+  padding: 0.5rem 1.25rem 1rem;
+}
+
+.tracker-dialog-body mat-label {
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.tracker-dialog-body mat-form-field {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.tracker-dialog-body mat-chip-listbox {
+  display: block;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.tracker-dialog-body mat-slider {
+  width: 100%;
+}
+
+.tracker-dialog-body mat-stepper {
+  background: transparent;
 }

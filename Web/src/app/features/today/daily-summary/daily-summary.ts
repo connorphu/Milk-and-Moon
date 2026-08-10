@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { DateTime, Duration } from 'luxon';
 import { BabyLogModel } from '../../../core/models/baby-log';
 import { FeedTrackerData } from '../../../core/models/feed-log';
@@ -7,7 +7,7 @@ import { SleepTrackerData } from '../../../core/models/sleep-log';
 
 @Component({
   selector: 'app-daily-summary',
-  imports: [MatCardModule],
+  imports: [MatIconModule],
   templateUrl: './daily-summary.html',
   styleUrl: './daily-summary.css',
 })
