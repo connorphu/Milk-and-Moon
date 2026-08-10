@@ -7,6 +7,7 @@ import { MatChipListboxChange, MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { TemplateName } from '../../../../shared/directives/template-name';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -28,7 +29,8 @@ import { BabyLog } from '../../../../core/services/baby-log';
     MatLabel,
     MatStepperModule,
     MatChipsModule,
-    MatTimepickerModule
+    MatTimepickerModule,
+    MatIconModule
   ],
   templateUrl: './diaper-tracker-dialog.html',
   styleUrl: './diaper-tracker-dialog.css',
