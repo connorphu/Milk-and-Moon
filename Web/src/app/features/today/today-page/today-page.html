@@ -1,16 +1,13 @@
-<div class="flex justify-center">
-  <div class="min-h-screen flex flex-col">
-    <div class="flex-1 flex flex-col">
-      <div>
-        <app-daily-summary [data]="data()"></app-daily-summary>
-      </div>
-      <div>
-        <app-timeline-list [data]="data()"></app-timeline-list>
-      </div>
-    </div>
-    <div>
-      <app-log-panel></app-log-panel>
-    </div>
-  </div>
-</div>
+<div class="page">
+  <header class="page-header">
+    <h1>Milk and Moon</h1>
+    <p>Today's overview</p>
+  </header>
 
+  <main class="page-content">
+    <app-daily-summary [data]="data()"></app-daily-summary>
+    <app-timeline-list [data]="data()"></app-timeline-list>
+  </main>
+
+  <app-log-panel />
+</div>

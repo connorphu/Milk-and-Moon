@@ -1,0 +1,67 @@
+:host {
+  display: block;
+}
+
+.summary-title {
+  margin: 0 0 0.75rem;
+  font: var(--mat-sys-title-medium);
+  color: var(--mat-sys-on-surface);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--tracker-bg);
+  color: var(--tracker-color);
+}
+
+.summary-card mat-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.summary-value {
+  font: var(--mat-sys-headline-small);
+  color: var(--mat-sys-on-surface);
+}
+
+.summary-label {
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.summary-detail {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.summary-card.feed {
+  --tracker-bg: var(--tracker-feed-bg);
+  --tracker-color: var(--tracker-feed);
+}
+
+.summary-card.diaper {
+  --tracker-bg: var(--tracker-diaper-bg);
+  --tracker-color: var(--tracker-diaper);
+}
+
+.summary-card.sleep {
+  --tracker-bg: var(--tracker-sleep-bg);
+  --tracker-color: var(--tracker-sleep);
+}
+
+.summary-card.pump {
+  --tracker-bg: var(--tracker-pump-bg);
+  --tracker-color: var(--tracker-pump);
+}

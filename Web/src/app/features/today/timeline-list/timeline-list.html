@@ -1,16 +1,23 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Timeline</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    @if (data().length > 0) {
-    <mat-list>
+<section class="timeline" aria-label="Today's timeline">
+  <h2 class="timeline-title">Timeline</h2>
+  @if (visibleData().length > 0) {
+    <ul class="timeline-list">
       @for (log of visibleData(); track log.id) {
-        <mat-list-item>{{log.time}} - {{log.type}} </mat-list-item>
+        <li class="timeline-item {{ log.trackerType }}">
+          <mat-icon class="timeline-icon" aria-hidden="true">
+            @switch (log.trackerType) {
+              @case ('feed') { fastfood }
+              @case ('diaper') { baby_changing_station }
+              @case ('sleep') { bedtime }
+              @case ('pump') { water_drop }
+            }
+          </mat-icon>
+          <span class="timeline-label">{{ log.type }}</span>
+          <span class="timeline-time">{{ log.time }}</span>
+        </li>
       }
-    </mat-list>
-    } @else {
-      No logs today
-    }
-  </mat-card-content>
-</mat-card>
+    </ul>
+  } @else {
+    <p class="timeline-empty">No logs yet today.</p>
+  }
+</section>

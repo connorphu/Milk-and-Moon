@@ -1,11 +1,26 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Daily Summary</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div>Feed: {{ feedData().bottles }} bottle(s), {{ feedData().breastFeeds }} breast feed(s)</div>
-    <div>Diapers: {{ diaperData().length }} diaper change(s)</div>
-    <div>Sleep: {{ sleepData().totalHours }} hour(s), {{ sleepData().totalMinutes }} minute(s)</div>
-    <div>Pump: {{ pumpData().length }} session(s)</div>
-  </mat-card-content>
-</mat-card>
+<section class="summary" aria-label="Daily summary">
+  <h2 class="summary-title">Today so far</h2>
+  <div class="summary-grid">
+    <div class="summary-card feed">
+      <mat-icon aria-hidden="true">fastfood</mat-icon>
+      <div class="summary-value">{{ feedData().bottles + feedData().breastFeeds }}</div>
+      <div class="summary-label">Feeds</div>
+      <div class="summary-detail">{{ feedData().bottles }} bottle · {{ feedData().breastFeeds }} breast</div>
+    </div>
+    <div class="summary-card diaper">
+      <mat-icon aria-hidden="true">baby_changing_station</mat-icon>
+      <div class="summary-value">{{ diaperData().length }}</div>
+      <div class="summary-label">Diapers</div>
+    </div>
+    <div class="summary-card sleep">
+      <mat-icon aria-hidden="true">bedtime</mat-icon>
+      <div class="summary-value">{{ sleepData().totalHours }}h {{ sleepData().totalMinutes }}m</div>
+      <div class="summary-label">Sleep</div>
+    </div>
+    <div class="summary-card pump">
+      <mat-icon aria-hidden="true">water_drop</mat-icon>
+      <div class="summary-value">{{ pumpData().length }}</div>
+      <div class="summary-label">Pumps</div>
+    </div>
+  </div>
+</section>
