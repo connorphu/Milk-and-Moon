@@ -93,8 +93,13 @@
   </div>
 </ng-template>
 
-<h2 mat-dialog-title>Diaper Tracker</h2>
-<div class="flex-1 flex flex-col">
+<div class="tracker-dialog-header">
+  <h2 mat-dialog-title>Diaper Tracker</h2>
+  <button matIconButton mat-dialog-close aria-label="Close dialog" type="button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="flex-1 flex flex-col tracker-dialog-body">
   <form>
     <mat-stepper #stepper>
       <mat-step>
@@ -114,11 +119,11 @@
   </form>
   <mat-dialog-actions align="start">
     <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
-    <button matButton (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
+    <button matButton="tonal" (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
   </mat-dialog-actions>
 </div>
 
 <mat-dialog-actions>
-  <button matButton mat-dialog-close>Cancel</button>
-  <button (click)="onSave()" matButton mat-dialog-close>Save</button>
+  <button matButton mat-dialog-close type="button">Cancel</button>
+  <button matButton="filled" (click)="onSave()" mat-dialog-close type="button">Save</button>
 </mat-dialog-actions>
