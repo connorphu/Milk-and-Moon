@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
 import { TemplateName } from '../../../../shared/directives/template-name';
 import { QuickNote } from '../../../../core/models/model';
 import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log';
@@ -31,7 +32,8 @@ import { BabyLog } from '../../../../core/services/baby-log';
     MatStepperModule,
     MatChipsModule,
     MatTimepickerModule,
-    MatSliderModule
+    MatSliderModule,
+    MatIconModule
   ],
   templateUrl: './sleep-tracker-dialog.html',
   styleUrl: './sleep-tracker-dialog.css',
