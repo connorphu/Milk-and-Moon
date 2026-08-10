@@ -4,11 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { FeedTrackerDialog } from '../dialog/feed-tracker-dialog';
 
 @Component({
   selector: 'app-feed-form',
-  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatTimepickerModule],
+  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatTimepickerModule, MatIconModule],
   templateUrl: './feed-tracker-form.html',
   styleUrl: './feed-tracker-form.css',
 })
