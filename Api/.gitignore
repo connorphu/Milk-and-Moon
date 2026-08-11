@@ -1,0 +1,10 @@
+# .NET build output
+bin/
+obj/
+
+# Rider/VS user files
+.vs/
+*.user
+
+# Local settings (secrets)
+appsettings.*.local.json
