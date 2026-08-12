@@ -1,0 +1,11 @@
+{
+  "name": "milk-and-moon",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "api": "dotnet watch run --project Api/src/MilkAndMoon.Api",
+    "web": "npm start --prefix Web",
+    "web:install": "npm install --prefix Web",
+    "json-server": "npm run db --prefix Web"
+  }
+}
