@@ -1,52 +1,71 @@
 [
   {
-    "type": "wet",
     "peeColor": "pale yellow",
     "stoolColor": [],
     "stoolTexture": [],
-    "rash": ["none"],
+    "rash": "",
     "rashLocation": [],
     "time": "2026-07-23T07:15:00.000Z",
-    "notes": "Moderately wet diaper."
+    "notes": "Moderately wet diaper.",
+    "diaperType": "wet"
   },
   {
-    "type": "both",
     "peeColor": "light yellow",
-    "stoolColor": ["yellow"],
-    "stoolTexture": ["seedy"],
-    "rash": ["mild"],
-    "rashLocation": "around anus",
+    "stoolColor": [
+      "yellow"
+    ],
+    "stoolTexture": [
+      "seedy"
+    ],
+    "rash": "mild",
+    "rashLocation": [
+      "around anus"
+    ],
     "time": "2026-07-23T10:40:00.000Z",
-    "notes": "Applied diaper cream after changing."
+    "notes": "Applied diaper cream after changing.",
+    "diaperType": "both"
   },
   {
-    "type": "poopy",
     "peeColor": "",
-    "stoolColor": ["yellow", "brown"],
-    "stoolTexture": ["soft"],
-    "rash": ["none"],
+    "stoolColor": [
+      "yellow",
+      "brown"
+    ],
+    "stoolTexture": [
+      "soft"
+    ],
+    "rash": "",
     "rashLocation": [],
     "time": "2026-07-23T13:25:00.000Z",
-    "notes": "Normal bowel movement."
+    "notes": "Normal bowel movement.",
+    "diaperType": "poopy"
   },
   {
-    "type": "wet",
     "peeColor": "clear",
     "stoolColor": [],
     "stoolTexture": [],
-    "rash": ["moderate"],
-    "rashLocation": ["left buttock"],
+    "rash": "moderate",
+    "rashLocation": [
+      "left buttock"
+    ],
     "time": "2026-07-23T16:50:00.000Z",
-    "notes": "Skin looked slightly irritated."
+    "notes": "Skin looked slightly irritated.",
+    "diaperType": "wet"
   },
   {
-    "type": "both",
     "peeColor": "dark yellow",
-    "stoolColor": ["green"],
-    "stoolTexture": ["loose"],
-    "rash": ["mild"],
-    "rashLocation": ["diaper line"],
+    "stoolColor": [
+      "green"
+    ],
+    "stoolTexture": [
+      "loose"
+    ],
+    "rash": "mild",
+    "rashLocation": [
+      "diaper line"
+    ],
     "time": "2026-07-23T20:10:00.000Z",
-    "notes": "Monitor stool color and hydration."
+    "notes": "Monitor stool color and hydration.",
+    "diaperType": "both"
   }
 ]

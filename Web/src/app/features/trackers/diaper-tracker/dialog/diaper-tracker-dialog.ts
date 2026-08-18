@@ -63,7 +63,7 @@ export class DiaperTrackerDialog {
     { description: 'Bleeding '}
   ]
   readonly diaperModel = signal<DiaperTrackerData>({
-    type: '',
+    diaperType: '',
     peeColor: '',
     stoolColor: [],
     stoolTexture: [],
@@ -93,7 +93,7 @@ export class DiaperTrackerDialog {
   }
 
   onDiaperTypeChange(event: MatChipListboxChange) {
-    this.diaperForm.type().value.set(event.value ?? '')
+    this.diaperForm.diaperType().value.set(event.value ?? '')
     const dynamicSteps = event.value === 'wet' ? this.wetSteps
                     : event.value === 'poopy' ? this.poopySteps
                     : event.value === 'both' ? this.bothTypeSteps
@@ -118,7 +118,7 @@ export class DiaperTrackerDialog {
 
     if (!this.diaperForm.rash().value() && rashLocationStep) {
       this.allSteps = this.allSteps.filter(step => step.name !== 'rashLocation')
-      this.diaperForm.rashLocation().value.set('')
+      this.diaperForm.rashLocation().value.set([])
     }
   }
 

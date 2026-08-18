@@ -165,23 +165,20 @@
       "notes": "Woke when the stroller entered the house."
     }
   },
-
   {
     "id": "log-11",
     "trackerType": "diaper",
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "wet",
       "peeColor": "pale yellow",
       "stoolColor": [],
       "stoolTexture": [],
-      "rash": [
-        "none"
-      ],
+      "rash": "none",
       "rashLocation": [],
       "time": "2026-07-23T07:15:00.000Z",
-      "notes": "Moderately wet diaper."
+      "notes": "Moderately wet diaper.",
+      "diaperType": "wet"
     }
   },
   {
@@ -190,7 +187,6 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "both",
       "peeColor": "light yellow",
       "stoolColor": [
         "yellow"
@@ -198,12 +194,13 @@
       "stoolTexture": [
         "seedy"
       ],
-      "rash": [
-        "mild"
+      "rash": "mild",
+      "rashLocation": [
+        "around anus"
       ],
-      "rashLocation": "around anus",
       "time": "2026-07-23T10:40:00.000Z",
-      "notes": "Applied diaper cream after changing."
+      "notes": "Applied diaper cream after changing.",
+      "diaperType": "both"
     }
   },
   {
@@ -212,7 +209,6 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "poopy",
       "peeColor": "",
       "stoolColor": [
         "yellow",
@@ -221,12 +217,11 @@
       "stoolTexture": [
         "soft"
       ],
-      "rash": [
-        "none"
-      ],
+      "rash": "none",
       "rashLocation": [],
       "time": "2026-07-23T13:25:00.000Z",
-      "notes": "Normal bowel movement."
+      "notes": "Normal bowel movement.",
+      "diaperType": "poopy"
     }
   },
   {
@@ -235,18 +230,16 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "wet",
       "peeColor": "clear",
       "stoolColor": [],
       "stoolTexture": [],
-      "rash": [
-        "moderate"
-      ],
+      "rash": "moderate",
       "rashLocation": [
         "left buttock"
       ],
       "time": "2026-07-23T16:50:00.000Z",
-      "notes": "Skin looked slightly irritated."
+      "notes": "Skin looked slightly irritated.",
+      "diaperType": "wet"
     }
   },
   {
@@ -255,7 +248,6 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "both",
       "peeColor": "dark yellow",
       "stoolColor": [
         "green"
@@ -263,33 +255,29 @@
       "stoolTexture": [
         "loose"
       ],
-      "rash": [
-        "mild"
-      ],
+      "rash": "mild",
       "rashLocation": [
         "diaper line"
       ],
       "time": "2026-07-23T20:10:00.000Z",
-      "notes": "Monitor stool color and hydration."
+      "notes": "Monitor stool color and hydration.",
+      "diaperType": "both"
     }
   },
-
   {
     "id": "log-16",
     "trackerType": "diaper",
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "wet",
       "peeColor": "pale yellow",
       "stoolColor": [],
       "stoolTexture": [],
-      "rash": [
-        "none"
-      ],
+      "rash": "none",
       "rashLocation": [],
       "time": "2026-07-23T07:15:00.000Z",
-      "notes": "Moderately wet diaper."
+      "notes": "Moderately wet diaper.",
+      "diaperType": "wet"
     }
   },
   {
@@ -298,7 +286,6 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "both",
       "peeColor": "light yellow",
       "stoolColor": [
         "yellow"
@@ -306,12 +293,13 @@
       "stoolTexture": [
         "seedy"
       ],
-      "rash": [
-        "mild"
+      "rash": "mild",
+      "rashLocation": [
+        "around anus"
       ],
-      "rashLocation": "around anus",
       "time": "2026-07-23T10:40:00.000Z",
-      "notes": "Applied diaper cream after changing."
+      "notes": "Applied diaper cream after changing.",
+      "diaperType": "both"
     }
   },
   {
@@ -320,7 +308,6 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "poopy",
       "peeColor": "",
       "stoolColor": [
         "yellow",
@@ -329,12 +316,11 @@
       "stoolTexture": [
         "soft"
       ],
-      "rash": [
-        "none"
-      ],
+      "rash": "none",
       "rashLocation": [],
       "time": "2026-07-23T13:25:00.000Z",
-      "notes": "Normal bowel movement."
+      "notes": "Normal bowel movement.",
+      "diaperType": "poopy"
     }
   },
   {
@@ -343,18 +329,16 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "wet",
       "peeColor": "clear",
       "stoolColor": [],
       "stoolTexture": [],
-      "rash": [
-        "moderate"
-      ],
+      "rash": "moderate",
       "rashLocation": [
         "left buttock"
       ],
       "time": "2026-07-23T16:50:00.000Z",
-      "notes": "Skin looked slightly irritated."
+      "notes": "Skin looked slightly irritated.",
+      "diaperType": "wet"
     }
   },
   {
@@ -363,7 +347,6 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "type": "both",
       "peeColor": "dark yellow",
       "stoolColor": [
         "green"
@@ -371,14 +354,13 @@
       "stoolTexture": [
         "loose"
       ],
-      "rash": [
-        "mild"
-      ],
+      "rash": "mild",
       "rashLocation": [
         "diaper line"
       ],
       "time": "2026-07-23T20:10:00.000Z",
-      "notes": "Monitor stool color and hydration."
+      "notes": "Monitor stool color and hydration.",
+      "diaperType": "both"
     }
   },
   {
