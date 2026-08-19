@@ -1,12 +1,12 @@
 import { TemplateRef } from "@angular/core"
 
 export interface DiaperTrackerData {
-  type: string
+  diaperType: string
   peeColor: string
-  stoolColor: string
-  stoolTexture: string
+  stoolColor: string[]
+  stoolTexture: string[]
   rash: string
-  rashLocation: string
+  rashLocation: string[]
   startTime: string
   notes: string
 }

@@ -3,7 +3,7 @@ import { TemplateRef } from "@angular/core"
 export interface FeedTrackerData {
   bottleSize: number
   feedType: string
-  breastSide: 'left' | 'right'
+  breastSide: string[]
   milkType: string[]
   milkConsumed: number
   startTime: string
