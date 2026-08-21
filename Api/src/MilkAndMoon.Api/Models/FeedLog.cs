@@ -1,4 +1,4 @@
-public class FeedLog : BaseModel
+public class FeedLog : BaseLog
 {
     public decimal BottleSize { get; set; }
     public string FeedType { get; set; } = null!;
