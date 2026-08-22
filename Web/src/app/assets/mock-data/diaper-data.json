@@ -3,7 +3,7 @@
     "peeColor": "pale yellow",
     "stoolColor": [],
     "stoolTexture": [],
-    "rash": "",
+    "rash": null,
     "rashLocation": [],
     "time": "2026-07-23T07:15:00.000Z",
     "notes": "Moderately wet diaper.",
@@ -26,7 +26,7 @@
     "diaperType": "both"
   },
   {
-    "peeColor": "",
+    "peeColor": null,
     "stoolColor": [
       "yellow",
       "brown"
@@ -34,7 +34,7 @@
     "stoolTexture": [
       "soft"
     ],
-    "rash": "",
+    "rash": null,
     "rashLocation": [],
     "time": "2026-07-23T13:25:00.000Z",
     "notes": "Normal bowel movement.",

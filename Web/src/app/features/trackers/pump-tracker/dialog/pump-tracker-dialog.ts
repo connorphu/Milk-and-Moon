@@ -54,8 +54,8 @@ export class PumpTrackerDialog implements AfterViewInit {
     { description: 'High amount' }
   ]
   readonly pumpModel = signal<PumpTrackerData>({
-    startTime: '',
-    endTime: '',
+    startTime: null,
+    endTime: null,
     leftAmount: 0,
     rightAmount: 0,
     notes: ''
