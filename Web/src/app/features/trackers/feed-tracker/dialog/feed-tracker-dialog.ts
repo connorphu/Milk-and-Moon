@@ -62,12 +62,12 @@ export class FeedTrackerDialog {
   ]
   readonly feedModel = signal<FeedTrackerData>({
     bottleSize: 0,
-    feedType: '',
+    feedType: null,
     breastSide: [],
     milkType: [],
     milkConsumed: 0,
-    startTime: '',
-    endTime: '',
+    startTime: null,
+    endTime: null,
     notes: ''
   } as unknown as FeedTrackerData);
 
@@ -85,7 +85,7 @@ export class FeedTrackerDialog {
   }
 
   onFeedTypeChange(event: MatChipListboxChange) {
-    this.feedForm.feedType().value.set(event.value ?? '')
+    this.feedForm.feedType().value.set(event.value ?? null)
     this.allSteps = event.value === 'breast' ? this.breastSteps
                     : event.value === 'bottle' ? this.bottleSteps
                     : [];

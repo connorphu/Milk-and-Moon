@@ -55,9 +55,9 @@ export class SleepTrackerDialog implements AfterViewInit{
     { description: 'Slept all night' },
   ]
   readonly sleepModel = signal<SleepTrackerData>({
-    startTime: '',
-    endTime: '',
-    location: '',
+    startTime: null,
+    endTime: null,
+    location: null,
     wakeReason: [],
     notes: ''
   } as unknown as SleepTrackerData);
@@ -81,7 +81,7 @@ export class SleepTrackerDialog implements AfterViewInit{
   }
 
   onLocationChange(event: MatChipListboxChange) {
-    this.sleepForm.location().value.set(event.value ?? '')
+    this.sleepForm.location().value.set(event.value ?? null)
   }
 
   onExplaination(event: InputEvent) {

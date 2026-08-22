@@ -209,7 +209,7 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "peeColor": "",
+      "peeColor": null,
       "stoolColor": [
         "yellow",
         "brown"
@@ -308,7 +308,7 @@
     "createdAt": "2026-07-23T07:46:00",
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
-      "peeColor": "",
+      "peeColor": null,
       "stoolColor": [
         "yellow",
         "brown"
