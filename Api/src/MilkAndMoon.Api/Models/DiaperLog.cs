@@ -1,4 +1,4 @@
-public class DiaperLog : BaseLog
+public class DiaperLog : BabyLog
 {
     public string DiaperType { get; set; } = null!;
     public string? PeeColor { get; set; }

@@ -52,6 +52,32 @@ namespace MilkAndMoon.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "pump_logs",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    left_amount = table.Column<decimal>(type: "numeric(3,1)", precision: 3, scale: 1, nullable: false, defaultValue: 0m),
+                    right_amount = table.Column<decimal>(type: "numeric(3,1)", precision: 3, scale: 1, nullable: false, defaultValue: 0m),
+                    end_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    timezone = table.Column<string>(type: "text", nullable: false),
+                    notes = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_pump_logs", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_pump_logs_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "diaper_logs",
                 columns: table => new
                 {
@@ -64,10 +90,10 @@ namespace MilkAndMoon.Api.Migrations
                     rash_location = table.Column<string[]>(type: "text[]", nullable: false, defaultValueSql: "'{}'"),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
-                    baby_id = table.Column<Guid>(type: "uuid", nullable: false),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true)
+                    notes = table.Column<string>(type: "text", nullable: true),
+                    baby_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,10 +125,10 @@ namespace MilkAndMoon.Api.Migrations
                     end_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
-                    baby_id = table.Column<Guid>(type: "uuid", nullable: false),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true)
+                    notes = table.Column<string>(type: "text", nullable: true),
+                    baby_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,32 +145,6 @@ namespace MilkAndMoon.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "pump_logs",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    left_amount = table.Column<decimal>(type: "numeric(3,1)", precision: 3, scale: 1, nullable: false, defaultValue: 0m),
-                    right_amount = table.Column<decimal>(type: "numeric(3,1)", precision: 3, scale: 1, nullable: false, defaultValue: 0m),
-                    end_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
-                    baby_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_pump_logs", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_pump_logs_babies_baby_id",
-                        column: x => x.baby_id,
-                        principalTable: "babies",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "sleep_logs",
                 columns: table => new
                 {
@@ -154,10 +154,10 @@ namespace MilkAndMoon.Api.Migrations
                     end_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
-                    baby_id = table.Column<Guid>(type: "uuid", nullable: false),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true)
+                    notes = table.Column<string>(type: "text", nullable: true),
+                    baby_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,9 +188,9 @@ namespace MilkAndMoon.Api.Migrations
                 column: "baby_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_pump_logs_baby_id",
+                name: "ix_pump_logs_user_id",
                 table: "pump_logs",
-                column: "baby_id");
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_sleep_logs_baby_id",

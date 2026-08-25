@@ -1,4 +1,4 @@
-public class SleepLog : BaseLog
+public class SleepLog : BabyLog
 {
     public string? Location { get; set; }
     public string[] WakeReasons { get; set; } = null!;
