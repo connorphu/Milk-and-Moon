@@ -260,10 +260,6 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("gen_random_uuid()");
 
-                    b.Property<Guid>("BabyId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("baby_id");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -307,11 +303,15 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("now()");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id")
                         .HasName("pk_pump_logs");
 
-                    b.HasIndex("BabyId")
-                        .HasDatabaseName("ix_pump_logs_baby_id");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_pump_logs_user_id");
 
                     b.ToTable("pump_logs", (string)null);
                 });
@@ -471,14 +471,14 @@ namespace MilkAndMoon.Api.Migrations
 
             modelBuilder.Entity("PumpLog", b =>
                 {
-                    b.HasOne("Baby", "Baby")
+                    b.HasOne("User", "User")
                         .WithMany()
-                        .HasForeignKey("BabyId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_pump_logs_babies_baby_id");
+                        .HasConstraintName("fk_pump_logs_users_user_id");
 
-                    b.Navigation("Baby");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SleepLog", b =>
