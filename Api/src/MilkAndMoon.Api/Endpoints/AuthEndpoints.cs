@@ -37,10 +37,12 @@ public static class AuthEndpoints
         dbContext.Users.Add(user);
         await dbContext.SaveChangesAsync();
 
-        return Results.Created($"/users/{user.Id}", new UserResponse(user.Id, user.Name, user.Email, user.CreatedAt));
+        UserResponse userResponse = new(user.Id, user.Name, user.Email, user.CreatedAt);
+
+        return Results.Created($"/users/{user.Id}", userResponse);
     }
 
-    private static async Task<IResult> LoginAsync(LoginRequest request, AppDbContext dbContext)
+    private static async Task<IResult> LoginAsync(LoginRequest request, AppDbContext dbContext, TokenService tokenService)
     {
         if (string.IsNullOrWhiteSpace(request.Email))
         {
@@ -54,6 +56,9 @@ public static class AuthEndpoints
             return Results.Unauthorized();
         }
 
-        return Results.Ok(new UserResponse(user.Id, user.Name, user.Email, user.CreatedAt));
+        UserResponse userResponse = new(user.Id, user.Name, user.Email, user.CreatedAt);
+        string token = tokenService.GenerateToken(user);
+
+        return Results.Ok(new LoginResponse(userResponse, token));
     }
 }

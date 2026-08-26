@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString);
     options.UseSnakeCaseNamingConvention();
 });
+builder.Services.AddSingleton<TokenService>();
+
+string jwtSigningKey = builder.Configuration.GetValue<string>("Jwt:SigningKey") ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+           ValidateIssuerSigningKey = true,
+           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSigningKey)),
+           ValidateIssuer = false,
+           ValidateAudience = false,
+           ValidateLifetime = true
+        };
+    });
 
 var app = builder.Build();
 
