@@ -10,7 +10,7 @@ public static class BabiesEndpoints
         group.MapGet("/", GetBabiesAsync);
         group.MapPost("/", CreateBabyAsync);
         group.MapGet("/{id:guid}", GetBabyByIdAsync);
-        group.MapPut("/{id:guid}", UpdateBabyAsync);
+        group.MapPatch("/{id:guid}", UpdateBabyAsync);
         group.MapDelete("/{id:guid}", DeleteBabyAsync);
     }
 
@@ -84,12 +84,19 @@ public static class BabiesEndpoints
             return Results.NotFound();
         }
 
-        existingBaby.Name = request.Name;
-        existingBaby.DateOfBirth = request.DateOfBirth;
+        if (request.Name is not null)
+        {
+            existingBaby.Name = request.Name;
+        }
 
-        BabyResponse babyResponse = new(existingBaby.Id, existingBaby.Name, existingBaby.DateOfBirth, existingBaby.CreatedAt);
+        if (request.DateOfBirth is not null)
+        {
+            existingBaby.DateOfBirth = request.DateOfBirth.Value;
+        }
 
         await dbContext.SaveChangesAsync();
+
+        BabyResponse babyResponse = new(existingBaby.Id, existingBaby.Name, existingBaby.DateOfBirth, existingBaby.CreatedAt);
 
         return Results.Ok(babyResponse);
     }
