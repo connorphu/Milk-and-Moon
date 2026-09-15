@@ -1,1 +1,1 @@
-public record UpdateBabyRequest(string Name, DateOnly DateOfBirth);
+public record UpdateBabyRequest(string? Name, DateOnly? DateOfBirth);
