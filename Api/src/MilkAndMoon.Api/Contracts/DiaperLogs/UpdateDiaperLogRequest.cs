@@ -2,9 +2,9 @@ public record UpdateDiaperLogRequest(
     string? Timezone,
     string? DiaperType,
     string? PeeColor,
-    string[] StoolColor,
-    string[] StoolTexture,
+    string[]? StoolColor,
+    string[]? StoolTexture,
     string? Rash,
-    string[] RashLocation,
+    string[]? RashLocation,
     string? Notes
 );

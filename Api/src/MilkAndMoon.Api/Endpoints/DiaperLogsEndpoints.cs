@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-public static class DiaperEndpoints
+public static class DiaperLogsEndpoints
 {
-    public static void MapDiaperEndpoints(this IEndpointRouteBuilder app)
+    public static void MapDiaperLogsEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("babies/{babyId:guid}/diaper-logs").RequireAuthorization();
 
@@ -92,10 +92,10 @@ public static class DiaperEndpoints
         diaperLog.Timezone = request.Timezone ?? diaperLog.Timezone;
         diaperLog.DiaperType = request.DiaperType ?? diaperLog.DiaperType;
         diaperLog.PeeColor = request.PeeColor ?? diaperLog.PeeColor;
-        diaperLog.StoolColor = request.StoolColor.Length > 0 ? request.StoolColor : diaperLog.StoolColor;
-        diaperLog.StoolTexture = request.StoolTexture.Length > 0 ? request.StoolTexture : diaperLog.StoolTexture;
+        diaperLog.StoolColor = request.StoolColor ?? diaperLog.StoolColor;
+        diaperLog.StoolTexture = request.StoolTexture ?? diaperLog.StoolTexture;
         diaperLog.Rash = request.Rash ?? diaperLog.Rash;
-        diaperLog.RashLocation = request.RashLocation.Length > 0 ? request.RashLocation : diaperLog.RashLocation;
+        diaperLog.RashLocation = request.RashLocation ?? diaperLog.RashLocation;
         diaperLog.Notes = request.Notes ?? diaperLog.Notes;
 
         await dbContext.SaveChangesAsync();
