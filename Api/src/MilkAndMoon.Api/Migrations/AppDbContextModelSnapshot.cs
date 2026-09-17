@@ -93,7 +93,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("diaper_type");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<string>("PeeColor")
@@ -218,7 +221,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasDefaultValueSql("'{}'");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<DateTimeOffset>("StartTime")
@@ -278,7 +284,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("left_amount");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<decimal>("RightAmount")
@@ -343,7 +352,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("location");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<DateTimeOffset>("StartTime")

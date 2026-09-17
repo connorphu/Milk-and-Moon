@@ -64,7 +64,7 @@ namespace MilkAndMoon.Api.Migrations
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true)
+                    notes = table.Column<string>(type: "text", nullable: false, defaultValue: "")
                 },
                 constraints: table =>
                 {
@@ -92,7 +92,7 @@ namespace MilkAndMoon.Api.Migrations
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true),
+                    notes = table.Column<string>(type: "text", nullable: false, defaultValue: ""),
                     baby_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -127,7 +127,7 @@ namespace MilkAndMoon.Api.Migrations
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true),
+                    notes = table.Column<string>(type: "text", nullable: false, defaultValue: ""),
                     baby_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -156,7 +156,7 @@ namespace MilkAndMoon.Api.Migrations
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     start_time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     timezone = table.Column<string>(type: "text", nullable: false),
-                    notes = table.Column<string>(type: "text", nullable: true),
+                    notes = table.Column<string>(type: "text", nullable: false, defaultValue: ""),
                     baby_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

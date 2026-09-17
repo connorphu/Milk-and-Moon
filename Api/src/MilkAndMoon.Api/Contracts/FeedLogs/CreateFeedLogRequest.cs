@@ -5,7 +5,7 @@ public record CreateFeedLogRequest(
     string[] BreastSide,
     string[] MilkType,
     decimal MilkConsumed,
-    string? Notes,
+    string Notes,
     DateTimeOffset StartTime,
     DateTimeOffset? EndTime
 );

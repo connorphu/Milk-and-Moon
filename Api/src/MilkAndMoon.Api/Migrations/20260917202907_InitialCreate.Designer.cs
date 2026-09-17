@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MilkAndMoon.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260825162200_InitialCreate")]
+    [Migration("20260917202907_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -96,7 +96,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("diaper_type");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<string>("PeeColor")
@@ -221,7 +224,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasDefaultValueSql("'{}'");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<DateTimeOffset>("StartTime")
@@ -281,7 +287,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("left_amount");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<decimal>("RightAmount")
@@ -346,7 +355,10 @@ namespace MilkAndMoon.Api.Migrations
                         .HasColumnName("location");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text")
+                        .HasDefaultValue("")
                         .HasColumnName("notes");
 
                     b.Property<DateTimeOffset>("StartTime")
