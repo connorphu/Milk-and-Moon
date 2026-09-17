@@ -45,5 +45,7 @@ app.UseAuthorization();
 app.MapAuthEndpoints();
 app.MapBabiesEndpoints();
 app.MapFeedLogsEndpoints();
+app.MapDiaperLogsEndpoints();
+app.MapSleepLogsEndpoints();
 
 app.Run();
