@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-public static class DiaperEndpoints
+public static class DiaperLogsEndpoints
 {
-    public static void MapDiaperEndpoints(this IEndpointRouteBuilder app)
+    public static void MapDiaperLogsEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("babies/{babyId:guid}/diaper-logs").RequireAuthorization();
 
