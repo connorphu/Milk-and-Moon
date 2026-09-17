@@ -43,6 +43,7 @@ public class AppDbContext: DbContext
             entity.Property(f => f.MilkConsumed).HasDefaultValue(0).HasPrecision(3, 1);
             entity.Property(f => f.CreatedAt).HasDefaultValueSql("now()");
             entity.Property(f => f.UpdatedAt).HasDefaultValueSql("now()");
+            entity.Property(f => f.Notes).HasDefaultValue("");
 
             entity.ToTable(t =>
             {
@@ -63,6 +64,7 @@ public class AppDbContext: DbContext
             entity.Property(s => s.WakeReasons).HasDefaultValueSql("'{}'");
             entity.Property(s => s.CreatedAt).HasDefaultValueSql("now()");
             entity.Property(s => s.UpdatedAt).HasDefaultValueSql("now()");
+            entity.Property(s => s.Notes).HasDefaultValue("");
 
             entity.ToTable(t =>
             {
@@ -81,6 +83,7 @@ public class AppDbContext: DbContext
             entity.Property(d => d.RashLocation).HasDefaultValueSql("'{}'");
             entity.Property(d => d.CreatedAt).HasDefaultValueSql("now()");
             entity.Property(d => d.UpdatedAt).HasDefaultValueSql("now()");
+            entity.Property(d => d.Notes).HasDefaultValue("");
 
             entity.ToTable(t =>
             {
@@ -111,6 +114,7 @@ public class AppDbContext: DbContext
             entity.Property(p => p.RightAmount).HasDefaultValue(0).HasPrecision(3, 1);
             entity.Property(p => p.CreatedAt).HasDefaultValueSql("now()");
             entity.Property(p => p.UpdatedAt).HasDefaultValueSql("now()");
+            entity.Property(p => p.Notes).HasDefaultValue("");
         });
     }
 }
