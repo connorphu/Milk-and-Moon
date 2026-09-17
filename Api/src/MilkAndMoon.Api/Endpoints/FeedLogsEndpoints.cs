@@ -90,50 +90,15 @@ public static class FeedLogsEndpoints
             return Results.NotFound();
         }
 
-        if (request.Timezone is not null)
-        {
-            feedLog.Timezone = request.Timezone;
-        }
-
-        if (request.BottleSize is decimal bottleSize)
-        {
-            feedLog.BottleSize = bottleSize;
-        }
-
-        if (request.FeedType is not null)
-        {
-            feedLog.FeedType = request.FeedType;
-        }
-
-        if (request.BreastSide is not null)
-        {
-            feedLog.BreastSide = request.BreastSide;
-        }
-
-        if (request.MilkType is not null)
-        {
-            feedLog.MilkType = request.MilkType;
-        }
-
-        if (request.MilkConsumed is decimal milkConsumed)
-        {
-            feedLog.MilkConsumed = milkConsumed;
-        }
-        
-        if (request.Notes is not null)
-        {
-            feedLog.Notes = request.Notes;
-        }
-
-        if (request.StartTime is DateTimeOffset startTime)
-        {
-            feedLog.StartTime = startTime;
-        }
-
-        if (request.EndTime is DateTimeOffset endTime)
-        {
-            feedLog.EndTime = endTime;
-        }
+        feedLog.Timezone = request.Timezone ?? feedLog.Timezone;
+        feedLog.BottleSize = request.BottleSize ?? feedLog.BottleSize;
+        feedLog.FeedType = request.FeedType ?? feedLog.FeedType;
+        feedLog.BreastSide = request.BreastSide ?? feedLog.BreastSide;
+        feedLog.MilkType = request.MilkType ?? feedLog.MilkType;
+        feedLog.MilkConsumed = request.MilkConsumed ?? feedLog.MilkConsumed;
+        feedLog.Notes = request.Notes ?? feedLog.Notes;
+        feedLog.StartTime = request.StartTime ?? feedLog.StartTime;
+        feedLog.EndTime = request.EndTime ?? feedLog.EndTime;
 
         await dbContext.SaveChangesAsync();
 
