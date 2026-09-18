@@ -8,4 +8,3 @@ public record PumpLogResponse(
     DateTimeOffset StartTime,
     DateTimeOffset? EndTime
 );
- 
