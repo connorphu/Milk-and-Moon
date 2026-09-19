@@ -10,5 +10,6 @@ public record DiaperLogResponse(
     string[] StoolTexture,
     string? Rash,
     string[] RashLocation,
-    string Notes
+    string Notes,
+    DateTimeOffset StartTime
 );
