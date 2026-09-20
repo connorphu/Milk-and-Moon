@@ -23,7 +23,7 @@ public static class SleepLogsEndpoints
             .ToList();
 
         SleepLogResponse[] sleepLogResponses = sleepLogs.Select(s => new SleepLogResponse(s.Id, s.BabyId, s.CreatedAt, s.UpdatedAt, s.Timezone, s.Location, s.WakeReasons, s.Notes, s.StartTime, s.EndTime)).ToArray();
-        
+
         return Task.FromResult(Results.Ok(sleepLogResponses));
     }
 

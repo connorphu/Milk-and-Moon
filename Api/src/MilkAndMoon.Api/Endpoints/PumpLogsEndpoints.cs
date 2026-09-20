@@ -66,7 +66,7 @@ public static class PumpLogsEndpoints
 
         return Results.Ok(pumpLogResponse);
     }
-    
+
     public static async Task<IResult> UpdatePumpLogAsync(Guid id, UpdatePumpLogRequest request, AppDbContext dbContext, ClaimsPrincipal user)
     {
         Guid currentUserId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
