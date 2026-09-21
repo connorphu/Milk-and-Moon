@@ -48,5 +48,6 @@ app.MapFeedLogsEndpoints();
 app.MapDiaperLogsEndpoints();
 app.MapSleepLogsEndpoints();
 app.MapPumpLogsEndpoints();
+app.MapLogsEndpoints();
 
 app.Run();
