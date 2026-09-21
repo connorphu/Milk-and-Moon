@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext: DbContext
+public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -58,7 +58,7 @@ public class AppDbContext: DbContext
             });
         });
 
-        modelBuilder.Entity<SleepLog>(entity => 
+        modelBuilder.Entity<SleepLog>(entity =>
         {
             entity.Property(s => s.Id).HasDefaultValueSql("gen_random_uuid()");
             entity.Property(s => s.WakeReasons).HasDefaultValueSql("'{}'");
