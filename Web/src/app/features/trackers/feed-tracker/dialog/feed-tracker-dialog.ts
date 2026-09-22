@@ -1,20 +1,20 @@
-import { Component, inject, signal, TemplateRef, viewChild, viewChildren } from "@angular/core";
-import { NgTemplateOutlet } from "@angular/common";
-import { form, FormField } from "@angular/forms/signals";
-import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatSliderModule } from "@angular/material/slider";
-import { MatChipListboxChange, MatChipsModule } from "@angular/material/chips";
-import { MatTimepickerModule } from "@angular/material/timepicker";
-import { MatStepper, MatStepperModule } from "@angular/material/stepper";
-import { provideNativeDateAdapter } from "@angular/material/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { TemplateName } from "../../../../shared/directives/template-name";
-import { FeedStep, FeedTrackerData } from "../../../../core/models/feed-log";
-import { QuickNote } from "../../../../core/models/model";
-import { BabyLog } from "../../../../core/services/baby-log";
+import { Component, inject, signal, TemplateRef, viewChild, viewChildren } from '@angular/core'
+import { NgTemplateOutlet } from '@angular/common'
+import { form, FormField } from '@angular/forms/signals'
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatSliderModule } from '@angular/material/slider'
+import { MatChipListboxChange, MatChipsModule } from '@angular/material/chips'
+import { MatTimepickerModule } from '@angular/material/timepicker'
+import { MatStepper, MatStepperModule } from '@angular/material/stepper'
+import { provideNativeDateAdapter } from '@angular/material/core'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { TemplateName } from '../../../../shared/directives/template-name'
+import { FeedStep, FeedTrackerData } from '../../../../core/models/feed-log'
+import { QuickNote } from '../../../../core/models/model'
+import { BabyLog } from '../../../../core/services/baby-log'
 
 @Component({
   selector: 'app-feed-form-dialog',
@@ -32,28 +32,24 @@ import { BabyLog } from "../../../../core/services/baby-log";
     MatTimepickerModule,
     MatButtonModule,
     MatIconModule
-],
+  ],
   templateUrl: './feed-tracker-dialog.html',
-  styleUrl: './feed-tracker-dialog.css',
+  styleUrl: './feed-tracker-dialog.css'
 })
 export class FeedTrackerDialog {
-  readonly dialogRef = inject(MatDialogRef<FeedTrackerDialog>);
-  readonly allTemplateRefs = viewChildren(TemplateName);
+  readonly dialogRef = inject(MatDialogRef<FeedTrackerDialog>)
+  readonly allTemplateRefs = viewChildren(TemplateName)
   readonly feedStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly breastSteps: FeedStep[] = [
-    { name: 'time' },
-    { name: 'breastSide' },
-    { name: 'notes' }
-  ];
+  readonly breastSteps: FeedStep[] = [{ name: 'time' }, { name: 'breastSide' }, { name: 'notes' }]
   readonly bottleSteps: FeedStep[] = [
     { name: 'bottleSize' },
     { name: 'milkType' },
     { name: 'time' },
     { name: 'milkConsumed' },
     { name: 'notes' }
-  ];
+  ]
   readonly quickNotes: QuickNote[] = [
     { description: 'Fast feed' },
     { description: 'Slow feed' },
@@ -69,9 +65,9 @@ export class FeedTrackerDialog {
     startTime: null,
     endTime: null,
     notes: ''
-  } as unknown as FeedTrackerData);
+  } as unknown as FeedTrackerData)
 
-  protected feedForm = form(this.feedModel);
+  protected feedForm = form(this.feedModel)
   protected allSteps: FeedStep[] = []
 
   private babyLogService = inject(BabyLog)
@@ -86,12 +82,13 @@ export class FeedTrackerDialog {
 
   onFeedTypeChange(event: MatChipListboxChange) {
     this.feedForm.feedType().value.set(event.value ?? null)
-    this.allSteps = event.value === 'breast' ? this.breastSteps
-                    : event.value === 'bottle' ? this.bottleSteps
-                    : [];
-    this.allSteps.forEach(step => {
-      step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
-    });
+    this.allSteps =
+      event.value === 'breast' ? this.breastSteps : event.value === 'bottle' ? this.bottleSteps : []
+    this.allSteps.forEach((step) => {
+      step.templateRef = this.allTemplateRefs().find(
+        (template) => template.templateName() === step.name
+      )?.templateRef
+    })
   }
 
   onQuickNotesChange(event: MatChipListboxChange) {
@@ -102,20 +99,21 @@ export class FeedTrackerDialog {
 
     const quickNotes: string[] = event.value
     if (quickNotes) {
-      this.feedForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
-        return finalNote.concat(`, ${currentNote}`)
-      }))
+      this.feedForm.notes().value.set(
+        quickNotes.reduce((finalNote, currentNote) => {
+          return finalNote.concat(`, ${currentNote}`)
+        })
+      )
     }
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
   }
 
   onSave() {
-    this.babyLogService.track('feed', this.feedForm().value()).subscribe(succeed => {
+    this.babyLogService.track('feed', this.feedForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }
 }
-

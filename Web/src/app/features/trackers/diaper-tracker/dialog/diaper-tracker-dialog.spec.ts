@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DiaperTrackerDialog } from './diaper-tracker-dialog';
+import { DiaperTrackerDialog } from './diaper-tracker-dialog'
 
 describe('DiaperTrackerDialog', () => {
-  let component: DiaperTrackerDialog;
-  let fixture: ComponentFixture<DiaperTrackerDialog>;
+  let component: DiaperTrackerDialog
+  let fixture: ComponentFixture<DiaperTrackerDialog>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DiaperTrackerDialog],
-    }).compileComponents();
+      imports: [DiaperTrackerDialog]
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(DiaperTrackerDialog);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+    fixture = TestBed.createComponent(DiaperTrackerDialog)
+    component = fixture.componentInstance
+    await fixture.whenStable()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

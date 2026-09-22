@@ -1,21 +1,28 @@
-import { NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, Component, inject, signal, TemplateRef, viewChild, viewChildren } from '@angular/core';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { form, FormField } from '@angular/forms/signals';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipListboxChange, MatChipsModule } from '@angular/material/chips';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { MatTimepickerModule } from '@angular/material/timepicker';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatIconModule } from '@angular/material/icon';
-import { TemplateName } from '../../../../shared/directives/template-name';
-import { QuickNote } from '../../../../core/models/model';
-import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log';
-import { BabyLog } from '../../../../core/services/baby-log';
-
+import { NgTemplateOutlet } from '@angular/common'
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  viewChild,
+  viewChildren
+} from '@angular/core'
+import { provideNativeDateAdapter } from '@angular/material/core'
+import { form, FormField } from '@angular/forms/signals'
+import { MatButtonModule } from '@angular/material/button'
+import { MatChipListboxChange, MatChipsModule } from '@angular/material/chips'
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatStepper, MatStepperModule } from '@angular/material/stepper'
+import { MatTimepickerModule } from '@angular/material/timepicker'
+import { MatSliderModule } from '@angular/material/slider'
+import { MatIconModule } from '@angular/material/icon'
+import { TemplateName } from '../../../../shared/directives/template-name'
+import { QuickNote } from '../../../../core/models/model'
+import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log'
+import { BabyLog } from '../../../../core/services/baby-log'
 
 @Component({
   selector: 'app-sleep-tracker-dialog',
@@ -36,11 +43,11 @@ import { BabyLog } from '../../../../core/services/baby-log';
     MatIconModule
   ],
   templateUrl: './sleep-tracker-dialog.html',
-  styleUrl: './sleep-tracker-dialog.css',
+  styleUrl: './sleep-tracker-dialog.css'
 })
-export class SleepTrackerDialog implements AfterViewInit{
-  readonly dialogRef = inject(MatDialogRef<SleepTrackerDialog>);
-  readonly allTemplateRefs = viewChildren(TemplateName);
+export class SleepTrackerDialog implements AfterViewInit {
+  readonly dialogRef = inject(MatDialogRef<SleepTrackerDialog>)
+  readonly allTemplateRefs = viewChildren(TemplateName)
   readonly sleepStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
@@ -49,10 +56,10 @@ export class SleepTrackerDialog implements AfterViewInit{
     { name: 'location' },
     { name: 'wakeReason' },
     { name: 'notes' }
-  ];
+  ]
   readonly quickNotes: QuickNote[] = [
     { description: 'Frequent wakes' },
-    { description: 'Slept all night' },
+    { description: 'Slept all night' }
   ]
   readonly sleepModel = signal<SleepTrackerData>({
     startTime: null,
@@ -60,16 +67,18 @@ export class SleepTrackerDialog implements AfterViewInit{
     location: null,
     wakeReason: [],
     notes: ''
-  } as unknown as SleepTrackerData);
+  } as unknown as SleepTrackerData)
 
-  protected sleepForm = form(this.sleepModel);
+  protected sleepForm = form(this.sleepModel)
 
   private babyLogService = inject(BabyLog)
 
   ngAfterViewInit(): void {
-    this.allSteps.forEach(step => {
-      step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
-    });
+    this.allSteps.forEach((step) => {
+      step.templateRef = this.allTemplateRefs().find(
+        (template) => template.templateName() === step.name
+      )?.templateRef
+    })
   }
 
   goBack() {
@@ -84,9 +93,7 @@ export class SleepTrackerDialog implements AfterViewInit{
     this.sleepForm.location().value.set(event.value ?? null)
   }
 
-  onExplaination(event: InputEvent) {
-
-  }
+  onExplaination(event: InputEvent) {}
 
   onQuickNotesChange(event: MatChipListboxChange) {
     if (!event.value.length) {
@@ -96,14 +103,16 @@ export class SleepTrackerDialog implements AfterViewInit{
 
     const quickNotes: string[] = event.value
     if (quickNotes) {
-      this.sleepForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
-        return finalNote.concat(`, ${currentNote}`)
-      }))
+      this.sleepForm.notes().value.set(
+        quickNotes.reduce((finalNote, currentNote) => {
+          return finalNote.concat(`, ${currentNote}`)
+        })
+      )
     }
   }
 
   onSave() {
-    this.babyLogService.track('sleep', this.sleepForm().value()).subscribe(succeed => {
+    this.babyLogService.track('sleep', this.sleepForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }
