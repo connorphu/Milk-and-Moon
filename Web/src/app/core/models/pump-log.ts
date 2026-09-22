@@ -1,4 +1,4 @@
-import { TemplateRef } from "@angular/core"
+import { TemplateRef } from '@angular/core'
 
 export interface PumpTrackerData {
   startTime: string

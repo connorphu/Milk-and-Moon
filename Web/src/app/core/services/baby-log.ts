@@ -1,8 +1,8 @@
-import { inject, Service } from '@angular/core';
-import { BabyLogModel } from '../models/baby-log';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs';
-import { DateTime } from 'luxon';
+import { inject, Service } from '@angular/core'
+import { BabyLogModel } from '../models/baby-log'
+import { HttpClient } from '@angular/common/http'
+import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs'
+import { DateTime } from 'luxon'
 
 @Service()
 export class BabyLog {
@@ -14,12 +14,14 @@ export class BabyLog {
     const endpoint = id ? `${this.url}/${id}` : this.url
     return this.refresh$.pipe(
       startWith(undefined),
-      switchMap(() => this.http.get<BabyLogModel[]>(endpoint, params).pipe(
-        catchError((error) => {
-          console.log(error);
-          return of([]);
-        })
-      ))
+      switchMap(() =>
+        this.http.get<BabyLogModel[]>(endpoint, params).pipe(
+          catchError((error) => {
+            console.log(error)
+            return of([])
+          })
+        )
+      )
     )
   }
 
@@ -28,9 +30,10 @@ export class BabyLog {
       tap(() => this.refresh$.next()),
       map(() => true),
       catchError((error) => {
-        console.log(error);
-        return of(false);
-      }))
+        console.log(error)
+        return of(false)
+      })
+    )
   }
 
   track(type: 'feed' | 'diaper' | 'pump' | 'sleep', data: any) {
@@ -44,9 +47,10 @@ export class BabyLog {
       tap(() => this.refresh$.next()),
       map(() => true),
       catchError((error) => {
-        console.log(error);
-        return of(false);
-      }))
+        console.log(error)
+        return of(false)
+      })
+    )
   }
 
   deleteData(id: string) {
@@ -54,8 +58,8 @@ export class BabyLog {
       tap(() => this.refresh$.next()),
       map(() => true),
       catchError((error) => {
-        console.log(error);
-        return of(false);
+        console.log(error)
+        return of(false)
       })
     )
   }

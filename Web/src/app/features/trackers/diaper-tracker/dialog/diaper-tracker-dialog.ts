@@ -1,19 +1,19 @@
-import { Component, inject, signal, TemplateRef, viewChild, viewChildren } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
-import { NgTemplateOutlet } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { MatChipListboxChange, MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { TemplateName } from '../../../../shared/directives/template-name';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTimepickerModule } from '@angular/material/timepicker';
-import { MatInputModule } from '@angular/material/input';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log';
-import { QuickNote } from '../../../../core/models/model';
-import { BabyLog } from '../../../../core/services/baby-log';
+import { Component, inject, signal, TemplateRef, viewChild, viewChildren } from '@angular/core'
+import { form, FormField } from '@angular/forms/signals'
+import { NgTemplateOutlet } from '@angular/common'
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
+import { MatStepper, MatStepperModule } from '@angular/material/stepper'
+import { MatChipListboxChange, MatChipsModule } from '@angular/material/chips'
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { TemplateName } from '../../../../shared/directives/template-name'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatTimepickerModule } from '@angular/material/timepicker'
+import { MatInputModule } from '@angular/material/input'
+import { provideNativeDateAdapter } from '@angular/material/core'
+import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log'
+import { QuickNote } from '../../../../core/models/model'
+import { BabyLog } from '../../../../core/services/baby-log'
 
 @Component({
   selector: 'app-diaper-tracker-dialog',
@@ -33,34 +33,22 @@ import { BabyLog } from '../../../../core/services/baby-log';
     MatIconModule
   ],
   templateUrl: './diaper-tracker-dialog.html',
-  styleUrl: './diaper-tracker-dialog.css',
+  styleUrl: './diaper-tracker-dialog.css'
 })
 export class DiaperTrackerDialog {
-  readonly dialogRef = inject(MatDialogRef<DiaperTrackerDialog>);
-  readonly allTemplateRefs = viewChildren(TemplateName);
+  readonly dialogRef = inject(MatDialogRef<DiaperTrackerDialog>)
+  readonly allTemplateRefs = viewChildren(TemplateName)
   readonly diaperStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly wetSteps: DiaperStep[] = [
-    { name: 'peeColor' }
-  ];
-  readonly poopySteps: DiaperStep[] = [
-    { name: 'stoolColor' },
-    { name: 'stoolTexture' }
-  ]
-  readonly bothTypeSteps: DiaperStep[] = [
-    ...this.wetSteps,
-    ...this.poopySteps,
-  ]
-  readonly staticSteps: DiaperStep[] = [
-    { name: 'rash' },
-    { name: 'startTime' },
-    { name: 'notes' }
-  ]
+  readonly wetSteps: DiaperStep[] = [{ name: 'peeColor' }]
+  readonly poopySteps: DiaperStep[] = [{ name: 'stoolColor' }, { name: 'stoolTexture' }]
+  readonly bothTypeSteps: DiaperStep[] = [...this.wetSteps, ...this.poopySteps]
+  readonly staticSteps: DiaperStep[] = [{ name: 'rash' }, { name: 'startTime' }, { name: 'notes' }]
   readonly quickNotes: QuickNote[] = [
     { description: 'Weird smell' },
     { description: 'Weird mark/bruise' },
-    { description: 'Bleeding '}
+    { description: 'Bleeding ' }
   ]
   readonly diaperModel = signal<DiaperTrackerData>({
     diaperType: null,
@@ -71,9 +59,9 @@ export class DiaperTrackerDialog {
     rashLocation: [],
     startTime: null,
     notes: ''
-  } as unknown as DiaperTrackerData);
+  } as unknown as DiaperTrackerData)
 
-  protected diaperForm = form(this.diaperModel);
+  protected diaperForm = form(this.diaperModel)
   protected allSteps: DiaperStep[] = []
 
   private babyLogService = inject(BabyLog)
@@ -87,17 +75,23 @@ export class DiaperTrackerDialog {
   }
 
   updateSteps() {
-    this.allSteps.forEach(step => {
-      step.templateRef = this.allTemplateRefs().find(template => template.templateName() === step.name)?.templateRef;
-    });
+    this.allSteps.forEach((step) => {
+      step.templateRef = this.allTemplateRefs().find(
+        (template) => template.templateName() === step.name
+      )?.templateRef
+    })
   }
 
   onDiaperTypeChange(event: MatChipListboxChange) {
     this.diaperForm.diaperType().value.set(event.value ?? null)
-    const dynamicSteps = event.value === 'wet' ? this.wetSteps
-                    : event.value === 'poopy' ? this.poopySteps
-                    : event.value === 'both' ? this.bothTypeSteps
-                    : [];
+    const dynamicSteps =
+      event.value === 'wet'
+        ? this.wetSteps
+        : event.value === 'poopy'
+          ? this.poopySteps
+          : event.value === 'both'
+            ? this.bothTypeSteps
+            : []
     this.allSteps = [...dynamicSteps, ...this.staticSteps]
     this.updateSteps()
   }
@@ -108,16 +102,16 @@ export class DiaperTrackerDialog {
 
   onRashChange(event: MatChipListboxChange) {
     this.diaperForm.rash().value.set(event.value ?? null)
-    const rashLocationStep = this.allSteps.find(step => step.name === 'rashLocation')
+    const rashLocationStep = this.allSteps.find((step) => step.name === 'rashLocation')
 
     if (this.diaperForm.rash().value() && !rashLocationStep) {
-      const rashStepIndex = this.allSteps.findIndex(step => step.name === 'rash')
-      this.allSteps.splice(rashStepIndex+1, 0, { name: 'rashLocation'})
+      const rashStepIndex = this.allSteps.findIndex((step) => step.name === 'rash')
+      this.allSteps.splice(rashStepIndex + 1, 0, { name: 'rashLocation' })
       this.updateSteps()
     }
 
     if (!this.diaperForm.rash().value() && rashLocationStep) {
-      this.allSteps = this.allSteps.filter(step => step.name !== 'rashLocation')
+      this.allSteps = this.allSteps.filter((step) => step.name !== 'rashLocation')
       this.diaperForm.rashLocation().value.set([])
     }
   }
@@ -130,14 +124,16 @@ export class DiaperTrackerDialog {
 
     const quickNotes: string[] = event.value
     if (quickNotes) {
-      this.diaperForm.notes().value.set(quickNotes.reduce((finalNote, currentNote) => {
-        return finalNote.concat(`, ${currentNote}`)
-      }))
+      this.diaperForm.notes().value.set(
+        quickNotes.reduce((finalNote, currentNote) => {
+          return finalNote.concat(`, ${currentNote}`)
+        })
+      )
     }
   }
 
   onSave() {
-    this.babyLogService.track('diaper', this.diaperForm().value()).subscribe(succeed => {
+    this.babyLogService.track('diaper', this.diaperForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

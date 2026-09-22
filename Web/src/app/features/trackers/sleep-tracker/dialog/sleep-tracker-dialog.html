@@ -5,17 +5,17 @@
   <div>
     <mat-form-field>
       <mat-label>Start Time</mat-label>
-      <input matInput [matTimepicker]="startTime" [formField]="sleepForm.startTime">
-      <mat-timepicker-toggle matIconSuffix [for]="startTime"/>
-      <mat-timepicker #startTime/>
+      <input matInput [matTimepicker]="startTime" [formField]="sleepForm.startTime" />
+      <mat-timepicker-toggle matIconSuffix [for]="startTime" />
+      <mat-timepicker #startTime />
     </mat-form-field>
   </div>
   <div>
     <mat-form-field>
       <mat-label>End Time</mat-label>
-      <input matInput [matTimepicker]="endTime" [formField]="sleepForm.endTime">
-      <mat-timepicker-toggle matIconSuffix [for]="endTime"/>
-      <mat-timepicker #endTime/>
+      <input matInput [matTimepicker]="endTime" [formField]="sleepForm.endTime" />
+      <mat-timepicker-toggle matIconSuffix [for]="endTime" />
+      <mat-timepicker #endTime />
     </mat-form-field>
   </div>
 </ng-template>
@@ -53,14 +53,14 @@
 <ng-template template-name="notes">
   <mat-form-field>
     <mat-label>Notes</mat-label>
-    <input matInput [formField]="sleepForm.notes">
+    <input matInput [formField]="sleepForm.notes" />
   </mat-form-field>
   <div>
     <mat-label>Quick Notes</mat-label>
     <mat-chip-listbox multiple (change)="onQuickNotesChange($event)" aria-label="Sleep quick notes">
-    @for ( note of quickNotes; track note.description ) {
-      <mat-chip-option>{{ note.description }}</mat-chip-option>
-    }
+      @for (note of quickNotes; track note.description) {
+        <mat-chip-option>{{ note.description }}</mat-chip-option>
+      }
     </mat-chip-listbox>
   </div>
 </ng-template>
@@ -74,7 +74,7 @@
 <div class="flex-1 flex flex-col tracker-dialog-body">
   <form>
     <mat-stepper #stepper>
-      @for (step of allSteps; track step.name;) {
+      @for (step of allSteps; track step.name) {
         <mat-step>
           <ng-container [ngTemplateOutlet]="step.templateRef"></ng-container>
         </mat-step>
@@ -82,8 +82,17 @@
     </mat-stepper>
   </form>
   <mat-dialog-actions align="start">
-    <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">Back</button>
-    <button matButton="tonal" (click)="goForward()" [disabled]="stepper.selectedIndex === stepper.steps.length-1" type="button">Next</button>
+    <button matButton (click)="goBack()" [disabled]="stepper.selectedIndex === 0" type="button">
+      Back
+    </button>
+    <button
+      matButton="tonal"
+      (click)="goForward()"
+      [disabled]="stepper.selectedIndex === stepper.steps.length - 1"
+      type="button"
+    >
+      Next
+    </button>
   </mat-dialog-actions>
 </div>
 

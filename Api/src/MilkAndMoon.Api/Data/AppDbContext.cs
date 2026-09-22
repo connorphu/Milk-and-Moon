@@ -2,9 +2,8 @@ using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options) { }
 
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Baby> Babies { get; set; } = null!;
@@ -47,14 +46,17 @@ public class AppDbContext : DbContext
 
             entity.ToTable(t =>
             {
-                t.HasCheckConstraint("feed_logs_feed_type",
-                    "feed_type IN ('bottle', 'breast')");
+                t.HasCheckConstraint("feed_logs_feed_type", "feed_type IN ('bottle', 'breast')");
 
-                t.HasCheckConstraint("feed_logs_breast_side",
-                    "breast_side <@ ARRAY['left','right']::text[]");
+                t.HasCheckConstraint(
+                    "feed_logs_breast_side",
+                    "breast_side <@ ARRAY['left','right']::text[]"
+                );
 
-                t.HasCheckConstraint("feed_logs_milk_type",
-                    "milk_type <@ ARRAY['breastmilk','formula']::text[]");
+                t.HasCheckConstraint(
+                    "feed_logs_milk_type",
+                    "milk_type <@ ARRAY['breastmilk','formula']::text[]"
+                );
             });
         });
 
@@ -68,10 +70,14 @@ public class AppDbContext : DbContext
 
             entity.ToTable(t =>
             {
-                t.HasCheckConstraint("sleep_logs_locations",
-                    "location IN ('bassinet','crib','contactNap','stroller','car','other')");
-                t.HasCheckConstraint("sleep_logs_wake_reasons",
-                    "wake_reasons <@ ARRAY['hungry','diaper','naturally','noise','moved','unknown']::text[]");
+                t.HasCheckConstraint(
+                    "sleep_logs_locations",
+                    "location IN ('bassinet','crib','contactNap','stroller','car','other')"
+                );
+                t.HasCheckConstraint(
+                    "sleep_logs_wake_reasons",
+                    "wake_reasons <@ ARRAY['hungry','diaper','naturally','noise','moved','unknown']::text[]"
+                );
             });
         });
 
@@ -87,23 +93,32 @@ public class AppDbContext : DbContext
 
             entity.ToTable(t =>
             {
-                t.HasCheckConstraint("diaper_logs_diaper_types",
-                    "diaper_type IN ('wet','poopy','both')");
+                t.HasCheckConstraint(
+                    "diaper_logs_diaper_types",
+                    "diaper_type IN ('wet','poopy','both')"
+                );
 
-                t.HasCheckConstraint("diaper_logs_pee_colors",
-                    "pee_color IN ('clear','light yellow','dark yellow','orange')");
+                t.HasCheckConstraint(
+                    "diaper_logs_pee_colors",
+                    "pee_color IN ('clear','light yellow','dark yellow','orange')"
+                );
 
-                t.HasCheckConstraint("diaper_logs_stool_colors",
-                    "stool_color <@ ARRAY['black','yellow','green','brown','red','white','other']::text[]");
+                t.HasCheckConstraint(
+                    "diaper_logs_stool_colors",
+                    "stool_color <@ ARRAY['black','yellow','green','brown','red','white','other']::text[]"
+                );
 
-                t.HasCheckConstraint("diaper_logs_stool_textures",
-                    "stool_texture <@ ARRAY['seedy','soft','loose','watery','mucus','hard','other']::text[]");
+                t.HasCheckConstraint(
+                    "diaper_logs_stool_textures",
+                    "stool_texture <@ ARRAY['seedy','soft','loose','watery','mucus','hard','other']::text[]"
+                );
 
-                t.HasCheckConstraint("diaper_logs_rash",
-                    "rash IN ('mild','moderate','severe')");
+                t.HasCheckConstraint("diaper_logs_rash", "rash IN ('mild','moderate','severe')");
 
-                t.HasCheckConstraint("diaper_logs_rash_locations",
-                    "rash_location <@ ARRAY['front','back','folds','aroundAnus','other']::text[]");
+                t.HasCheckConstraint(
+                    "diaper_logs_rash_locations",
+                    "rash_location <@ ARRAY['front','back','folds','aroundAnus','other']::text[]"
+                );
             });
         });
 

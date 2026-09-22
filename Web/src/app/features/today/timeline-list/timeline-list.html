@@ -6,10 +6,18 @@
         <li class="timeline-item {{ log.trackerType }}">
           <mat-icon class="timeline-icon" aria-hidden="true">
             @switch (log.trackerType) {
-              @case ('feed') { fastfood }
-              @case ('diaper') { baby_changing_station }
-              @case ('sleep') { bedtime }
-              @case ('pump') { water_drop }
+              @case ('feed') {
+                fastfood
+              }
+              @case ('diaper') {
+                baby_changing_station
+              }
+              @case ('sleep') {
+                bedtime
+              }
+              @case ('pump') {
+                water_drop
+              }
             }
           </mat-icon>
           <span class="timeline-label">{{ log.type }}</span>

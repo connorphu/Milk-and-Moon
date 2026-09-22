@@ -8,9 +8,7 @@
       "bottleSize": 4,
       "feedType": "bottle",
       "breastSide": [],
-      "milkType": [
-        "breastmilk"
-      ],
+      "milkType": ["breastmilk"],
       "milkConsumed": 3,
       "startTime": "2026-07-23T07:30:00",
       "endTime": "2026-07-23T07:45:00",
@@ -26,9 +24,7 @@
       "bottleSize": 5,
       "feedType": "bottle",
       "breastSide": [],
-      "milkType": [
-        "formula"
-      ],
+      "milkType": ["formula"],
       "milkConsumed": 4,
       "startTime": "2026-07-23T10:15:00",
       "endTime": "2026-07-23T10:35:00",
@@ -43,9 +39,7 @@
     "data": {
       "bottleSize": 0,
       "feedType": "breast",
-      "breastSide": [
-        "left"
-      ],
+      "breastSide": ["left"],
       "milkType": [],
       "milkConsumed": 0,
       "startTime": "2026-07-23T13:00:00",
@@ -61,10 +55,7 @@
     "data": {
       "bottleSize": 0,
       "feedType": "breast",
-      "breastSide": [
-        "left",
-        "right"
-      ],
+      "breastSide": ["left", "right"],
       "milkType": [],
       "milkConsumed": 0,
       "startTime": "2026-07-23T16:20:00",
@@ -81,9 +72,7 @@
       "bottleSize": 4,
       "feedType": "bottle",
       "breastSide": [],
-      "milkType": [
-        "breastmilk"
-      ],
+      "milkType": ["breastmilk"],
       "milkConsumed": 2.5,
       "startTime": "2026-07-23T20:10:00",
       "endTime": "2026-07-23T20:25:00",
@@ -99,9 +88,7 @@
       "startTime": "2026-07-23T01:10:00.000Z",
       "endTime": "2026-07-23T03:35:00.000Z",
       "location": "crib",
-      "wakeReason": [
-        "hungry"
-      ],
+      "wakeReason": ["hungry"],
       "notes": "Woke up crying and was ready for a bottle."
     }
   },
@@ -114,9 +101,7 @@
       "startTime": "2026-07-23T04:15:00.000Z",
       "endTime": "2026-07-23T06:20:00.000Z",
       "location": "bassinet",
-      "wakeReason": [
-        "diaper"
-      ],
+      "wakeReason": ["diaper"],
       "notes": "Settled quickly after feeding."
     }
   },
@@ -129,9 +114,7 @@
       "startTime": "2026-07-23T08:40:00.000Z",
       "endTime": "2026-07-23T09:25:00.000Z",
       "location": "parent's arms",
-      "wakeReason": [
-        "moved"
-      ],
+      "wakeReason": ["moved"],
       "notes": "Short contact nap after morning feeding."
     }
   },
@@ -144,9 +127,7 @@
       "startTime": "2026-07-23T12:05:00.000Z",
       "endTime": "2026-07-23T13:50:00.000Z",
       "location": "crib",
-      "wakeReason": [
-        "naturally"
-      ],
+      "wakeReason": ["naturally"],
       "notes": "Good afternoon nap with minimal movement."
     }
   },
@@ -159,9 +140,7 @@
       "startTime": "2026-07-23T16:30:00.000Z",
       "endTime": "2026-07-23T17:10:00.000Z",
       "location": "stroller",
-      "wakeReason": [
-        "unknown"
-      ],
+      "wakeReason": ["unknown"],
       "notes": "Woke when the stroller entered the house."
     }
   },
@@ -188,16 +167,10 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "peeColor": "light yellow",
-      "stoolColor": [
-        "yellow"
-      ],
-      "stoolTexture": [
-        "seedy"
-      ],
+      "stoolColor": ["yellow"],
+      "stoolTexture": ["seedy"],
       "rash": "mild",
-      "rashLocation": [
-        "around anus"
-      ],
+      "rashLocation": ["around anus"],
       "time": "2026-07-23T10:40:00.000Z",
       "notes": "Applied diaper cream after changing.",
       "diaperType": "both"
@@ -210,13 +183,8 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "peeColor": null,
-      "stoolColor": [
-        "yellow",
-        "brown"
-      ],
-      "stoolTexture": [
-        "soft"
-      ],
+      "stoolColor": ["yellow", "brown"],
+      "stoolTexture": ["soft"],
       "rash": "none",
       "rashLocation": [],
       "time": "2026-07-23T13:25:00.000Z",
@@ -234,9 +202,7 @@
       "stoolColor": [],
       "stoolTexture": [],
       "rash": "moderate",
-      "rashLocation": [
-        "left buttock"
-      ],
+      "rashLocation": ["left buttock"],
       "time": "2026-07-23T16:50:00.000Z",
       "notes": "Skin looked slightly irritated.",
       "diaperType": "wet"
@@ -249,16 +215,10 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "peeColor": "dark yellow",
-      "stoolColor": [
-        "green"
-      ],
-      "stoolTexture": [
-        "loose"
-      ],
+      "stoolColor": ["green"],
+      "stoolTexture": ["loose"],
       "rash": "mild",
-      "rashLocation": [
-        "diaper line"
-      ],
+      "rashLocation": ["diaper line"],
       "time": "2026-07-23T20:10:00.000Z",
       "notes": "Monitor stool color and hydration.",
       "diaperType": "both"
@@ -287,16 +247,10 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "peeColor": "light yellow",
-      "stoolColor": [
-        "yellow"
-      ],
-      "stoolTexture": [
-        "seedy"
-      ],
+      "stoolColor": ["yellow"],
+      "stoolTexture": ["seedy"],
       "rash": "mild",
-      "rashLocation": [
-        "around anus"
-      ],
+      "rashLocation": ["around anus"],
       "time": "2026-07-23T10:40:00.000Z",
       "notes": "Applied diaper cream after changing.",
       "diaperType": "both"
@@ -309,13 +263,8 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "peeColor": null,
-      "stoolColor": [
-        "yellow",
-        "brown"
-      ],
-      "stoolTexture": [
-        "soft"
-      ],
+      "stoolColor": ["yellow", "brown"],
+      "stoolTexture": ["soft"],
       "rash": "none",
       "rashLocation": [],
       "time": "2026-07-23T13:25:00.000Z",
@@ -333,9 +282,7 @@
       "stoolColor": [],
       "stoolTexture": [],
       "rash": "moderate",
-      "rashLocation": [
-        "left buttock"
-      ],
+      "rashLocation": ["left buttock"],
       "time": "2026-07-23T16:50:00.000Z",
       "notes": "Skin looked slightly irritated.",
       "diaperType": "wet"
@@ -348,16 +295,10 @@
     "updatedAt": "2026-07-23T07:46:00",
     "data": {
       "peeColor": "dark yellow",
-      "stoolColor": [
-        "green"
-      ],
-      "stoolTexture": [
-        "loose"
-      ],
+      "stoolColor": ["green"],
+      "stoolTexture": ["loose"],
       "rash": "mild",
-      "rashLocation": [
-        "diaper line"
-      ],
+      "rashLocation": ["diaper line"],
       "time": "2026-07-23T20:10:00.000Z",
       "notes": "Monitor stool color and hydration.",
       "diaperType": "both"

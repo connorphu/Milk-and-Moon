@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,14 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    string connectionString = builder.Configuration.GetConnectionString("MoonAndMilkDb") ?? throw new InvalidOperationException("Connection string 'MoonAndMilkDb' not found.");
+    string connectionString =
+        builder.Configuration.GetConnectionString("MoonAndMilkDb")
+        ?? throw new InvalidOperationException("Connection string 'MoonAndMilkDb' not found.");
     options.UseNpgsql(connectionString);
     options.UseSnakeCaseNamingConvention();
 });
 builder.Services.AddSingleton<TokenService>();
 
-string jwtSigningKey = builder.Configuration.GetValue<string>("Jwt:SigningKey") ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+string jwtSigningKey =
+    builder.Configuration.GetValue<string>("Jwt:SigningKey")
+    ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -26,7 +31,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSigningKey)),
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateLifetime = true
+            ValidateLifetime = true,
         };
     });
 

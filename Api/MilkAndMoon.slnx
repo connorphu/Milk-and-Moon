@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/MilkAndMoon.Api/MilkAndMoon.Api.csproj" />
-  </Folder>
+    <Folder Name="/src/">
+        <Project Path="src/MilkAndMoon.Api/MilkAndMoon.Api.csproj" />
+    </Folder>
 </Solution>

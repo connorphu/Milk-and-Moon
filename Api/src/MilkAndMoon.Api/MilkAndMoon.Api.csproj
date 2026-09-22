@@ -1,23 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>67704ffc-90fd-4942-94ce-b5c4275579be</UserSecretsId>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>67704ffc-90fd-4942-94ce-b5c4275579be</UserSecretsId>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
-    <PackageReference Include="EFCore.NamingConventions" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
-  </ItemGroup>
-
+    <ItemGroup>
+        <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+        <PackageReference Include="EFCore.NamingConventions" Version="10.0.1" />
+        <PackageReference
+            Include="Microsoft.AspNetCore.Authentication.JwtBearer"
+            Version="10.0.11"
+        />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    </ItemGroup>
 </Project>

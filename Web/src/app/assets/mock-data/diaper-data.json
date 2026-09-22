@@ -11,29 +11,18 @@
   },
   {
     "peeColor": "light yellow",
-    "stoolColor": [
-      "yellow"
-    ],
-    "stoolTexture": [
-      "seedy"
-    ],
+    "stoolColor": ["yellow"],
+    "stoolTexture": ["seedy"],
     "rash": "mild",
-    "rashLocation": [
-      "around anus"
-    ],
+    "rashLocation": ["around anus"],
     "time": "2026-07-23T10:40:00.000Z",
     "notes": "Applied diaper cream after changing.",
     "diaperType": "both"
   },
   {
     "peeColor": null,
-    "stoolColor": [
-      "yellow",
-      "brown"
-    ],
-    "stoolTexture": [
-      "soft"
-    ],
+    "stoolColor": ["yellow", "brown"],
+    "stoolTexture": ["soft"],
     "rash": null,
     "rashLocation": [],
     "time": "2026-07-23T13:25:00.000Z",
@@ -45,25 +34,17 @@
     "stoolColor": [],
     "stoolTexture": [],
     "rash": "moderate",
-    "rashLocation": [
-      "left buttock"
-    ],
+    "rashLocation": ["left buttock"],
     "time": "2026-07-23T16:50:00.000Z",
     "notes": "Skin looked slightly irritated.",
     "diaperType": "wet"
   },
   {
     "peeColor": "dark yellow",
-    "stoolColor": [
-      "green"
-    ],
-    "stoolTexture": [
-      "loose"
-    ],
+    "stoolColor": ["green"],
+    "stoolTexture": ["loose"],
     "rash": "mild",
-    "rashLocation": [
-      "diaper line"
-    ],
+    "rashLocation": ["diaper line"],
     "time": "2026-07-23T20:10:00.000Z",
     "notes": "Monitor stool color and hydration.",
     "diaperType": "both"

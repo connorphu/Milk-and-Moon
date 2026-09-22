@@ -10,7 +10,10 @@ public static class AuthEndpoints
         group.MapPost("/login", LoginAsync);
     }
 
-    private static async Task<IResult> RegisterAsync(RegisterRequest request, AppDbContext dbContext)
+    private static async Task<IResult> RegisterAsync(
+        RegisterRequest request,
+        AppDbContext dbContext
+    )
     {
         if (string.IsNullOrWhiteSpace(request.Name))
         {
@@ -42,7 +45,11 @@ public static class AuthEndpoints
         return Results.Created($"/users/{user.Id}", userResponse);
     }
 
-    private static async Task<IResult> LoginAsync(LoginRequest request, AppDbContext dbContext, TokenService tokenService)
+    private static async Task<IResult> LoginAsync(
+        LoginRequest request,
+        AppDbContext dbContext,
+        TokenService tokenService
+    )
     {
         if (string.IsNullOrWhiteSpace(request.Email))
         {

@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "format": "prettier --write .",
     "serve:ssr:Web": "node dist/Web/server/server.mjs",
     "postinstall": "node scripts/init-db.mjs",
     "map-log-data": "node ./scripts/map-log-data.mjs",

@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "api": "dotnet watch run --project Api/src/MilkAndMoon.Api",
+    "api:format": "cd Api && dotnet csharpier format .",
     "web": "npm start --prefix Web",
     "web:install": "npm install --prefix Web",
+    "web:format": "npm run format --prefix Web",
     "json-server": "npm run db --prefix Web"
   }
 }
