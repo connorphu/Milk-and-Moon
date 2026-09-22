@@ -9,5 +9,6 @@ export interface BabyLogModel {
   trackerType: 'feed' | 'diaper' | 'pump' | 'sleep'
   createdAt: string
   updatedAt: string
+  timezone: string
   data: FeedTrackerData | DiaperTrackerData | PumpTrackerData | SleepTrackerData
 }

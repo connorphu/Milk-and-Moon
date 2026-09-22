@@ -6,7 +6,7 @@ import { DateTime } from 'luxon'
 
 @Service()
 export class BabyLog {
-  private readonly url = 'http://localhost:3000/baby-log'
+  private readonly url = 'http://localhost:3000/logs'
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
@@ -41,6 +41,7 @@ export class BabyLog {
       trackerType: type,
       createdAt: DateTime.utc().toISO(),
       updatedAt: DateTime.utc().toISO(),
+      timezone: DateTime.local().zoneName,
       data: data
     }
     return this.http.post(this.url, model).pipe(
