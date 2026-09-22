@@ -15,12 +15,15 @@ function resolveEntryId(index, idPrefix) {
 }
 
 export function mapLogEntries({ templateEntry, sourceEntries, trackerType, idPrefix }) {
+  const babyName = templateEntry.data?.babyName
+
   return sourceEntries.map((entry, index) => ({
     id: resolveEntryId(index, idPrefix),
     trackerType,
     createdAt: templateEntry.createdAt,
     updatedAt: templateEntry.updatedAt,
-    data: entry
+    timezone: templateEntry.timezone,
+    data: babyName ? { babyName, ...entry } : entry
   }))
 }
 

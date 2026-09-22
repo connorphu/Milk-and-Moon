@@ -1,11 +1,57 @@
 {
-  "baby-log": [
+  "users": [
+    {
+      "id": "user-1",
+      "name": "Sarah Johnson",
+      "email": "sarah.johnson@example.com",
+      "createdAt": "2026-06-01T09:00:00"
+    },
+    {
+      "id": "user-2",
+      "name": "Amanda Lee",
+      "email": "amanda.lee@example.com",
+      "createdAt": "2026-06-15T09:00:00"
+    }
+  ],
+  "babies": [
+    {
+      "id": "baby-1",
+      "userId": "user-1",
+      "name": "Emma",
+      "dateOfBirth": "2026-05-01",
+      "createdAt": "2026-06-01T09:05:00"
+    },
+    {
+      "id": "baby-2",
+      "userId": "user-2",
+      "name": "Liam",
+      "dateOfBirth": "2026-03-12",
+      "createdAt": "2026-06-15T09:05:00"
+    },
+    {
+      "id": "baby-3",
+      "userId": "user-2",
+      "name": "Noah",
+      "dateOfBirth": "2026-01-20",
+      "createdAt": "2026-06-15T09:06:00"
+    },
+    {
+      "id": "baby-4",
+      "userId": "user-2",
+      "name": "Olivia",
+      "dateOfBirth": "2025-11-08",
+      "createdAt": "2026-06-15T09:07:00"
+    }
+  ],
+  "logs": [
     {
       "id": "log-1",
       "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Emma",
         "bottleSize": 4,
         "feedType": "bottle",
         "breastSide": [],
@@ -21,7 +67,9 @@
       "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Liam",
         "bottleSize": 5,
         "feedType": "bottle",
         "breastSide": [],
@@ -37,7 +85,9 @@
       "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Noah",
         "bottleSize": 0,
         "feedType": "breast",
         "breastSide": ["left"],
@@ -53,7 +103,9 @@
       "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Olivia",
         "bottleSize": 0,
         "feedType": "breast",
         "breastSide": ["left", "right"],
@@ -69,7 +121,9 @@
       "trackerType": "feed",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Emma",
         "bottleSize": 4,
         "feedType": "bottle",
         "breastSide": [],
@@ -85,7 +139,9 @@
       "trackerType": "sleep",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Liam",
         "startTime": "2026-07-23T01:10:00.000Z",
         "endTime": "2026-07-23T03:35:00.000Z",
         "location": "crib",
@@ -98,7 +154,9 @@
       "trackerType": "sleep",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Noah",
         "startTime": "2026-07-23T04:15:00.000Z",
         "endTime": "2026-07-23T06:20:00.000Z",
         "location": "bassinet",
@@ -111,7 +169,9 @@
       "trackerType": "sleep",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Olivia",
         "startTime": "2026-07-23T08:40:00.000Z",
         "endTime": "2026-07-23T09:25:00.000Z",
         "location": "parent's arms",
@@ -124,7 +184,9 @@
       "trackerType": "sleep",
       "createdAt": "2026-07-27T07:46:00",
       "updatedAt": "2026-07-27T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Emma",
         "startTime": "2026-07-23T12:05:00.000Z",
         "endTime": "2026-07-23T13:50:00.000Z",
         "location": "crib",
@@ -137,7 +199,9 @@
       "trackerType": "sleep",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Liam",
         "startTime": "2026-07-23T16:30:00.000Z",
         "endTime": "2026-07-23T17:10:00.000Z",
         "location": "stroller",
@@ -150,7 +214,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Emma",
         "type": "wet",
         "peeColor": "pale yellow",
         "stoolColor": [],
@@ -166,7 +232,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-27T07:46:00",
       "updatedAt": "2026-07-27T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Liam",
         "type": "both",
         "peeColor": "light yellow",
         "stoolColor": ["yellow"],
@@ -182,7 +250,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Noah",
         "type": "poopy",
         "peeColor": "",
         "stoolColor": ["yellow", "brown"],
@@ -198,7 +268,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Olivia",
         "type": "wet",
         "peeColor": "clear",
         "stoolColor": [],
@@ -214,7 +286,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Emma",
         "type": "both",
         "peeColor": "dark yellow",
         "stoolColor": ["green"],
@@ -230,7 +304,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Liam",
         "type": "wet",
         "peeColor": "pale yellow",
         "stoolColor": [],
@@ -246,7 +322,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Noah",
         "type": "both",
         "peeColor": "light yellow",
         "stoolColor": ["yellow"],
@@ -262,7 +340,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Olivia",
         "type": "poopy",
         "peeColor": "",
         "stoolColor": ["yellow", "brown"],
@@ -278,7 +358,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Emma",
         "type": "wet",
         "peeColor": "clear",
         "stoolColor": [],
@@ -294,7 +376,9 @@
       "trackerType": "diaper",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
+        "babyName": "Liam",
         "type": "both",
         "peeColor": "dark yellow",
         "stoolColor": ["green"],
@@ -310,6 +394,7 @@
       "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
         "startTime": "2026-07-23T06:30:00.000Z",
         "endTime": "2026-07-23T06:50:00.000Z",
@@ -323,6 +408,7 @@
       "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
         "startTime": "2026-07-23T09:45:00.000Z",
         "endTime": "2026-07-23T10:03:00.000Z",
@@ -336,6 +422,7 @@
       "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
         "startTime": "2026-07-23T13:10:00.000Z",
         "endTime": "2026-07-23T13:30:00.000Z",
@@ -349,6 +436,7 @@
       "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
         "startTime": "2026-07-23T17:20:00.000Z",
         "endTime": "2026-07-23T17:42:00.000Z",
@@ -362,6 +450,7 @@
       "trackerType": "pump",
       "createdAt": "2026-07-23T07:46:00",
       "updatedAt": "2026-07-23T07:46:00",
+      "timezone": "America/Chicago",
       "data": {
         "startTime": "2026-07-23T21:15:00.000Z",
         "endTime": "2026-07-23T21:35:00.000Z",
