@@ -9,7 +9,9 @@ public class TokenService
 
     public TokenService(IConfiguration configuration)
     {
-        _signingKey = configuration.GetValue<string>("Jwt:SigningKey") ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
+        _signingKey =
+            configuration.GetValue<string>("Jwt:SigningKey")
+            ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
     }
 
     public string GenerateToken(User user)
@@ -17,7 +19,7 @@ public class TokenService
         Claim[] claims =
         [
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email)
+            new(JwtRegisteredClaimNames.Email, user.Email),
         ];
 
         SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_signingKey));

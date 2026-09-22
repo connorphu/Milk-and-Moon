@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 public static class FeedLogsEndpoints
 {
@@ -14,25 +14,53 @@ public static class FeedLogsEndpoints
         group.MapDelete("/{id:guid}", DeleteFeedLogAsync);
     }
 
-    public static async Task<IResult> GetFeedLogsAsync(Guid babyId, AppDbContext dbContext, ClaimsPrincipal user)
+    public static async Task<IResult> GetFeedLogsAsync(
+        Guid babyId,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        List<FeedLog> feedLogs = await dbContext.FeedLogs
-            .Where(f => f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null)
+        List<FeedLog> feedLogs = await dbContext
+            .FeedLogs.Where(f =>
+                f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
+            )
             .ToListAsync();
 
-        List<FeedLogResponse> feedLogResponses = feedLogs.Select(f => new FeedLogResponse(f.Id, f.BabyId, f.CreatedAt, f.UpdatedAt, f.Timezone, f.BottleSize, f.FeedType, f.BreastSide, f.MilkType, f.MilkConsumed, f.Notes, f.StartTime, f.EndTime)).ToList();
+        List<FeedLogResponse> feedLogResponses = feedLogs
+            .Select(f => new FeedLogResponse(
+                f.Id,
+                f.BabyId,
+                f.CreatedAt,
+                f.UpdatedAt,
+                f.Timezone,
+                f.BottleSize,
+                f.FeedType,
+                f.BreastSide,
+                f.MilkType,
+                f.MilkConsumed,
+                f.Notes,
+                f.StartTime,
+                f.EndTime
+            ))
+            .ToList();
 
         return Results.Ok(feedLogResponses);
     }
 
-    public static async Task<IResult> CreateFeedLogAsync(Guid babyId, CreateFeedLogRequest request, AppDbContext dbContext, ClaimsPrincipal user)
+    public static async Task<IResult> CreateFeedLogAsync(
+        Guid babyId,
+        CreateFeedLogRequest request,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        Baby? baby = await dbContext.Babies
-            .FirstOrDefaultAsync(b => b.Id == babyId && b.UserId == userId && b.DeletedAt == null);
+        Baby? baby = await dbContext.Babies.FirstOrDefaultAsync(b =>
+            b.Id == babyId && b.UserId == userId && b.DeletedAt == null
+        );
 
         if (baby is null)
         {
@@ -50,40 +78,81 @@ public static class FeedLogsEndpoints
             MilkConsumed = request.MilkConsumed,
             Notes = request.Notes,
             StartTime = request.StartTime,
-            EndTime = request.EndTime
+            EndTime = request.EndTime,
         };
 
         dbContext.FeedLogs.Add(feedLog);
         await dbContext.SaveChangesAsync();
 
-        FeedLogResponse feedLogResponse = new(feedLog.Id, feedLog.BabyId, feedLog.CreatedAt, feedLog.UpdatedAt, feedLog.Timezone, feedLog.BottleSize, feedLog.FeedType, feedLog.BreastSide, feedLog.MilkType, feedLog.MilkConsumed, feedLog.Notes, feedLog.StartTime, feedLog.EndTime);
+        FeedLogResponse feedLogResponse = new(
+            feedLog.Id,
+            feedLog.BabyId,
+            feedLog.CreatedAt,
+            feedLog.UpdatedAt,
+            feedLog.Timezone,
+            feedLog.BottleSize,
+            feedLog.FeedType,
+            feedLog.BreastSide,
+            feedLog.MilkType,
+            feedLog.MilkConsumed,
+            feedLog.Notes,
+            feedLog.StartTime,
+            feedLog.EndTime
+        );
 
         return Results.Created($"/babies/{babyId}/feed-logs/{feedLog.Id}", feedLogResponse);
     }
 
-    public static async Task<IResult> GetFeedLogByIdAsync(Guid babyId, Guid id, AppDbContext dbContext, ClaimsPrincipal user)
+    public static async Task<IResult> GetFeedLogByIdAsync(
+        Guid babyId,
+        Guid id,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        FeedLog? feedLog = await dbContext.FeedLogs
-            .FirstOrDefaultAsync(f => f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null);
+        FeedLog? feedLog = await dbContext.FeedLogs.FirstOrDefaultAsync(f =>
+            f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
+        );
 
         if (feedLog is null)
         {
             return Results.NotFound();
         }
 
-        FeedLogResponse feedLogResponse = new(feedLog.Id, feedLog.BabyId, feedLog.CreatedAt, feedLog.UpdatedAt, feedLog.Timezone, feedLog.BottleSize, feedLog.FeedType, feedLog.BreastSide, feedLog.MilkType, feedLog.MilkConsumed, feedLog.Notes, feedLog.StartTime, feedLog.EndTime);
+        FeedLogResponse feedLogResponse = new(
+            feedLog.Id,
+            feedLog.BabyId,
+            feedLog.CreatedAt,
+            feedLog.UpdatedAt,
+            feedLog.Timezone,
+            feedLog.BottleSize,
+            feedLog.FeedType,
+            feedLog.BreastSide,
+            feedLog.MilkType,
+            feedLog.MilkConsumed,
+            feedLog.Notes,
+            feedLog.StartTime,
+            feedLog.EndTime
+        );
 
         return Results.Ok(feedLogResponse);
     }
 
-    public static async Task<IResult> UpdateFeedLogAsync(Guid babyId, Guid id, UpdateFeedLogRequest request, AppDbContext dbContext, ClaimsPrincipal user)
+    public static async Task<IResult> UpdateFeedLogAsync(
+        Guid babyId,
+        Guid id,
+        UpdateFeedLogRequest request,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        FeedLog? feedLog = await dbContext.FeedLogs
-            .FirstOrDefaultAsync(f => f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null);
+        FeedLog? feedLog = await dbContext.FeedLogs.FirstOrDefaultAsync(f =>
+            f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
+        );
 
         if (feedLog is null)
         {
@@ -102,17 +171,37 @@ public static class FeedLogsEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        FeedLogResponse feedLogResponse = new(feedLog.Id, feedLog.BabyId, feedLog.CreatedAt, feedLog.UpdatedAt, feedLog.Timezone, feedLog.BottleSize, feedLog.FeedType, feedLog.BreastSide, feedLog.MilkType, feedLog.MilkConsumed, feedLog.Notes, feedLog.StartTime, feedLog.EndTime);
+        FeedLogResponse feedLogResponse = new(
+            feedLog.Id,
+            feedLog.BabyId,
+            feedLog.CreatedAt,
+            feedLog.UpdatedAt,
+            feedLog.Timezone,
+            feedLog.BottleSize,
+            feedLog.FeedType,
+            feedLog.BreastSide,
+            feedLog.MilkType,
+            feedLog.MilkConsumed,
+            feedLog.Notes,
+            feedLog.StartTime,
+            feedLog.EndTime
+        );
 
         return Results.Ok(feedLogResponse);
     }
 
-    public static async Task<IResult> DeleteFeedLogAsync(Guid babyId, Guid id, AppDbContext dbContext, ClaimsPrincipal user)
+    public static async Task<IResult> DeleteFeedLogAsync(
+        Guid babyId,
+        Guid id,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        FeedLog? feedLog = await dbContext.FeedLogs
-            .FirstOrDefaultAsync(f => f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null);
+        FeedLog? feedLog = await dbContext.FeedLogs.FirstOrDefaultAsync(f =>
+            f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
+        );
 
         if (feedLog is null)
         {

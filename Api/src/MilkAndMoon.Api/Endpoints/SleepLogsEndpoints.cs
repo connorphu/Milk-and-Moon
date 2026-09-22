@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 public static class SleepLogsEndpoints
 {
@@ -14,25 +14,50 @@ public static class SleepLogsEndpoints
         group.MapDelete("/{id:guid}", DeleteSleepLogAsync);
     }
 
-    public static Task<IResult> GetSleepLogsAsync(Guid babyId, AppDbContext dbContext, ClaimsPrincipal user)
+    public static Task<IResult> GetSleepLogsAsync(
+        Guid babyId,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        List<SleepLog> sleepLogs = dbContext.SleepLogs
-            .Where(s => s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null)
+        List<SleepLog> sleepLogs = dbContext
+            .SleepLogs.Where(s =>
+                s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
+            )
             .ToList();
 
-        SleepLogResponse[] sleepLogResponses = sleepLogs.Select(s => new SleepLogResponse(s.Id, s.BabyId, s.CreatedAt, s.UpdatedAt, s.Timezone, s.Location, s.WakeReasons, s.Notes, s.StartTime, s.EndTime)).ToArray();
+        SleepLogResponse[] sleepLogResponses = sleepLogs
+            .Select(s => new SleepLogResponse(
+                s.Id,
+                s.BabyId,
+                s.CreatedAt,
+                s.UpdatedAt,
+                s.Timezone,
+                s.Location,
+                s.WakeReasons,
+                s.Notes,
+                s.StartTime,
+                s.EndTime
+            ))
+            .ToArray();
 
         return Task.FromResult(Results.Ok(sleepLogResponses));
     }
 
-    public static Task<IResult> CreateSleepLogAsync(Guid babyId, CreateSleepLogRequest request, AppDbContext dbContext, ClaimsPrincipal user)
+    public static Task<IResult> CreateSleepLogAsync(
+        Guid babyId,
+        CreateSleepLogRequest request,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        Baby? baby = dbContext.Babies
-            .FirstOrDefault(b => b.Id == babyId && b.UserId == userId && b.DeletedAt == null);
+        Baby? baby = dbContext.Babies.FirstOrDefault(b =>
+            b.Id == babyId && b.UserId == userId && b.DeletedAt == null
+        );
 
         if (baby is null)
         {
@@ -47,40 +72,77 @@ public static class SleepLogsEndpoints
             WakeReasons = request.WakeReasons,
             Notes = request.Notes,
             StartTime = request.StartTime,
-            EndTime = request.EndTime
+            EndTime = request.EndTime,
         };
 
         dbContext.SleepLogs.Add(sleepLog);
         dbContext.SaveChanges();
 
-        SleepLogResponse sleepLogResponse = new(sleepLog.Id, sleepLog.BabyId, sleepLog.CreatedAt, sleepLog.UpdatedAt, sleepLog.Timezone, sleepLog.Location, sleepLog.WakeReasons, sleepLog.Notes, sleepLog.StartTime, sleepLog.EndTime);
+        SleepLogResponse sleepLogResponse = new(
+            sleepLog.Id,
+            sleepLog.BabyId,
+            sleepLog.CreatedAt,
+            sleepLog.UpdatedAt,
+            sleepLog.Timezone,
+            sleepLog.Location,
+            sleepLog.WakeReasons,
+            sleepLog.Notes,
+            sleepLog.StartTime,
+            sleepLog.EndTime
+        );
 
-        return Task.FromResult(Results.Created($"/babies/{babyId}/sleep-logs/{sleepLog.Id}", sleepLogResponse));
+        return Task.FromResult(
+            Results.Created($"/babies/{babyId}/sleep-logs/{sleepLog.Id}", sleepLogResponse)
+        );
     }
 
-    public static Task<IResult> GetSleepLogByIdAsync(Guid babyId, Guid id, AppDbContext dbContext, ClaimsPrincipal user)
+    public static Task<IResult> GetSleepLogByIdAsync(
+        Guid babyId,
+        Guid id,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = dbContext.SleepLogs
-            .FirstOrDefault(s => s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null);
+        SleepLog? sleepLog = dbContext.SleepLogs.FirstOrDefault(s =>
+            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
+        );
 
         if (sleepLog is null)
         {
             return Task.FromResult(Results.NotFound());
         }
 
-        SleepLogResponse sleepLogResponse = new(sleepLog.Id, sleepLog.BabyId, sleepLog.CreatedAt, sleepLog.UpdatedAt, sleepLog.Timezone, sleepLog.Location, sleepLog.WakeReasons, sleepLog.Notes, sleepLog.StartTime, sleepLog.EndTime);
+        SleepLogResponse sleepLogResponse = new(
+            sleepLog.Id,
+            sleepLog.BabyId,
+            sleepLog.CreatedAt,
+            sleepLog.UpdatedAt,
+            sleepLog.Timezone,
+            sleepLog.Location,
+            sleepLog.WakeReasons,
+            sleepLog.Notes,
+            sleepLog.StartTime,
+            sleepLog.EndTime
+        );
 
         return Task.FromResult(Results.Ok(sleepLogResponse));
     }
 
-    public static Task<IResult> UpdateSleepLogAsync(Guid babyId, Guid id, UpdateSleepLogRequest request, AppDbContext dbContext, ClaimsPrincipal user)
+    public static Task<IResult> UpdateSleepLogAsync(
+        Guid babyId,
+        Guid id,
+        UpdateSleepLogRequest request,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = dbContext.SleepLogs
-            .FirstOrDefault(s => s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null);
+        SleepLog? sleepLog = dbContext.SleepLogs.FirstOrDefault(s =>
+            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
+        );
 
         if (sleepLog is null)
         {
@@ -96,17 +158,34 @@ public static class SleepLogsEndpoints
 
         dbContext.SaveChanges();
 
-        SleepLogResponse sleepLogResponse = new(sleepLog.Id, sleepLog.BabyId, sleepLog.CreatedAt, sleepLog.UpdatedAt, sleepLog.Timezone, sleepLog.Location, sleepLog.WakeReasons, sleepLog.Notes, sleepLog.StartTime, sleepLog.EndTime);
+        SleepLogResponse sleepLogResponse = new(
+            sleepLog.Id,
+            sleepLog.BabyId,
+            sleepLog.CreatedAt,
+            sleepLog.UpdatedAt,
+            sleepLog.Timezone,
+            sleepLog.Location,
+            sleepLog.WakeReasons,
+            sleepLog.Notes,
+            sleepLog.StartTime,
+            sleepLog.EndTime
+        );
 
         return Task.FromResult(Results.Ok(sleepLogResponse));
     }
 
-    public static Task<IResult> DeleteSleepLogAsync(Guid babyId, Guid id, AppDbContext dbContext, ClaimsPrincipal user)
+    public static Task<IResult> DeleteSleepLogAsync(
+        Guid babyId,
+        Guid id,
+        AppDbContext dbContext,
+        ClaimsPrincipal user
+    )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = dbContext.SleepLogs
-            .FirstOrDefault(s => s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null);
+        SleepLog? sleepLog = dbContext.SleepLogs.FirstOrDefault(s =>
+            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
+        );
 
         if (sleepLog is null)
         {
