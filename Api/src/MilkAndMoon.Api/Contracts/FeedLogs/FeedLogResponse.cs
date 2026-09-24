@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.FeedLogs;
+
 public record FeedLogResponse(
     Guid Id,
     Guid BabyId,

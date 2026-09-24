@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public class DiaperLog : BabyLog
 {
     public string DiaperType { get; set; } = null!;

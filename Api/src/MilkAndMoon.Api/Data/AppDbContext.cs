@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using MilkAndMoon.Api.Models;
+
+namespace MilkAndMoon.Api.Data;
 
 public class AppDbContext : DbContext
 {

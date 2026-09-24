@@ -1,4 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using MilkAndMoon.Api.Contracts.Auth;
+using MilkAndMoon.Api.Data;
+using MilkAndMoon.Api.Models;
+using MilkAndMoon.Api.Services;
+
+namespace MilkAndMoon.Api.Endpoints;
 
 public static class AuthEndpoints
 {

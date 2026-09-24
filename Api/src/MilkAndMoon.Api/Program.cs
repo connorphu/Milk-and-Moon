@@ -2,6 +2,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MilkAndMoon.Api.Data;
+using MilkAndMoon.Api.Endpoints;
+using MilkAndMoon.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,7 @@ builder.Services.AddSingleton<TokenService>();
 string jwtSigningKey =
     builder.Configuration.GetValue<string>("Jwt:SigningKey")
     ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
+
 builder
     .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -34,6 +38,8 @@ builder
             ValidateLifetime = true,
         };
     });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

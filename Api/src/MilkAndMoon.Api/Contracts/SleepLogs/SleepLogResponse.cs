@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.SleepLogs;
+
 public record SleepLogResponse(
     Guid Id,
     Guid BabyId,

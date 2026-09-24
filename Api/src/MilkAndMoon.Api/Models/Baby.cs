@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public class Baby : BaseModel
 {
     public User User { get; set; } = null!;

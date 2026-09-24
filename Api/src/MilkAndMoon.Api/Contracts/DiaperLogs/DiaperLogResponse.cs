@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.DiaperLogs;
+
 public record DiaperLogResponse(
     Guid Id,
     Guid BabyId,
