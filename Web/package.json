@@ -27,6 +27,7 @@
     "@angular/router": "^22.0.0",
     "@angular/ssr": "^22.0.5",
     "express": "^5.1.0",
+    "jest": "^30.5.2",
     "json-server": "^0.17.4",
     "luxon": "^3.7.2",
     "rxjs": "~7.8.0",
