@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.SleepLogs;
+
 public record CreateSleepLogRequest(
     string Timezone,
     string? Location,

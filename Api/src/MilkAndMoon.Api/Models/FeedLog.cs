@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public class FeedLog : BabyLog
 {
     public decimal BottleSize { get; set; }

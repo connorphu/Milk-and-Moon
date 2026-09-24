@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.Logs;
+
 public record LogResponse(
     Guid Id,
     string TrackerType,

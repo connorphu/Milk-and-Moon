@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.DiaperLogs;
+
 public record CreateDiaperLogRequest(
     string Timezone,
     string DiaperType,

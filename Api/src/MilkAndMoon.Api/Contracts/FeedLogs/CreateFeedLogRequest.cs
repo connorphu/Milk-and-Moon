@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.FeedLogs;
+
 public record CreateFeedLogRequest(
     string Timezone,
     decimal BottleSize,

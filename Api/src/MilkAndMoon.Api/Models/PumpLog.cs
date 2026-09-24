@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public class PumpLog : BaseLog
 {
     public User User { get; set; } = null!;

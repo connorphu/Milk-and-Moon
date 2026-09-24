@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Contracts.PumpLogs;
+
 public record UpdatePumpLogRequest(
     string? Timezone,
     decimal? LeftAmount,

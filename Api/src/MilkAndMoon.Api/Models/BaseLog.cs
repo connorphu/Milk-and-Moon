@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public abstract class BaseLog : BaseModel
 {
     public DateTimeOffset StartTime { get; set; }

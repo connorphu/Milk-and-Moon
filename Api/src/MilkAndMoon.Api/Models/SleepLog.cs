@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public class SleepLog : BabyLog
 {
     public string? Location { get; set; }

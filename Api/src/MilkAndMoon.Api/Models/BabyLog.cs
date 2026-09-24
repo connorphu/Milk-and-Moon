@@ -1,3 +1,5 @@
+namespace MilkAndMoon.Api.Models;
+
 public abstract class BabyLog : BaseLog
 {
     public Baby Baby { get; set; } = null!;

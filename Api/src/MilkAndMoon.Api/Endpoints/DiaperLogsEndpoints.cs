@@ -1,5 +1,10 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using MilkAndMoon.Api.Contracts.DiaperLogs;
+using MilkAndMoon.Api.Data;
+using MilkAndMoon.Api.Models;
+
+namespace MilkAndMoon.Api.Endpoints;
 
 public static class DiaperLogsEndpoints
 {
