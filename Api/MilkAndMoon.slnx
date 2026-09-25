@@ -2,4 +2,7 @@
     <Folder Name="/src/">
         <Project Path="src/MilkAndMoon.Api/MilkAndMoon.Api.csproj" />
     </Folder>
+    <Folder Name="/tests/">
+        <Project Path="tests/MilkAndMoon.Api.Tests/MilkAndMoon.Api.Tests.csproj" />
+    </Folder>
 </Solution>
