@@ -9,12 +9,14 @@ namespace MilkAndMoon.Api.Services;
 public class TokenService
 {
     private readonly string _signingKey;
+    private readonly TimeProvider _timeProvider;
 
-    public TokenService(IConfiguration configuration)
+    public TokenService(IConfiguration configuration, TimeProvider timeProvider)
     {
         _signingKey =
             configuration.GetValue<string>("Jwt:SigningKey")
             ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
+        _timeProvider = timeProvider;
     }
 
     public string GenerateToken(User user)
@@ -30,7 +32,7 @@ public class TokenService
 
         JwtSecurityToken token = new(
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(15),
+            expires: _timeProvider.GetUtcNow().UtcDateTime.AddMinutes(15),
             signingCredentials: credentials
         );
 
