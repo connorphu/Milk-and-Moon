@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Time.Testing;
+using Microsoft.IdentityModel.Tokens;
 using MilkAndMoon.Api.Models;
 using MilkAndMoon.Api.Services;
 
@@ -22,14 +24,22 @@ public class TokenServiceTests
     }
 
     [Fact]
-    public void GenerateToken_ValidUser_SetsSubtoUserId()
+    public void GenerateToken_ValidUser_ContainsExpectedClaims()
     {
         User user = new() { Id = Guid.NewGuid(), Email = "test@example.com" };
+        Dictionary<string, string> expected = new()
+        {
+            { JwtRegisteredClaimNames.Sub, user.Id.ToString() },
+            { JwtRegisteredClaimNames.Email, user.Email },
+        };
 
         string token = CreateService().GenerateToken(user);
 
         JwtSecurityToken jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-        Assert.Equal(user.Id.ToString(), jwt.Subject);
+        Dictionary<string, string> actual = jwt
+            .Claims.Where(c => c.Type != JwtRegisteredClaimNames.Exp)
+            .ToDictionary(c => c.Type, c => c.Value);
+        Assert.Equal(expected, actual);
     }
 
     [Fact]
@@ -42,11 +52,31 @@ public class TokenServiceTests
         string token = CreateService(fakeTimeProvider).GenerateToken(user);
 
         JwtSecurityToken jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-        Assert.Equal(jwt.ValidTo, now.AddMinutes(15));
+        Assert.Equal(now.AddMinutes(15).UtcDateTime, jwt.ValidTo);
     }
 
     [Fact]
-    public void GenerateToken_MissingSigningKey_ThrowsException()
+    public void GenerateToken_ValidUser_IsSignedWithConfiguredKey()
+    {
+        User user = new() { Id = Guid.NewGuid(), Email = "test@example.com" };
+        TokenValidationParameters validationParameters = new()
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+        };
+
+        string token = CreateService().GenerateToken(user);
+
+        Exception? exception = Record.Exception(() =>
+            new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out _)
+        );
+        Assert.Null(exception);
+    }
+
+    [Fact]
+    public void Constructor_MissingSigningKey_Throws()
     {
         IConfiguration emptyConfig = new ConfigurationBuilder().Build();
 
