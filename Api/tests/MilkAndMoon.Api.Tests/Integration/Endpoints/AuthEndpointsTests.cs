@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,26 @@ namespace MilkAndMoon.Api.Tests.Integration.Endpoints;
 public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
 {
     private readonly HttpClient _client = factory.CreateClient();
-    private const string registerURI = "/auth/register";
+    private const string RegisterPath = "/auth/register";
+    private const string LoginPath = "/auth/login";
+
+    private async Task<RegisterRequest> RegisterUserAsync()
+    {
+        RegisterRequest request = new(
+            "Registered User",
+            $"{Guid.NewGuid()}@example.com",
+            "IRegistered123!"
+        );
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync(
+            RegisterPath,
+            request,
+            TestContext.Current.CancellationToken
+        );
+        response.EnsureSuccessStatusCode();
+
+        return request;
+    }
 
     [Fact]
     public async Task Register_ValidRequest_ReturnsCreatedUser()
@@ -24,7 +44,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         );
 
         HttpResponseMessage response = await _client.PostAsJsonAsync(
-            registerURI,
+            RegisterPath,
             request,
             TestContext.Current.CancellationToken
         );
@@ -50,7 +70,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         );
 
         HttpResponseMessage response = await _client.PostAsJsonAsync(
-            registerURI,
+            RegisterPath,
             request,
             TestContext.Current.CancellationToken
         );
@@ -77,7 +97,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         RegisterRequest request = new(name!, $"{Guid.NewGuid()}@example.com", "TestPassword123!");
 
         HttpResponseMessage response = await _client.PostAsJsonAsync(
-            registerURI,
+            RegisterPath,
             request,
             TestContext.Current.CancellationToken
         );
@@ -99,7 +119,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         RegisterRequest request = new("Test User", email!, "TestPassword123!");
 
         HttpResponseMessage response = await _client.PostAsJsonAsync(
-            registerURI,
+            RegisterPath,
             request,
             TestContext.Current.CancellationToken
         );
@@ -118,7 +138,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         RegisterRequest request = new("Test User", $"{Guid.NewGuid()}@example.com", "1234567");
 
         HttpResponseMessage response = await _client.PostAsJsonAsync(
-            registerURI,
+            RegisterPath,
             request,
             TestContext.Current.CancellationToken
         );
@@ -137,11 +157,91 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         RegisterRequest request = new("Test User", $"{Guid.NewGuid()}@example.com", "12345678");
 
         HttpResponseMessage response = await _client.PostAsJsonAsync(
-            registerURI,
+            RegisterPath,
             request,
             TestContext.Current.CancellationToken
         );
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Login_ValidUser_ReturnsUserAndToken()
+    {
+        RegisterRequest registered = await RegisterUserAsync();
+        LoginRequest request = new(registered.Email, registered.Password);
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync(
+            LoginPath,
+            request,
+            TestContext.Current.CancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        LoginResponse? body = await response.Content.ReadFromJsonAsync<LoginResponse>(
+            TestContext.Current.CancellationToken
+        );
+        Assert.NotNull(body);
+        Assert.Equal(registered.Name, body.User.Name);
+        Assert.Equal(request.Email, body.User.Email);
+
+        JwtSecurityToken jwt = new JwtSecurityTokenHandler().ReadJwtToken(body.Token);
+        Assert.Equal(body.User.Id.ToString(), jwt.Subject);
+    }
+
+    [Fact]
+    public async Task Login_WrongPassword_ReturnsUnauthorized()
+    {
+        RegisterRequest registered = await RegisterUserAsync();
+        LoginRequest request = new(registered.Email, "wrong_password");
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync(
+            LoginPath,
+            request,
+            TestContext.Current.CancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Login_UnknownEmail_ReturnsUnauthorized()
+    {
+        RegisterRequest registered = await RegisterUserAsync();
+        LoginRequest request = new($"{Guid.NewGuid()}@example.com", registered.Password);
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync(
+            LoginPath,
+            request,
+            TestContext.Current.CancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("  ")]
+    public async Task Login_MissingEmail_ReturnsBadRequest(string? email)
+    {
+        LoginRequest request = new(email!, "Password1234!");
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync(
+            LoginPath,
+            request,
+            TestContext.Current.CancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        string? message = await response.Content.ReadFromJsonAsync<string>(
+            TestContext.Current.CancellationToken
+        );
+        LoginResponse? body = await response.Content.ReadFromJsonAsync<LoginResponse>(
+            TestContext.Current.CancellationToken
+        );
+        Assert.Equal("Email is required.", message);
     }
 }
