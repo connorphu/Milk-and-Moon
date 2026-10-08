@@ -11,7 +11,8 @@ using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
 namespace MilkAndMoon.Api.Tests.Integration.Endpoints;
 
-public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
+[Collection(ApiCollection.Name)]
+public class AuthEndpointsTests(ApiFactory factory)
 {
     private readonly HttpClient _client = factory.CreateClient();
     private const string RegisterPath = "/auth/register";

@@ -11,7 +11,8 @@ using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
 namespace MilkAndMoon.Api.Tests.Integration.Endpoints;
 
-public class BabiesEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
+[Collection(ApiCollection.Name)]
+public class BabiesEndpointsTests(ApiFactory factory)
 {
     private const string BabiesByIdUrl = $"{BabiesUrl}/00000000-0000-0000-0000-000000000001";
 
