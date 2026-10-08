@@ -6,13 +6,13 @@ using MilkAndMoon.Api.Contracts.Babies;
 using MilkAndMoon.Api.Data;
 using MilkAndMoon.Api.Models;
 using MilkAndMoon.Api.Tests.Infrastructure;
+using static MilkAndMoon.Api.Tests.Infrastructure.Routes;
 using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
 namespace MilkAndMoon.Api.Tests.Integration.Endpoints;
 
 public class BabiesEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
 {
-    private const string BabiesUrl = "/babies";
     private const string BabiesByIdUrl = $"{BabiesUrl}/00000000-0000-0000-0000-000000000001";
 
     [Theory]

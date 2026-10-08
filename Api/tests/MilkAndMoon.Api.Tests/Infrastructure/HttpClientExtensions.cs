@@ -1,14 +1,13 @@
 using System.Net;
 using System.Net.Http.Json;
 using MilkAndMoon.Api.Contracts.Babies;
+using static MilkAndMoon.Api.Tests.Infrastructure.Routes;
 using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
 namespace MilkAndMoon.Api.Tests.Infrastructure;
 
 public static class HttpClientExtensions
 {
-    private const string BabiesUrl = "/babies";
-
     public static async Task<BabyResponse> CreateBabyAsync(
         this HttpClient client,
         string name = "Baby",
