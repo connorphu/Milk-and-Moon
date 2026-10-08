@@ -59,7 +59,7 @@ public static class HttpClientExtensions
         CreateDiaperLogRequest? request = null
     ) =>
         client.PostCreatedAsync<CreateDiaperLogRequest, DiaperLogResponse>(
-            $"{BabiesUrl}/{babyId}/diaper-logs",
+            DiaperLogsUrl(babyId),
             request ?? TestRequests.DiaperLog
         );
 }

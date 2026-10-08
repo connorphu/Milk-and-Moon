@@ -31,6 +31,8 @@ public static class DiaperLogsEndpoints
             .DiaperLogs.Where(d =>
                 d.BabyId == babyId && d.Baby.UserId == userId && d.Baby.DeletedAt == null
             )
+            .OrderBy(d => d.CreatedAt)
+            .ThenBy(d => d.Id)
             .ToListAsync();
 
         List<DiaperLogResponse> diaperLogResponses = diaperLogs
