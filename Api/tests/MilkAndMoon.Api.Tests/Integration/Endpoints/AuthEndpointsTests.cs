@@ -7,6 +7,7 @@ using MilkAndMoon.Api.Contracts.Auth;
 using MilkAndMoon.Api.Data;
 using MilkAndMoon.Api.Models;
 using MilkAndMoon.Api.Tests.Infrastructure;
+using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
 namespace MilkAndMoon.Api.Tests.Integration.Endpoints;
 
@@ -27,7 +28,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
         response.EnsureSuccessStatusCode();
 
@@ -46,13 +47,13 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
         UserResponse? body = await response.Content.ReadFromJsonAsync<UserResponse>(
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
         Assert.NotNull(body);
         Assert.Equal(request.Name, body.Name);
@@ -72,7 +73,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -81,7 +82,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         AppDbContext db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         User saved = await db.Users.SingleAsync(
             u => u.Email == request.Email,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.NotEqual(request.Password, saved.PasswordHash);
@@ -99,14 +100,12 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-        string? message = await response.Content.ReadFromJsonAsync<string>(
-            TestContext.Current.CancellationToken
-        );
+        string? message = await response.Content.ReadFromJsonAsync<string>(TestCancellationToken);
         Assert.Equal("Name is required.", message);
     }
 
@@ -121,14 +120,12 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-        string? message = await response.Content.ReadFromJsonAsync<string>(
-            TestContext.Current.CancellationToken
-        );
+        string? message = await response.Content.ReadFromJsonAsync<string>(TestCancellationToken);
         Assert.Equal("Email is required.", message);
     }
 
@@ -140,14 +137,12 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-        string? message = await response.Content.ReadFromJsonAsync<string>(
-            TestContext.Current.CancellationToken
-        );
+        string? message = await response.Content.ReadFromJsonAsync<string>(TestCancellationToken);
         Assert.Equal("Password must be at least 8 characters long.", message);
     }
 
@@ -159,7 +154,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             RegisterPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -174,13 +169,13 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             LoginPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         LoginResponse? body = await response.Content.ReadFromJsonAsync<LoginResponse>(
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
         Assert.NotNull(body);
         Assert.Equal(registered.Name, body.User.Name);
@@ -199,7 +194,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             LoginPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -214,7 +209,7 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             LoginPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -231,17 +226,12 @@ public class AuthEndpointsTests(ApiFactory factory) : IClassFixture<ApiFactory>
         HttpResponseMessage response = await _client.PostAsJsonAsync(
             LoginPath,
             request,
-            TestContext.Current.CancellationToken
+            TestCancellationToken
         );
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-        string? message = await response.Content.ReadFromJsonAsync<string>(
-            TestContext.Current.CancellationToken
-        );
-        LoginResponse? body = await response.Content.ReadFromJsonAsync<LoginResponse>(
-            TestContext.Current.CancellationToken
-        );
+        string? message = await response.Content.ReadFromJsonAsync<string>(TestCancellationToken);
         Assert.Equal("Email is required.", message);
     }
 }

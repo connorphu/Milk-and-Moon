@@ -25,6 +25,8 @@ public static class BabiesEndpoints
 
         List<Baby> babies = await dbContext
             .Babies.Where(b => b.UserId == userId && b.DeletedAt == null)
+            .OrderBy(b => b.CreatedAt)
+            .ThenBy(b => b.Id)
             .ToListAsync();
 
         List<BabyResponse> babyResponses = babies
@@ -90,9 +92,9 @@ public static class BabiesEndpoints
         ClaimsPrincipal user
     )
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
+        if (request.Name is not null && string.IsNullOrWhiteSpace(request.Name))
         {
-            return Results.BadRequest("Baby name is required.");
+            return Results.BadRequest("Baby name cannot be empty.");
         }
 
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
