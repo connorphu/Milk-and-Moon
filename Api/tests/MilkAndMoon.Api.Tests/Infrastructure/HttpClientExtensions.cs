@@ -15,7 +15,7 @@ public static class HttpClientExtensions
         DateOnly? dateOfBirth = null
     )
     {
-        CreateBabyRequest request = new(name, dateOfBirth ?? new DateOnly(2026, 1, 1));
+        BabyRequest request = new(name, dateOfBirth ?? new DateOnly(2026, 1, 1));
 
         HttpResponseMessage createResponse = await client.PostAsJsonAsync(
             BabiesUrl,

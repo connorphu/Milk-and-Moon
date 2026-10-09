@@ -1,3 +1,3 @@
 namespace MilkAndMoon.Api.Contracts.Babies;
 
-public record CreateBabyRequest(string Name, DateOnly DateOfBirth);
+public record BabyRequest(string Name, DateOnly DateOfBirth);
