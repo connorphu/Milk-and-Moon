@@ -56,9 +56,9 @@ public static class HttpClientExtensions
     public static Task<DiaperLogResponse> CreateDiaperLogAsync(
         this HttpClient client,
         Guid babyId,
-        CreateDiaperLogRequest? request = null
+        DiaperLogRequest? request = null
     ) =>
-        client.PostCreatedAsync<CreateDiaperLogRequest, DiaperLogResponse>(
+        client.PostCreatedAsync<DiaperLogRequest, DiaperLogResponse>(
             DiaperLogsUrl(babyId),
             request ?? TestRequests.DiaperLog
         );

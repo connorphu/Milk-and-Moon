@@ -4,7 +4,7 @@ namespace MilkAndMoon.Api.Tests.Infrastructure;
 
 public static class TestRequests
 {
-    public static CreateDiaperLogRequest DiaperLog =>
+    public static DiaperLogRequest DiaperLog =>
         new(
             "America/Chicago",
             "wet",
@@ -17,15 +17,16 @@ public static class TestRequests
             new DateTimeOffset(2026, 11, 23, 14, 30, 0, TimeSpan.Zero)
         );
 
-    public static UpdateDiaperLogRequest UpdateDiaperLog =>
+    public static DiaperLogRequest UpdateDiaperLog =>
         new(
-            "America/Chicago",
+            "America/New_York",
             "both",
             "light yellow",
             ["yellow"],
             ["seedy"],
             "mild",
             ["back"],
-            "test note"
+            "test note",
+            new DateTimeOffset(2026, 11, 23, 14, 30, 0, TimeSpan.Zero)
         );
 }
