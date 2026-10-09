@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using MilkAndMoon.Api.Contracts.Babies;
+using MilkAndMoon.Api.Contracts.DiaperLogs;
 using static MilkAndMoon.Api.Tests.Infrastructure.Routes;
 using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
@@ -30,4 +31,35 @@ public static class HttpClientExtensions
 
         return baby;
     }
+
+    public static async Task<TResponse> PostCreatedAsync<TRequest, TResponse>(
+        this HttpClient client,
+        string url,
+        TRequest request
+    )
+    {
+        HttpResponseMessage response = await client.PostAsJsonAsync(
+            url,
+            request,
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+
+        TResponse? body = await response.Content.ReadFromJsonAsync<TResponse>(
+            TestCancellationToken
+        );
+        Assert.NotNull(body);
+
+        return body;
+    }
+
+    public static Task<DiaperLogResponse> CreateDiaperLogAsync(
+        this HttpClient client,
+        Guid babyId,
+        CreateDiaperLogRequest? request = null
+    ) =>
+        client.PostCreatedAsync<CreateDiaperLogRequest, DiaperLogResponse>(
+            DiaperLogsUrl(babyId),
+            request ?? TestRequests.DiaperLog
+        );
 }

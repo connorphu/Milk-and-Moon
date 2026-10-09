@@ -27,10 +27,17 @@ public static class DiaperLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+        bool babyExists = await dbContext.Babies.AnyAsync(b =>
+            b.Id == babyId && b.UserId == userId && b.DeletedAt == null
+        );
+
+        if (!babyExists)
+        {
+            return Results.NotFound();
+        }
+
         List<DiaperLog> diaperLogs = await dbContext
-            .DiaperLogs.Where(d =>
-                d.BabyId == babyId && d.Baby.UserId == userId && d.Baby.DeletedAt == null
-            )
+            .DiaperLogs.Where(d => d.BabyId == babyId && d.Baby.DeletedAt == null)
             .ToListAsync();
 
         List<DiaperLogResponse> diaperLogResponses = diaperLogs
@@ -83,6 +90,7 @@ public static class DiaperLogsEndpoints
             Rash = request.Rash,
             RashLocation = request.RashLocation,
             Notes = request.Notes,
+            StartTime = request.StartTime,
         };
 
         dbContext.DiaperLogs.Add(diaperLog);

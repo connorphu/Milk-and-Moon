@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MilkAndMoon.Api.Data;
 using MilkAndMoon.Api.Models;
 using MilkAndMoon.Api.Services;
@@ -19,6 +20,12 @@ public class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         builder.UseSetting("ConnectionStrings:MoonAndMilkDb", _database.GetConnectionString());
         builder.UseSetting("Jwt:SigningKey", "test-signing-key-that-is-at-least-32-bytes-long");
+
+        builder.ConfigureLogging(logging =>
+        {
+            logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+            logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Warning);
+        });
     }
 
     public async ValueTask InitializeAsync()
