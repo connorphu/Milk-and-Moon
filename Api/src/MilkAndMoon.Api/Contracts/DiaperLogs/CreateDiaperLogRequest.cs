@@ -8,5 +8,6 @@ public record CreateDiaperLogRequest(
     string[] StoolTexture,
     string? Rash,
     string[] RashLocation,
-    string Notes
+    string Notes,
+    DateTimeOffset StartTime
 );

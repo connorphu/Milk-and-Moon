@@ -4,6 +4,8 @@ public static class Routes
 {
     public const string BabiesUrl = "/babies";
 
+    public static string BabiesByIdUrl(Guid babyId) => $"{BabiesUrl}/{babyId}";
+
     public static string DiaperLogsUrl(Guid babyId) => $"{BabiesUrl}/{babyId}/diaper-logs";
 
     public static string DiaperLogsByIdUrl(Guid babyId, Guid id) => $"{DiaperLogsUrl(babyId)}/{id}";

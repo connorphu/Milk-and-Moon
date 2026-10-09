@@ -39,6 +39,7 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
         BabyResponse baby = await client.CreateBabyAsync();
         CreateDiaperLogRequest request = TestRequests.DiaperLog with
         {
+            DiaperType = "both",
             StoolColor = ["yellow"],
             StoolTexture = ["seedy"],
             Rash = "mild",
@@ -104,7 +105,7 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
         BabyResponse baby = await client.CreateBabyAsync();
 
         HttpResponseMessage deleteBabyResponse = await client.DeleteAsync(
-            $"{BabiesUrl}/{baby.Id}",
+            BabiesByIdUrl(baby.Id),
             TestCancellationToken
         );
         Assert.Equal(HttpStatusCode.NoContent, deleteBabyResponse.StatusCode);
@@ -116,5 +117,433 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
         );
 
         Assert.Equal(HttpStatusCode.NotFound, createResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogs_HasLogs_ReturnsAllLogs()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        BabyResponse otherBaby = await client.CreateBabyAsync();
+        DiaperLogResponse log1 = await client.CreateDiaperLogAsync(
+            baby.Id,
+            TestRequests.DiaperLog with
+            {
+                DiaperType = "both",
+            }
+        );
+        DiaperLogResponse log2 = await client.CreateDiaperLogAsync(
+            baby.Id,
+            TestRequests.DiaperLog with
+            {
+                PeeColor = "light yellow",
+            }
+        );
+        await client.CreateDiaperLogAsync(
+            otherBaby.Id,
+            TestRequests.DiaperLog with
+            {
+                Notes = "Other fellow",
+            }
+        );
+        List<DiaperLogResponse> expected = [log1, log2];
+
+        HttpResponseMessage response = await client.GetAsync(
+            DiaperLogsUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        List<DiaperLogResponse>? logs = await response.Content.ReadFromJsonAsync<
+            List<DiaperLogResponse>
+        >(TestCancellationToken);
+        Assert.NotNull(logs);
+        Assert.Equivalent(expected, logs, true);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogs_DeletedBaby_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(baby.Id);
+        List<DiaperLogResponse> expectedBeforeBabyDelete = [log];
+
+        HttpResponseMessage getLogsBeforeBabyDelete = await client.GetAsync(
+            DiaperLogsUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.OK, getLogsBeforeBabyDelete.StatusCode);
+
+        List<DiaperLogResponse>? logsBeforeBabyDelete =
+            await getLogsBeforeBabyDelete.Content.ReadFromJsonAsync<List<DiaperLogResponse>>(
+                TestCancellationToken
+            );
+        Assert.NotNull(logsBeforeBabyDelete);
+        Assert.Equivalent(expectedBeforeBabyDelete, logsBeforeBabyDelete);
+
+        HttpResponseMessage deleteBaby = await client.DeleteAsync(
+            BabiesByIdUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.NoContent, deleteBaby.StatusCode);
+
+        HttpResponseMessage getLogsAfterBabyDelete = await client.GetAsync(
+            DiaperLogsUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.NotFound, getLogsAfterBabyDelete.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogs_OtherUsersBaby_ReturnsNotFound()
+    {
+        HttpClient callerClient = await factory.CreateAuthenticatedClientAsync();
+        HttpClient otherClient = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse otherBaby = await otherClient.CreateBabyAsync();
+        await otherClient.CreateDiaperLogAsync(
+            otherBaby.Id,
+            TestRequests.DiaperLog with
+            {
+                PeeColor = "light yellow",
+            }
+        );
+
+        HttpResponseMessage response = await callerClient.GetAsync(
+            DiaperLogsUrl(otherBaby.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogs_NonExistentBaby_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+
+        HttpResponseMessage response = await client.GetAsync(
+            FakeDiaperLogsUrl,
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogById_OwnLog_ReturnsLog()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(
+            baby.Id,
+            TestRequests.DiaperLog with
+            {
+                Timezone = "America/Chicago",
+                DiaperType = "both",
+                PeeColor = "light yellow",
+                StoolColor = ["yellow"],
+                StoolTexture = ["seedy"],
+                Rash = "mild",
+                RashLocation = ["back"],
+                Notes = "test note",
+            }
+        );
+
+        HttpResponseMessage response = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        DiaperLogResponse? retrievedLog =
+            await response.Content.ReadFromJsonAsync<DiaperLogResponse>(TestCancellationToken);
+        Assert.NotNull(retrievedLog);
+        Assert.Equivalent(log, retrievedLog);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogById_NonExistentLog_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        await client.CreateDiaperLogAsync(baby.Id);
+
+        HttpResponseMessage response = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, Guid.NewGuid()),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogById_OtherUsersBaby_ReturnsNotFound()
+    {
+        HttpClient callerClient = await factory.CreateAuthenticatedClientAsync();
+        HttpClient otherClient = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse otherBaby = await otherClient.CreateBabyAsync();
+        DiaperLogResponse otherLog = await otherClient.CreateDiaperLogAsync(otherBaby.Id);
+
+        HttpResponseMessage response = await callerClient.GetAsync(
+            DiaperLogsByIdUrl(otherBaby.Id, otherLog.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogById_MultipleBabies_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync("Oldest");
+        BabyResponse otherBaby = await client.CreateBabyAsync("Youngest");
+        DiaperLogResponse otherBabyLog = await client.CreateDiaperLogAsync(otherBaby.Id);
+
+        HttpResponseMessage response = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, otherBabyLog.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetDiaperLogById_DeletedBaby_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(baby.Id);
+
+        HttpResponseMessage deleteBabyResponse = await client.DeleteAsync(
+            BabiesByIdUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.NoContent, deleteBabyResponse.StatusCode);
+
+        HttpResponseMessage response = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDiaperLog_OwnLog_ReturnsUpdatedLog()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(baby.Id);
+        UpdateDiaperLogRequest updateRequest = new(
+            "America/Chicago",
+            "both",
+            "clear",
+            ["yellow"],
+            ["seedy"],
+            "mild",
+            ["back"],
+            "test note"
+        );
+
+        HttpResponseMessage updateResponse = await client.PatchAsJsonAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            updateRequest,
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
+
+        DiaperLogResponse? updatedLog =
+            await updateResponse.Content.ReadFromJsonAsync<DiaperLogResponse>(
+                TestCancellationToken
+            );
+        Assert.NotNull(updatedLog);
+
+        HttpResponseMessage getResponse = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
+
+        DiaperLogResponse expected = log with
+        {
+            Timezone = "America/Chicago",
+            DiaperType = "both",
+            PeeColor = "clear",
+            StoolColor = ["yellow"],
+            StoolTexture = ["seedy"],
+            Rash = "mild",
+            RashLocation = ["back"],
+            Notes = "test note",
+        };
+        DiaperLogResponse? retrievedLog =
+            await getResponse.Content.ReadFromJsonAsync<DiaperLogResponse>(TestCancellationToken);
+
+        Assert.NotNull(retrievedLog);
+        Assert.Equivalent(expected, retrievedLog);
+    }
+
+    [Fact]
+    public async Task UpdateDiaperLog_NonExistentLog_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        UpdateDiaperLogRequest updateRequest = TestRequests.UpdateDiaperLog;
+
+        HttpResponseMessage response = await client.PatchAsJsonAsync(
+            DiaperLogsByIdUrl(baby.Id, Guid.NewGuid()),
+            updateRequest,
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDiaperLog_OtherUsersBaby_ReturnsNotFound()
+    {
+        HttpClient callerClient = await factory.CreateAuthenticatedClientAsync();
+        HttpClient otherClient = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse otherBaby = await otherClient.CreateBabyAsync();
+        DiaperLogResponse otherLog = await otherClient.CreateDiaperLogAsync(otherBaby.Id);
+        UpdateDiaperLogRequest updateRequest = TestRequests.UpdateDiaperLog;
+
+        HttpResponseMessage response = await callerClient.PatchAsJsonAsync(
+            DiaperLogsByIdUrl(otherBaby.Id, otherLog.Id),
+            updateRequest,
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDiaperLog_MultipleBabies_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        BabyResponse otherBaby = await client.CreateBabyAsync();
+        DiaperLogResponse otherLog = await client.CreateDiaperLogAsync(otherBaby.Id);
+        UpdateDiaperLogRequest updateRequest = TestRequests.UpdateDiaperLog;
+
+        HttpResponseMessage response = await client.PatchAsJsonAsync(
+            DiaperLogsByIdUrl(baby.Id, otherLog.Id),
+            updateRequest,
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDiaperLog_DeletedBaby_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(baby.Id);
+        UpdateDiaperLogRequest updateRequest = TestRequests.UpdateDiaperLog;
+
+        HttpResponseMessage deleteBabyResponse = await client.DeleteAsync(
+            BabiesByIdUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.NoContent, deleteBabyResponse.StatusCode);
+
+        HttpResponseMessage response = await client.PatchAsJsonAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            updateRequest,
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteDiaperLog_OwnLog_ReturnsNoContent()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(baby.Id);
+
+        HttpResponseMessage deleteLogResponse = await client.DeleteAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.NoContent, deleteLogResponse.StatusCode);
+
+        HttpResponseMessage response = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteDiaperLog_NonExistentLog_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+
+        HttpResponseMessage response = await client.DeleteAsync(
+            DiaperLogsByIdUrl(baby.Id, Guid.NewGuid()),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteDiaperLog_MultipleBabies_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        BabyResponse otherBaby = await client.CreateBabyAsync();
+        DiaperLogResponse otherLog = await client.CreateDiaperLogAsync(otherBaby.Id);
+
+        HttpResponseMessage response = await client.DeleteAsync(
+            DiaperLogsByIdUrl(baby.Id, otherLog.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteDiaperLog_OtherUsersBaby_ReturnsNotFound()
+    {
+        HttpClient callerClient = await factory.CreateAuthenticatedClientAsync();
+        HttpClient otherClient = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse otherBaby = await otherClient.CreateBabyAsync();
+        DiaperLogResponse otherLog = await otherClient.CreateDiaperLogAsync(otherBaby.Id);
+
+        HttpResponseMessage response = await callerClient.DeleteAsync(
+            DiaperLogsByIdUrl(otherBaby.Id, otherLog.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteDiaperLog_DeletedBaby_ReturnsNotFound()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(baby.Id);
+
+        HttpResponseMessage deleteBabyResponse = await client.DeleteAsync(
+            BabiesByIdUrl(baby.Id),
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.NoContent, deleteBabyResponse.StatusCode);
+
+        HttpResponseMessage response = await client.DeleteAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
