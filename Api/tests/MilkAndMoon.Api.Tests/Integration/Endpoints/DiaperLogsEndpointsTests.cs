@@ -464,6 +464,54 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
     }
 
     [Fact]
+    public async Task UpdateDiaperLog_EmptyValues_ClearsPreviousValues()
+    {
+        HttpClient client = await factory.CreateAuthenticatedClientAsync();
+        BabyResponse baby = await client.CreateBabyAsync();
+        DiaperLogResponse log = await client.CreateDiaperLogAsync(
+            baby.Id,
+            TestRequests.DiaperLog with
+            {
+                DiaperType = "both",
+                PeeColor = "light yellow",
+                StoolColor = ["yellow"],
+                StoolTexture = ["seedy"],
+                Rash = "mild",
+                RashLocation = ["back"],
+                Notes = "test note",
+            }
+        );
+
+        DiaperLogRequest updateRequest = TestRequests.DiaperLog with
+        {
+            DiaperType = "wet",
+            PeeColor = null,
+            StoolColor = [],
+            StoolTexture = [],
+            Rash = null,
+            RashLocation = [],
+            Notes = "",
+        };
+
+        HttpResponseMessage updateResponse = await client.PutAsJsonAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            updateRequest,
+            TestCancellationToken
+        );
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
+
+        HttpResponseMessage getResponse = await client.GetAsync(
+            DiaperLogsByIdUrl(baby.Id, log.Id),
+            TestCancellationToken
+        );
+        DiaperLogResponse? retrievedLog =
+            await getResponse.Content.ReadFromJsonAsync<DiaperLogResponse>(TestCancellationToken);
+
+        Assert.NotNull(retrievedLog);
+        Assert.Equivalent(updateRequest, retrievedLog);
+    }
+
+    [Fact]
     public async Task DeleteDiaperLog_OwnLog_ReturnsNoContent()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
