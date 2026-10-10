@@ -9,4 +9,8 @@ public static class Routes
     public static string DiaperLogsUrl(Guid babyId) => $"{BabiesUrl}/{babyId}/diaper-logs";
 
     public static string DiaperLogsByIdUrl(Guid babyId, Guid id) => $"{DiaperLogsUrl(babyId)}/{id}";
+
+    public static string FeedLogsUrl(Guid babyId) => $"{BabiesUrl}/{babyId}/feed-logs";
+
+    public static string FeedLogsByIdUrl(Guid babyId, Guid id) => $"{FeedLogsUrl(babyId)}/{id}";
 }

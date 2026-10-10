@@ -27,10 +27,17 @@ public static class FeedLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+        bool babyExists = await dbContext.Babies.AnyAsync(b =>
+            b.Id == babyId && b.UserId == userId && b.DeletedAt == null
+        );
+
+        if (!babyExists)
+        {
+            return Results.NotFound();
+        }
+
         List<FeedLog> feedLogs = await dbContext
-            .FeedLogs.Where(f =>
-                f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
-            )
+            .FeedLogs.Where(f => f.BabyId == babyId && f.Baby.DeletedAt == null)
             .ToListAsync();
 
         List<FeedLogResponse> feedLogResponses = feedLogs
