@@ -15,7 +15,7 @@ public static class BabiesEndpoints
         group.MapGet("/", GetBabiesAsync);
         group.MapPost("/", CreateBabyAsync);
         group.MapGet("/{id:guid}", GetBabyByIdAsync);
-        group.MapPatch("/{id:guid}", UpdateBabyAsync);
+        group.MapPut("/{id:guid}", UpdateBabyAsync);
         group.MapDelete("/{id:guid}", DeleteBabyAsync);
     }
 
@@ -37,7 +37,7 @@ public static class BabiesEndpoints
     }
 
     private static async Task<IResult> CreateBabyAsync(
-        CreateBabyRequest request,
+        BabyRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -87,12 +87,12 @@ public static class BabiesEndpoints
 
     private static async Task<IResult> UpdateBabyAsync(
         Guid id,
-        UpdateBabyRequest request,
+        BabyRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
     {
-        if (request.Name is not null && string.IsNullOrWhiteSpace(request.Name))
+        if (string.IsNullOrWhiteSpace(request.Name))
         {
             return Results.BadRequest("Baby name cannot be empty.");
         }
@@ -108,15 +108,8 @@ public static class BabiesEndpoints
             return Results.NotFound();
         }
 
-        if (request.Name is not null)
-        {
-            existingBaby.Name = request.Name;
-        }
-
-        if (request.DateOfBirth is not null)
-        {
-            existingBaby.DateOfBirth = request.DateOfBirth.Value;
-        }
+        existingBaby.Name = request.Name;
+        existingBaby.DateOfBirth = request.DateOfBirth;
 
         await dbContext.SaveChangesAsync();
 

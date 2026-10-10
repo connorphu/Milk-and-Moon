@@ -1,6 +1,6 @@
 namespace MilkAndMoon.Api.Contracts.PumpLogs;
 
-public record CreatePumpLogRequest(
+public record PumpLogRequest(
     string Timezone,
     decimal LeftAmount,
     decimal RightAmount,

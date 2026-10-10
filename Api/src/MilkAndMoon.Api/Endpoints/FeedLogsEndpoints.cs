@@ -15,7 +15,7 @@ public static class FeedLogsEndpoints
         group.MapGet("/", GetFeedLogsAsync);
         group.MapPost("/", CreateFeedLogAsync);
         group.MapGet("/{id:guid}", GetFeedLogByIdAsync);
-        group.MapPatch("/{id:guid}", UpdateFeedLogAsync);
+        group.MapPut("/{id:guid}", UpdateFeedLogAsync);
         group.MapDelete("/{id:guid}", DeleteFeedLogAsync);
     }
 
@@ -56,7 +56,7 @@ public static class FeedLogsEndpoints
 
     public static async Task<IResult> CreateFeedLogAsync(
         Guid babyId,
-        CreateFeedLogRequest request,
+        FeedLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -148,7 +148,7 @@ public static class FeedLogsEndpoints
     public static async Task<IResult> UpdateFeedLogAsync(
         Guid babyId,
         Guid id,
-        UpdateFeedLogRequest request,
+        FeedLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -164,15 +164,15 @@ public static class FeedLogsEndpoints
             return Results.NotFound();
         }
 
-        feedLog.Timezone = request.Timezone ?? feedLog.Timezone;
-        feedLog.BottleSize = request.BottleSize ?? feedLog.BottleSize;
-        feedLog.FeedType = request.FeedType ?? feedLog.FeedType;
-        feedLog.BreastSide = request.BreastSide ?? feedLog.BreastSide;
-        feedLog.MilkType = request.MilkType ?? feedLog.MilkType;
-        feedLog.MilkConsumed = request.MilkConsumed ?? feedLog.MilkConsumed;
-        feedLog.Notes = request.Notes ?? feedLog.Notes;
-        feedLog.StartTime = request.StartTime ?? feedLog.StartTime;
-        feedLog.EndTime = request.EndTime ?? feedLog.EndTime;
+        feedLog.Timezone = request.Timezone;
+        feedLog.BottleSize = request.BottleSize;
+        feedLog.FeedType = request.FeedType;
+        feedLog.BreastSide = request.BreastSide;
+        feedLog.MilkType = request.MilkType;
+        feedLog.MilkConsumed = request.MilkConsumed;
+        feedLog.Notes = request.Notes;
+        feedLog.StartTime = request.StartTime;
+        feedLog.EndTime = request.EndTime;
 
         await dbContext.SaveChangesAsync();
 

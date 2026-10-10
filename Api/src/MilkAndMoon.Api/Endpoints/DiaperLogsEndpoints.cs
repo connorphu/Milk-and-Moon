@@ -15,7 +15,7 @@ public static class DiaperLogsEndpoints
         group.MapGet("/", GetDiaperLogsAsync);
         group.MapPost("/", CreateDiaperLogAsync);
         group.MapGet("/{id:guid}", GetDiaperLogByIdAsync);
-        group.MapPatch("/{id:guid}", UpdateDiaperLogAsync);
+        group.MapPut("/{id:guid}", UpdateDiaperLogAsync);
         group.MapDelete("/{id:guid}", DeleteDiaperLogAsync);
     }
 
@@ -63,7 +63,7 @@ public static class DiaperLogsEndpoints
 
     public static async Task<IResult> CreateDiaperLogAsync(
         Guid babyId,
-        CreateDiaperLogRequest request,
+        DiaperLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -155,7 +155,7 @@ public static class DiaperLogsEndpoints
     public static async Task<IResult> UpdateDiaperLogAsync(
         Guid babyId,
         Guid id,
-        UpdateDiaperLogRequest request,
+        DiaperLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -171,14 +171,15 @@ public static class DiaperLogsEndpoints
             return Results.NotFound();
         }
 
-        diaperLog.Timezone = request.Timezone ?? diaperLog.Timezone;
-        diaperLog.DiaperType = request.DiaperType ?? diaperLog.DiaperType;
-        diaperLog.PeeColor = request.PeeColor ?? diaperLog.PeeColor;
-        diaperLog.StoolColor = request.StoolColor ?? diaperLog.StoolColor;
-        diaperLog.StoolTexture = request.StoolTexture ?? diaperLog.StoolTexture;
-        diaperLog.Rash = request.Rash ?? diaperLog.Rash;
-        diaperLog.RashLocation = request.RashLocation ?? diaperLog.RashLocation;
-        diaperLog.Notes = request.Notes ?? diaperLog.Notes;
+        diaperLog.Timezone = request.Timezone;
+        diaperLog.DiaperType = request.DiaperType;
+        diaperLog.PeeColor = request.PeeColor;
+        diaperLog.StoolColor = request.StoolColor;
+        diaperLog.StoolTexture = request.StoolTexture;
+        diaperLog.Rash = request.Rash;
+        diaperLog.RashLocation = request.RashLocation;
+        diaperLog.Notes = request.Notes;
+        diaperLog.StartTime = request.StartTime;
 
         await dbContext.SaveChangesAsync();
 

@@ -15,7 +15,7 @@ public static class SleepLogsEndpoints
         group.MapGet("/", GetSleepLogsAsync);
         group.MapPost("/", CreateSleepLogAsync);
         group.MapGet("/{id:guid}", GetSleepLogByIdAsync);
-        group.MapPatch("/{id:guid}", UpdateSleepLogAsync);
+        group.MapPut("/{id:guid}", UpdateSleepLogAsync);
         group.MapDelete("/{id:guid}", DeleteSleepLogAsync);
     }
 
@@ -53,7 +53,7 @@ public static class SleepLogsEndpoints
 
     public static async Task<IResult> CreateSleepLogAsync(
         Guid babyId,
-        CreateSleepLogRequest request,
+        SleepLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -136,7 +136,7 @@ public static class SleepLogsEndpoints
     public static async Task<IResult> UpdateSleepLogAsync(
         Guid babyId,
         Guid id,
-        UpdateSleepLogRequest request,
+        SleepLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -152,12 +152,12 @@ public static class SleepLogsEndpoints
             return Results.NotFound();
         }
 
-        sleepLog.Timezone = request.Timezone ?? sleepLog.Timezone;
-        sleepLog.Location = request.Location ?? sleepLog.Location;
-        sleepLog.WakeReasons = request.WakeReasons ?? sleepLog.WakeReasons;
-        sleepLog.Notes = request.Notes ?? sleepLog.Notes;
-        sleepLog.StartTime = request.StartTime ?? sleepLog.StartTime;
-        sleepLog.EndTime = request.EndTime ?? sleepLog.EndTime;
+        sleepLog.Timezone = request.Timezone;
+        sleepLog.Location = request.Location;
+        sleepLog.WakeReasons = request.WakeReasons;
+        sleepLog.Notes = request.Notes;
+        sleepLog.StartTime = request.StartTime;
+        sleepLog.EndTime = request.EndTime;
 
         await dbContext.SaveChangesAsync();
 

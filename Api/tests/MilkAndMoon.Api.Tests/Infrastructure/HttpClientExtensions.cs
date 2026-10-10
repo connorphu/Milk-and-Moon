@@ -15,7 +15,7 @@ public static class HttpClientExtensions
         DateOnly? dateOfBirth = null
     )
     {
-        CreateBabyRequest request = new(name, dateOfBirth ?? new DateOnly(2026, 1, 1));
+        BabyRequest request = new(name, dateOfBirth ?? new DateOnly(2026, 1, 1));
 
         HttpResponseMessage createResponse = await client.PostAsJsonAsync(
             BabiesUrl,
@@ -56,9 +56,9 @@ public static class HttpClientExtensions
     public static Task<DiaperLogResponse> CreateDiaperLogAsync(
         this HttpClient client,
         Guid babyId,
-        CreateDiaperLogRequest? request = null
+        DiaperLogRequest? request = null
     ) =>
-        client.PostCreatedAsync<CreateDiaperLogRequest, DiaperLogResponse>(
+        client.PostCreatedAsync<DiaperLogRequest, DiaperLogResponse>(
             DiaperLogsUrl(babyId),
             request ?? TestRequests.DiaperLog
         );

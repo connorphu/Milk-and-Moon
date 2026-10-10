@@ -20,7 +20,7 @@ public class BabiesEndpointsTests(ApiFactory factory)
     [InlineData("GET", BabiesUrl)]
     [InlineData("GET", FakeBabiesByIdUrl)]
     [InlineData("POST", BabiesUrl)]
-    [InlineData("PATCH", FakeBabiesByIdUrl)]
+    [InlineData("PUT", FakeBabiesByIdUrl)]
     [InlineData("DELETE", FakeBabiesByIdUrl)]
     public async Task AnyEndpoint_NoToken_ReturnsUnauthorized(string method, string url)
     {
@@ -37,7 +37,7 @@ public class BabiesEndpointsTests(ApiFactory factory)
     public async Task CreateBaby_ValidRequest_ReturnsCreatedBaby()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        CreateBabyRequest request = new("New Baby", new DateOnly(2026, 1, 1));
+        BabyRequest request = new("New Baby", new DateOnly(2026, 1, 1));
 
         HttpResponseMessage response = await client.PostAsJsonAsync(
             BabiesUrl,
@@ -65,7 +65,7 @@ public class BabiesEndpointsTests(ApiFactory factory)
     public async Task CreateBaby_EmptyOrWhitespaceName_ReturnsBadRequest(string? name)
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        CreateBabyRequest request = new(name!, new DateOnly(2026, 1, 1));
+        BabyRequest request = new(name!, new DateOnly(2026, 1, 1));
 
         HttpResponseMessage response = await client.PostAsJsonAsync(
             BabiesUrl,
@@ -219,9 +219,9 @@ public class BabiesEndpointsTests(ApiFactory factory)
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
         BabyResponse baby = await client.CreateBabyAsync();
-        UpdateBabyRequest request = new(name, null);
+        BabyRequest request = new(name, new DateOnly(2026, 4, 1));
 
-        HttpResponseMessage response = await client.PatchAsJsonAsync(
+        HttpResponseMessage response = await client.PutAsJsonAsync(
             BabiesByIdUrl(baby.Id),
             request,
             TestCancellationToken
@@ -233,57 +233,13 @@ public class BabiesEndpointsTests(ApiFactory factory)
     }
 
     [Fact]
-    public async Task UpdateBaby_OnlyName_UpdatesNameKeepsDateOfBirth()
-    {
-        HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        BabyResponse baby = await client.CreateBabyAsync();
-        UpdateBabyRequest request = new("New Name", null);
-
-        HttpResponseMessage response = await client.PatchAsJsonAsync(
-            BabiesByIdUrl(baby.Id),
-            request,
-            TestCancellationToken
-        );
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-        BabyResponse? updatedBaby = await response.Content.ReadFromJsonAsync<BabyResponse>(
-            TestCancellationToken
-        );
-        Assert.NotNull(updatedBaby);
-        Assert.Equal(request.Name, updatedBaby.Name);
-        Assert.Equal(baby.DateOfBirth, updatedBaby.DateOfBirth);
-    }
-
-    [Fact]
-    public async Task UpdateBaby_OnlyDateOfBirth_UpdatesDateKeepsName()
-    {
-        HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        BabyResponse baby = await client.CreateBabyAsync();
-        UpdateBabyRequest request = new(null, new DateOnly(2026, 4, 1));
-
-        HttpResponseMessage updateResponse = await client.PatchAsJsonAsync(
-            BabiesByIdUrl(baby.Id),
-            request,
-            TestCancellationToken
-        );
-        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-
-        BabyResponse? updatedBaby = await updateResponse.Content.ReadFromJsonAsync<BabyResponse>(
-            TestCancellationToken
-        );
-        Assert.NotNull(updatedBaby);
-        Assert.Equal(baby.Name, updatedBaby.Name);
-        Assert.Equal(request.DateOfBirth, updatedBaby.DateOfBirth);
-    }
-
-    [Fact]
     public async Task UpdateBaby_ValidRequest_ReturnsUpdatedBaby()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
         BabyResponse baby = await client.CreateBabyAsync();
-        UpdateBabyRequest request = new("Valid Name", new DateOnly(2026, 3, 2));
+        BabyRequest request = new("Valid Name", new DateOnly(2026, 3, 2));
 
-        HttpResponseMessage response = await client.PatchAsJsonAsync(
+        HttpResponseMessage response = await client.PutAsJsonAsync(
             BabiesByIdUrl(baby.Id),
             request,
             TestCancellationToken
@@ -318,9 +274,9 @@ public class BabiesEndpointsTests(ApiFactory factory)
     public async Task UpdateBaby_NonExistentId_ReturnsNotFound()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        UpdateBabyRequest request = new("Update", new DateOnly(2026, 9, 24));
+        BabyRequest request = new("Update", new DateOnly(2026, 9, 24));
 
-        HttpResponseMessage response = await client.PatchAsJsonAsync(
+        HttpResponseMessage response = await client.PutAsJsonAsync(
             FakeBabiesByIdUrl,
             request,
             TestCancellationToken
@@ -334,9 +290,9 @@ public class BabiesEndpointsTests(ApiFactory factory)
         HttpClient callerClient = await factory.CreateAuthenticatedClientAsync();
         HttpClient otherClient = await factory.CreateAuthenticatedClientAsync();
         BabyResponse otherBaby = await otherClient.CreateBabyAsync();
-        UpdateBabyRequest request = new("Update", new DateOnly(2026, 5, 4));
+        BabyRequest request = new("Update", new DateOnly(2026, 5, 4));
 
-        HttpResponseMessage response = await callerClient.PatchAsJsonAsync(
+        HttpResponseMessage response = await callerClient.PutAsJsonAsync(
             BabiesByIdUrl(otherBaby.Id),
             request,
             TestCancellationToken
@@ -361,7 +317,7 @@ public class BabiesEndpointsTests(ApiFactory factory)
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
         BabyResponse baby = await client.CreateBabyAsync();
-        UpdateBabyRequest request = new("Deleted", new DateOnly(2026, 1, 4));
+        BabyRequest request = new("Deleted", new DateOnly(2026, 1, 4));
 
         HttpResponseMessage deleteResponse = await client.DeleteAsync(
             BabiesByIdUrl(baby.Id),
@@ -369,12 +325,12 @@ public class BabiesEndpointsTests(ApiFactory factory)
         );
         Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
-        HttpResponseMessage patchResponse = await client.PatchAsJsonAsync(
+        HttpResponseMessage updateResponse = await client.PutAsJsonAsync(
             BabiesByIdUrl(baby.Id),
             request,
             TestCancellationToken
         );
-        Assert.Equal(HttpStatusCode.NotFound, patchResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, updateResponse.StatusCode);
     }
 
     [Fact]

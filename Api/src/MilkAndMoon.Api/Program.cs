@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using MilkAndMoon.Api.Data;
 using MilkAndMoon.Api.Endpoints;
 using MilkAndMoon.Api.Services;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
