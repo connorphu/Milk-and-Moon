@@ -15,7 +15,7 @@ public static class PumpLogsEndpoints
         group.MapGet("/", GetPumpLogsAsync);
         group.MapPost("/", CreatePumpLogAsync);
         group.MapGet("/{id:guid}", GetPumpLogByIdAsync);
-        group.MapPatch("/{id:guid}", UpdatePumpLogAsync);
+        group.MapPut("/{id:guid}", UpdatePumpLogAsync);
         group.MapDelete("/{id:guid}", DeletePumpLogAsync);
     }
 
@@ -44,7 +44,7 @@ public static class PumpLogsEndpoints
     }
 
     public static async Task<IResult> CreatePumpLogAsync(
-        CreatePumpLogRequest request,
+        PumpLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -112,7 +112,7 @@ public static class PumpLogsEndpoints
 
     public static async Task<IResult> UpdatePumpLogAsync(
         Guid id,
-        UpdatePumpLogRequest request,
+        PumpLogRequest request,
         AppDbContext dbContext,
         ClaimsPrincipal user
     )
@@ -128,12 +128,12 @@ public static class PumpLogsEndpoints
             return Results.NotFound();
         }
 
-        pumpLog.Timezone = request.Timezone ?? pumpLog.Timezone;
-        pumpLog.LeftAmount = request.LeftAmount ?? pumpLog.LeftAmount;
-        pumpLog.RightAmount = request.RightAmount ?? pumpLog.RightAmount;
-        pumpLog.Notes = request.Notes ?? pumpLog.Notes;
-        pumpLog.StartTime = request.StartTime ?? pumpLog.StartTime;
-        pumpLog.EndTime = request.EndTime ?? pumpLog.EndTime;
+        pumpLog.Timezone = request.Timezone;
+        pumpLog.LeftAmount = request.LeftAmount;
+        pumpLog.RightAmount = request.RightAmount;
+        pumpLog.Notes = request.Notes;
+        pumpLog.StartTime = request.StartTime;
+        pumpLog.EndTime = request.EndTime;
 
         await dbContext.SaveChangesAsync();
 
