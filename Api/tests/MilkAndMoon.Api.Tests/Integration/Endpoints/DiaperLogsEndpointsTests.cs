@@ -504,6 +504,8 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
             DiaperLogsByIdUrl(baby.Id, log.Id),
             TestCancellationToken
         );
+        Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
+
         DiaperLogResponse? retrievedLog =
             await getResponse.Content.ReadFromJsonAsync<DiaperLogResponse>(TestCancellationToken);
 
