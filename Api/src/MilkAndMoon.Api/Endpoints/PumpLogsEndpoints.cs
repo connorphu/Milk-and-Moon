@@ -51,6 +51,15 @@ public static class PumpLogsEndpoints
     {
         Guid currentUserId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+        bool userExists = await dbContext.Users.AnyAsync(u =>
+            u.Id == currentUserId && u.DeletedAt == null
+        );
+
+        if (!userExists)
+        {
+            return Results.Unauthorized();
+        }
+
         PumpLog pumpLog = new()
         {
             UserId = currentUserId,

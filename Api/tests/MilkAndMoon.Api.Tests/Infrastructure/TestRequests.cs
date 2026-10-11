@@ -1,5 +1,6 @@
 using MilkAndMoon.Api.Contracts.DiaperLogs;
 using MilkAndMoon.Api.Contracts.FeedLogs;
+using MilkAndMoon.Api.Contracts.PumpLogs;
 
 namespace MilkAndMoon.Api.Tests.Infrastructure;
 
@@ -55,5 +56,25 @@ public static class TestRequests
             "new note",
             new DateTimeOffset(2026, 4, 15, 20, 0, 0, TimeSpan.Zero),
             new DateTimeOffset(2026, 4, 15, 20, 30, 0, TimeSpan.Zero)
+        );
+
+    public static PumpLogRequest PumpLog =>
+        new(
+            "America/Chicago",
+            0,
+            0,
+            "",
+            new DateTimeOffset(2026, 11, 23, 14, 30, 0, TimeSpan.Zero),
+            null
+        );
+
+    public static PumpLogRequest FilledPumpLog =>
+        new(
+            "America/New_York",
+            3.5m,
+            4.5m,
+            "new note",
+            new DateTimeOffset(2026, 4, 15, 20, 0, 0, TimeSpan.Zero),
+            new DateTimeOffset(2026, 4, 15, 20, 20, 0, TimeSpan.Zero)
         );
 }
