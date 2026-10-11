@@ -27,6 +27,15 @@ public static class SleepLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+        bool babyExists = await dbContext.Babies.AnyAsync(b =>
+            b.Id == babyId && b.UserId == userId && b.DeletedAt == null
+        );
+
+        if (!babyExists)
+        {
+            return Results.NotFound();
+        }
+
         List<SleepLog> sleepLogs = await dbContext
             .SleepLogs.Where(s =>
                 s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
