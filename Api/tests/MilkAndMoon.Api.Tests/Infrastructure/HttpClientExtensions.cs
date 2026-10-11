@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using MilkAndMoon.Api.Contracts.Babies;
 using MilkAndMoon.Api.Contracts.DiaperLogs;
 using MilkAndMoon.Api.Contracts.FeedLogs;
+using MilkAndMoon.Api.Contracts.PumpLogs;
 using static MilkAndMoon.Api.Tests.Infrastructure.Routes;
 using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
@@ -72,5 +73,14 @@ public static class HttpClientExtensions
         client.PostCreatedAsync<FeedLogRequest, FeedLogResponse>(
             FeedLogsUrl(babyId),
             request ?? TestRequests.FeedLog
+        );
+
+    public static Task<PumpLogResponse> CreatePumpLogAsync(
+        this HttpClient client,
+        PumpLogRequest? request = null
+    ) =>
+        client.PostCreatedAsync<PumpLogRequest, PumpLogResponse>(
+            PumpLogsUrl,
+            request ?? TestRequests.PumpLog
         );
 }

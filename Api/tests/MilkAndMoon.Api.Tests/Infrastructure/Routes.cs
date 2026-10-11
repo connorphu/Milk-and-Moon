@@ -13,4 +13,8 @@ public static class Routes
     public static string FeedLogsUrl(Guid babyId) => $"{BabiesUrl}/{babyId}/feed-logs";
 
     public static string FeedLogsByIdUrl(Guid babyId, Guid id) => $"{FeedLogsUrl(babyId)}/{id}";
+
+    public const string PumpLogsUrl = "/pump-logs";
+
+    public static string PumpLogsByIdUrl(Guid id) => $"{PumpLogsUrl}/{id}";
 }
