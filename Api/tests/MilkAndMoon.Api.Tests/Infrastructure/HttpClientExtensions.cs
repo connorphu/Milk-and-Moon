@@ -4,6 +4,7 @@ using MilkAndMoon.Api.Contracts.Babies;
 using MilkAndMoon.Api.Contracts.DiaperLogs;
 using MilkAndMoon.Api.Contracts.FeedLogs;
 using MilkAndMoon.Api.Contracts.PumpLogs;
+using MilkAndMoon.Api.Contracts.SleepLogs;
 using static MilkAndMoon.Api.Tests.Infrastructure.Routes;
 using static MilkAndMoon.Api.Tests.Infrastructure.TestToken;
 
@@ -73,6 +74,16 @@ public static class HttpClientExtensions
         client.PostCreatedAsync<FeedLogRequest, FeedLogResponse>(
             FeedLogsUrl(babyId),
             request ?? TestRequests.FeedLog
+        );
+
+    public static Task<SleepLogResponse> CreateSleepLogAsync(
+        this HttpClient client,
+        Guid babyId,
+        SleepLogRequest? request = null
+    ) =>
+        client.PostCreatedAsync<SleepLogRequest, SleepLogResponse>(
+            SleepLogsUrl(babyId),
+            request ?? TestRequests.SleepLog
         );
 
     public static Task<PumpLogResponse> CreatePumpLogAsync(
