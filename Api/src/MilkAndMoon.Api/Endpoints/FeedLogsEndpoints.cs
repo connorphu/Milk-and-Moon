@@ -41,21 +41,7 @@ public static class FeedLogsEndpoints
             .ToListAsync();
 
         List<FeedLogResponse> feedLogResponses = feedLogs
-            .Select(f => new FeedLogResponse(
-                f.Id,
-                f.BabyId,
-                f.CreatedAt,
-                f.UpdatedAt,
-                f.Timezone,
-                f.BottleSize,
-                f.FeedType,
-                f.BreastSide,
-                f.MilkType,
-                f.MilkConsumed,
-                f.Notes,
-                f.StartTime,
-                f.EndTime
-            ))
+            .Select(FeedLogResponse.FromEntity)
             .ToList();
 
         return Results.Ok(feedLogResponses);
@@ -96,21 +82,7 @@ public static class FeedLogsEndpoints
         dbContext.FeedLogs.Add(feedLog);
         await dbContext.SaveChangesAsync();
 
-        FeedLogResponse feedLogResponse = new(
-            feedLog.Id,
-            feedLog.BabyId,
-            feedLog.CreatedAt,
-            feedLog.UpdatedAt,
-            feedLog.Timezone,
-            feedLog.BottleSize,
-            feedLog.FeedType,
-            feedLog.BreastSide,
-            feedLog.MilkType,
-            feedLog.MilkConsumed,
-            feedLog.Notes,
-            feedLog.StartTime,
-            feedLog.EndTime
-        );
+        FeedLogResponse feedLogResponse = FeedLogResponse.FromEntity(feedLog);
 
         return Results.Created($"/babies/{babyId}/feed-logs/{feedLog.Id}", feedLogResponse);
     }
@@ -133,21 +105,7 @@ public static class FeedLogsEndpoints
             return Results.NotFound();
         }
 
-        FeedLogResponse feedLogResponse = new(
-            feedLog.Id,
-            feedLog.BabyId,
-            feedLog.CreatedAt,
-            feedLog.UpdatedAt,
-            feedLog.Timezone,
-            feedLog.BottleSize,
-            feedLog.FeedType,
-            feedLog.BreastSide,
-            feedLog.MilkType,
-            feedLog.MilkConsumed,
-            feedLog.Notes,
-            feedLog.StartTime,
-            feedLog.EndTime
-        );
+        FeedLogResponse feedLogResponse = FeedLogResponse.FromEntity(feedLog);
 
         return Results.Ok(feedLogResponse);
     }
@@ -183,21 +141,7 @@ public static class FeedLogsEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        FeedLogResponse feedLogResponse = new(
-            feedLog.Id,
-            feedLog.BabyId,
-            feedLog.CreatedAt,
-            feedLog.UpdatedAt,
-            feedLog.Timezone,
-            feedLog.BottleSize,
-            feedLog.FeedType,
-            feedLog.BreastSide,
-            feedLog.MilkType,
-            feedLog.MilkConsumed,
-            feedLog.Notes,
-            feedLog.StartTime,
-            feedLog.EndTime
-        );
+        FeedLogResponse feedLogResponse = FeedLogResponse.FromEntity(feedLog);
 
         return Results.Ok(feedLogResponse);
     }
