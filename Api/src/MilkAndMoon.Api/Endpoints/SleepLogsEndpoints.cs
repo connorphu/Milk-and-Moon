@@ -43,18 +43,7 @@ public static class SleepLogsEndpoints
             .ToListAsync();
 
         SleepLogResponse[] sleepLogResponses = sleepLogs
-            .Select(s => new SleepLogResponse(
-                s.Id,
-                s.BabyId,
-                s.CreatedAt,
-                s.UpdatedAt,
-                s.Timezone,
-                s.Location,
-                s.WakeReasons,
-                s.Notes,
-                s.StartTime,
-                s.EndTime
-            ))
+            .Select(SleepLogResponse.FromEntity)
             .ToArray();
 
         return Results.Ok(sleepLogResponses);
@@ -92,18 +81,7 @@ public static class SleepLogsEndpoints
         dbContext.SleepLogs.Add(sleepLog);
         await dbContext.SaveChangesAsync();
 
-        SleepLogResponse sleepLogResponse = new(
-            sleepLog.Id,
-            sleepLog.BabyId,
-            sleepLog.CreatedAt,
-            sleepLog.UpdatedAt,
-            sleepLog.Timezone,
-            sleepLog.Location,
-            sleepLog.WakeReasons,
-            sleepLog.Notes,
-            sleepLog.StartTime,
-            sleepLog.EndTime
-        );
+        SleepLogResponse sleepLogResponse = SleepLogResponse.FromEntity(sleepLog);
 
         return Results.Created($"/babies/{babyId}/sleep-logs/{sleepLog.Id}", sleepLogResponse);
     }
@@ -126,18 +104,7 @@ public static class SleepLogsEndpoints
             return Results.NotFound();
         }
 
-        SleepLogResponse sleepLogResponse = new(
-            sleepLog.Id,
-            sleepLog.BabyId,
-            sleepLog.CreatedAt,
-            sleepLog.UpdatedAt,
-            sleepLog.Timezone,
-            sleepLog.Location,
-            sleepLog.WakeReasons,
-            sleepLog.Notes,
-            sleepLog.StartTime,
-            sleepLog.EndTime
-        );
+        SleepLogResponse sleepLogResponse = SleepLogResponse.FromEntity(sleepLog);
 
         return Results.Ok(sleepLogResponse);
     }
@@ -170,18 +137,7 @@ public static class SleepLogsEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        SleepLogResponse sleepLogResponse = new(
-            sleepLog.Id,
-            sleepLog.BabyId,
-            sleepLog.CreatedAt,
-            sleepLog.UpdatedAt,
-            sleepLog.Timezone,
-            sleepLog.Location,
-            sleepLog.WakeReasons,
-            sleepLog.Notes,
-            sleepLog.StartTime,
-            sleepLog.EndTime
-        );
+        SleepLogResponse sleepLogResponse = SleepLogResponse.FromEntity(sleepLog);
 
         return Results.Ok(sleepLogResponse);
     }
