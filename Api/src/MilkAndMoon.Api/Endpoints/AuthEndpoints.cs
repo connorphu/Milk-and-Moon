@@ -46,7 +46,7 @@ public static class AuthEndpoints
         dbContext.Users.Add(user);
         await dbContext.SaveChangesAsync();
 
-        UserResponse userResponse = new(user.Id, user.Name, user.Email, user.CreatedAt);
+        UserResponse userResponse = UserResponse.FromEntity(user);
 
         return Results.Created($"/users/{user.Id}", userResponse);
     }
@@ -69,7 +69,7 @@ public static class AuthEndpoints
             return Results.Unauthorized();
         }
 
-        UserResponse userResponse = new(user.Id, user.Name, user.Email, user.CreatedAt);
+        UserResponse userResponse = UserResponse.FromEntity(user);
         string token = tokenService.GenerateToken(user);
 
         return Results.Ok(new LoginResponse(userResponse, token));
