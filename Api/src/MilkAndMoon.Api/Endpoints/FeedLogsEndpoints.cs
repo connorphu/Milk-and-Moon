@@ -37,7 +37,8 @@ public static class FeedLogsEndpoints
         }
 
         List<FeedLog> feedLogs = await dbContext
-            .FeedLogs.Where(f => f.BabyId == babyId && f.Baby.DeletedAt == null)
+            .FeedLogs.Include(f => f.Baby)
+            .Where(f => f.BabyId == babyId && f.Baby.DeletedAt == null)
             .ToListAsync();
 
         List<FeedLogResponse> feedLogResponses = feedLogs
@@ -67,7 +68,7 @@ public static class FeedLogsEndpoints
 
         FeedLog feedLog = new()
         {
-            BabyId = babyId,
+            Baby = baby,
             Timezone = request.Timezone,
             BottleSize = request.BottleSize,
             FeedType = request.FeedType,
@@ -96,9 +97,14 @@ public static class FeedLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        FeedLog? feedLog = await dbContext.FeedLogs.FirstOrDefaultAsync(f =>
-            f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
-        );
+        FeedLog? feedLog = await dbContext
+            .FeedLogs.Include(f => f.Baby)
+            .FirstOrDefaultAsync(f =>
+                f.Id == id
+                && f.BabyId == babyId
+                && f.Baby.UserId == userId
+                && f.Baby.DeletedAt == null
+            );
 
         if (feedLog is null)
         {
@@ -120,9 +126,14 @@ public static class FeedLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        FeedLog? feedLog = await dbContext.FeedLogs.FirstOrDefaultAsync(f =>
-            f.Id == id && f.BabyId == babyId && f.Baby.UserId == userId && f.Baby.DeletedAt == null
-        );
+        FeedLog? feedLog = await dbContext
+            .FeedLogs.Include(f => f.Baby)
+            .FirstOrDefaultAsync(f =>
+                f.Id == id
+                && f.BabyId == babyId
+                && f.Baby.UserId == userId
+                && f.Baby.DeletedAt == null
+            );
 
         if (feedLog is null)
         {

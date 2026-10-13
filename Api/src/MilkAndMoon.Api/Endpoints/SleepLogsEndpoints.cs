@@ -37,9 +37,8 @@ public static class SleepLogsEndpoints
         }
 
         List<SleepLog> sleepLogs = await dbContext
-            .SleepLogs.Where(s =>
-                s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
-            )
+            .SleepLogs.Include(s => s.Baby)
+            .Where(s => s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null)
             .ToListAsync();
 
         SleepLogResponse[] sleepLogResponses = sleepLogs
@@ -69,7 +68,7 @@ public static class SleepLogsEndpoints
 
         SleepLog sleepLog = new()
         {
-            BabyId = babyId,
+            Baby = baby,
             Timezone = request.Timezone,
             Location = request.Location,
             WakeReasons = request.WakeReasons,
@@ -95,9 +94,14 @@ public static class SleepLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = await dbContext.SleepLogs.FirstOrDefaultAsync(s =>
-            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
-        );
+        SleepLog? sleepLog = await dbContext
+            .SleepLogs.Include(s => s.Baby)
+            .FirstOrDefaultAsync(s =>
+                s.Id == id
+                && s.BabyId == babyId
+                && s.Baby.UserId == userId
+                && s.Baby.DeletedAt == null
+            );
 
         if (sleepLog is null)
         {
@@ -119,9 +123,14 @@ public static class SleepLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = await dbContext.SleepLogs.FirstOrDefaultAsync(s =>
-            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
-        );
+        SleepLog? sleepLog = await dbContext
+            .SleepLogs.Include(s => s.Baby)
+            .FirstOrDefaultAsync(s =>
+                s.Id == id
+                && s.BabyId == babyId
+                && s.Baby.UserId == userId
+                && s.Baby.DeletedAt == null
+            );
 
         if (sleepLog is null)
         {

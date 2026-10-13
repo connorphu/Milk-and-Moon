@@ -37,7 +37,8 @@ public static class DiaperLogsEndpoints
         }
 
         List<DiaperLog> diaperLogs = await dbContext
-            .DiaperLogs.Where(d => d.BabyId == babyId && d.Baby.DeletedAt == null)
+            .DiaperLogs.Include(d => d.Baby)
+            .Where(d => d.BabyId == babyId && d.Baby.DeletedAt == null)
             .ToListAsync();
 
         List<DiaperLogResponse> diaperLogResponses = diaperLogs
@@ -67,7 +68,7 @@ public static class DiaperLogsEndpoints
 
         DiaperLog diaperLog = new()
         {
-            BabyId = babyId,
+            Baby = baby,
             Timezone = request.Timezone,
             DiaperType = request.DiaperType,
             PeeColor = request.PeeColor,
@@ -96,9 +97,14 @@ public static class DiaperLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        DiaperLog? diaperLog = await dbContext.DiaperLogs.FirstOrDefaultAsync(d =>
-            d.Id == id && d.BabyId == babyId && d.Baby.UserId == userId && d.Baby.DeletedAt == null
-        );
+        DiaperLog? diaperLog = await dbContext
+            .DiaperLogs.Include(d => d.Baby)
+            .FirstOrDefaultAsync(d =>
+                d.Id == id
+                && d.BabyId == babyId
+                && d.Baby.UserId == userId
+                && d.Baby.DeletedAt == null
+            );
 
         if (diaperLog is null)
         {
@@ -120,9 +126,14 @@ public static class DiaperLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        DiaperLog? diaperLog = await dbContext.DiaperLogs.FirstOrDefaultAsync(d =>
-            d.Id == id && d.BabyId == babyId && d.Baby.UserId == userId && d.Baby.DeletedAt == null
-        );
+        DiaperLog? diaperLog = await dbContext
+            .DiaperLogs.Include(d => d.Baby)
+            .FirstOrDefaultAsync(d =>
+                d.Id == id
+                && d.BabyId == babyId
+                && d.Baby.UserId == userId
+                && d.Baby.DeletedAt == null
+            );
 
         if (diaperLog is null)
         {

@@ -1,3 +1,4 @@
+using MilkAndMoon.Api.Contracts.Logs;
 using MilkAndMoon.Api.Models;
 
 namespace MilkAndMoon.Api.Contracts.DiaperLogs;
@@ -5,6 +6,7 @@ namespace MilkAndMoon.Api.Contracts.DiaperLogs;
 public record DiaperLogResponse(
     Guid Id,
     Guid BabyId,
+    string BabyName,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     string Timezone,
@@ -16,12 +18,13 @@ public record DiaperLogResponse(
     string[] RashLocation,
     string Notes,
     DateTimeOffset StartTime
-)
+) : LogResponse(StartTime)
 {
     public static DiaperLogResponse FromEntity(DiaperLog d) =>
         new(
             d.Id,
             d.BabyId,
+            d.Baby.Name,
             d.CreatedAt,
             d.UpdatedAt,
             d.Timezone,

@@ -1,3 +1,4 @@
+using MilkAndMoon.Api.Contracts.Logs;
 using MilkAndMoon.Api.Models;
 
 namespace MilkAndMoon.Api.Contracts.SleepLogs;
@@ -5,6 +6,7 @@ namespace MilkAndMoon.Api.Contracts.SleepLogs;
 public record SleepLogResponse(
     Guid Id,
     Guid BabyId,
+    string BabyName,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     string Timezone,
@@ -13,12 +15,13 @@ public record SleepLogResponse(
     string Notes,
     DateTimeOffset StartTime,
     DateTimeOffset? EndTime
-)
+) : LogResponse(StartTime)
 {
     public static SleepLogResponse FromEntity(SleepLog s) =>
         new(
             s.Id,
             s.BabyId,
+            s.Baby.Name,
             s.CreatedAt,
             s.UpdatedAt,
             s.Timezone,
