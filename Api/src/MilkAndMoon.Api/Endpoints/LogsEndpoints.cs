@@ -98,7 +98,7 @@ public static class LogsEndpoints
             .Concat<LogResponse>(diaperLogs)
             .Concat(sleepLogs)
             .Concat(pumpLogs)
-            .OrderByDescending(l => l.StartTime)
+            .OrderBy(l => l.StartTime)
             .ToList();
 
         return Results.Ok(dayLogEntries);
