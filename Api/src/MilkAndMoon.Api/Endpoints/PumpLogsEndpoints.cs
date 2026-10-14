@@ -28,16 +28,7 @@ public static class PumpLogsEndpoints
             .ToListAsync();
 
         List<PumpLogResponse> pumpLogResponses = pumpLogs
-            .Select(p => new PumpLogResponse(
-                p.Id,
-                p.UserId,
-                p.Timezone,
-                p.LeftAmount,
-                p.RightAmount,
-                p.Notes,
-                p.StartTime,
-                p.EndTime
-            ))
+            .Select(PumpLogResponse.FromEntity)
             .ToList();
 
         return Results.Ok(pumpLogResponses);
@@ -74,16 +65,7 @@ public static class PumpLogsEndpoints
         dbContext.PumpLogs.Add(pumpLog);
         await dbContext.SaveChangesAsync();
 
-        PumpLogResponse pumpLogResponse = new(
-            pumpLog.Id,
-            pumpLog.UserId,
-            pumpLog.Timezone,
-            pumpLog.LeftAmount,
-            pumpLog.RightAmount,
-            pumpLog.Notes,
-            pumpLog.StartTime,
-            pumpLog.EndTime
-        );
+        PumpLogResponse pumpLogResponse = PumpLogResponse.FromEntity(pumpLog);
 
         return Results.Created($"/pump-logs/{pumpLog.Id}", pumpLogResponse);
     }
@@ -105,16 +87,7 @@ public static class PumpLogsEndpoints
             return Results.NotFound();
         }
 
-        PumpLogResponse pumpLogResponse = new(
-            pumpLog.Id,
-            pumpLog.UserId,
-            pumpLog.Timezone,
-            pumpLog.LeftAmount,
-            pumpLog.RightAmount,
-            pumpLog.Notes,
-            pumpLog.StartTime,
-            pumpLog.EndTime
-        );
+        PumpLogResponse pumpLogResponse = PumpLogResponse.FromEntity(pumpLog);
 
         return Results.Ok(pumpLogResponse);
     }
@@ -146,16 +119,7 @@ public static class PumpLogsEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        PumpLogResponse pumpLogResponse = new(
-            pumpLog.Id,
-            pumpLog.UserId,
-            pumpLog.Timezone,
-            pumpLog.LeftAmount,
-            pumpLog.RightAmount,
-            pumpLog.Notes,
-            pumpLog.StartTime,
-            pumpLog.EndTime
-        );
+        PumpLogResponse pumpLogResponse = PumpLogResponse.FromEntity(pumpLog);
 
         return Results.Ok(pumpLogResponse);
     }

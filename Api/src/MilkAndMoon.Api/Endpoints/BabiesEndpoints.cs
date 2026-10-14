@@ -29,9 +29,7 @@ public static class BabiesEndpoints
             .ThenBy(b => b.Id)
             .ToListAsync();
 
-        List<BabyResponse> babyResponses = babies
-            .Select(b => new BabyResponse(b.Id, b.Name, b.DateOfBirth, b.CreatedAt))
-            .ToList();
+        List<BabyResponse> babyResponses = babies.Select(BabyResponse.FromEntity).ToList();
 
         return Results.Ok(babyResponses);
     }
@@ -58,7 +56,7 @@ public static class BabiesEndpoints
         dbContext.Babies.Add(baby);
         await dbContext.SaveChangesAsync();
 
-        BabyResponse babyResponse = new(baby.Id, baby.Name, baby.DateOfBirth, baby.CreatedAt);
+        BabyResponse babyResponse = BabyResponse.FromEntity(baby);
 
         return Results.Created($"/babies/{baby.Id}", babyResponse);
     }
@@ -80,7 +78,7 @@ public static class BabiesEndpoints
             return Results.NotFound();
         }
 
-        BabyResponse babyResponse = new(baby.Id, baby.Name, baby.DateOfBirth, baby.CreatedAt);
+        BabyResponse babyResponse = BabyResponse.FromEntity(baby);
 
         return Results.Ok(babyResponse);
     }
@@ -113,12 +111,7 @@ public static class BabiesEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        BabyResponse babyResponse = new(
-            existingBaby.Id,
-            existingBaby.Name,
-            existingBaby.DateOfBirth,
-            existingBaby.CreatedAt
-        );
+        BabyResponse babyResponse = BabyResponse.FromEntity(existingBaby);
 
         return Results.Ok(babyResponse);
     }

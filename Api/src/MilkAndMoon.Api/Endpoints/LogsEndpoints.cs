@@ -1,6 +1,10 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using MilkAndMoon.Api.Contracts.DiaperLogs;
+using MilkAndMoon.Api.Contracts.FeedLogs;
 using MilkAndMoon.Api.Contracts.Logs;
+using MilkAndMoon.Api.Contracts.PumpLogs;
+using MilkAndMoon.Api.Contracts.SleepLogs;
 using MilkAndMoon.Api.Data;
 
 namespace MilkAndMoon.Api.Endpoints;
@@ -41,103 +45,60 @@ public static class LogsEndpoints
             .Select(b => b.Id)
             .ToListAsync();
 
-        List<LogResponse> feedLogs = await dbContext
-            .FeedLogs.Where(f =>
-                babyIds.Contains(f.BabyId) && f.StartTime >= rangeStart && f.StartTime < rangeEnd
-            )
-            .Select(f => new LogResponse(
-                f.Id,
-                "feed",
-                f.CreatedAt,
-                f.UpdatedAt,
-                f.Timezone,
-                new
-                {
-                    BabyName = f.Baby.Name,
-                    f.FeedType,
-                    f.BreastSide,
-                    f.MilkType,
-                    f.MilkConsumed,
-                    f.Notes,
-                    f.StartTime,
-                    f.EndTime,
-                }
-            ))
-            .ToListAsync();
+        List<FeedLogResponse> feedLogs = (
+            await dbContext
+                .FeedLogs.Include(f => f.Baby)
+                .Where(f =>
+                    babyIds.Contains(f.BabyId)
+                    && f.StartTime >= rangeStart
+                    && f.StartTime < rangeEnd
+                )
+                .ToListAsync()
+        )
+            .Select(FeedLogResponse.FromEntity)
+            .ToList();
 
-        List<LogResponse> diaperLogs = await dbContext
-            .DiaperLogs.Where(d =>
-                babyIds.Contains(d.BabyId) && d.StartTime >= rangeStart && d.StartTime < rangeEnd
-            )
-            .Select(d => new LogResponse(
-                d.Id,
-                "diaper",
-                d.CreatedAt,
-                d.UpdatedAt,
-                d.Timezone,
-                new
-                {
-                    BabyName = d.Baby.Name,
-                    d.DiaperType,
-                    d.PeeColor,
-                    d.StoolColor,
-                    d.StoolTexture,
-                    d.Rash,
-                    d.RashLocation,
-                    d.Notes,
-                    d.StartTime,
-                }
-            ))
-            .ToListAsync();
+        List<DiaperLogResponse> diaperLogs = (
+            await dbContext
+                .DiaperLogs.Include(d => d.Baby)
+                .Where(d =>
+                    babyIds.Contains(d.BabyId)
+                    && d.StartTime >= rangeStart
+                    && d.StartTime < rangeEnd
+                )
+                .ToListAsync()
+        )
+            .Select(DiaperLogResponse.FromEntity)
+            .ToList();
 
-        List<LogResponse> sleepLogs = await dbContext
-            .SleepLogs.Where(s =>
-                babyIds.Contains(s.BabyId) && s.StartTime >= rangeStart && s.StartTime < rangeEnd
-            )
-            .Select(s => new LogResponse(
-                s.Id,
-                "sleep",
-                s.CreatedAt,
-                s.UpdatedAt,
-                s.Timezone,
-                new
-                {
-                    BabyName = s.Baby.Name,
-                    s.Location,
-                    s.WakeReasons,
-                    s.Notes,
-                    s.StartTime,
-                    s.EndTime,
-                }
-            ))
-            .ToListAsync();
+        List<SleepLogResponse> sleepLogs = (
+            await dbContext
+                .SleepLogs.Include(s => s.Baby)
+                .Where(s =>
+                    babyIds.Contains(s.BabyId)
+                    && s.StartTime >= rangeStart
+                    && s.StartTime < rangeEnd
+                )
+                .ToListAsync()
+        )
+            .Select(SleepLogResponse.FromEntity)
+            .ToList();
 
-        List<LogResponse> pumpLogs = await dbContext
-            .PumpLogs.Where(p =>
-                p.UserId == userId && p.StartTime >= rangeStart && p.StartTime < rangeEnd
-            )
-            .Select(p => new LogResponse(
-                p.Id,
-                "pump",
-                p.CreatedAt,
-                p.UpdatedAt,
-                p.Timezone,
-                new
-                {
-                    p.LeftAmount,
-                    p.RightAmount,
-                    p.StartTime,
-                    p.EndTime,
-                    p.Notes,
-                }
-            ))
-            .ToListAsync();
+        List<PumpLogResponse> pumpLogs = (
+            await dbContext
+                .PumpLogs.Where(p =>
+                    p.UserId == userId && p.StartTime >= rangeStart && p.StartTime < rangeEnd
+                )
+                .ToListAsync()
+        )
+            .Select(PumpLogResponse.FromEntity)
+            .ToList();
 
         List<LogResponse> dayLogEntries = feedLogs
-            .Concat(diaperLogs)
+            .Concat<LogResponse>(diaperLogs)
             .Concat(sleepLogs)
             .Concat(pumpLogs)
-            .OrderByDescending(l => l.CreatedAt)
+            .OrderBy(l => l.StartTime)
             .ToList();
 
         return Results.Ok(dayLogEntries);

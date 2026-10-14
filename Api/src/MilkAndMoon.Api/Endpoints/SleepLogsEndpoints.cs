@@ -37,24 +37,12 @@ public static class SleepLogsEndpoints
         }
 
         List<SleepLog> sleepLogs = await dbContext
-            .SleepLogs.Where(s =>
-                s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
-            )
+            .SleepLogs.Include(s => s.Baby)
+            .Where(s => s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null)
             .ToListAsync();
 
         SleepLogResponse[] sleepLogResponses = sleepLogs
-            .Select(s => new SleepLogResponse(
-                s.Id,
-                s.BabyId,
-                s.CreatedAt,
-                s.UpdatedAt,
-                s.Timezone,
-                s.Location,
-                s.WakeReasons,
-                s.Notes,
-                s.StartTime,
-                s.EndTime
-            ))
+            .Select(SleepLogResponse.FromEntity)
             .ToArray();
 
         return Results.Ok(sleepLogResponses);
@@ -80,7 +68,7 @@ public static class SleepLogsEndpoints
 
         SleepLog sleepLog = new()
         {
-            BabyId = babyId,
+            Baby = baby,
             Timezone = request.Timezone,
             Location = request.Location,
             WakeReasons = request.WakeReasons,
@@ -92,18 +80,7 @@ public static class SleepLogsEndpoints
         dbContext.SleepLogs.Add(sleepLog);
         await dbContext.SaveChangesAsync();
 
-        SleepLogResponse sleepLogResponse = new(
-            sleepLog.Id,
-            sleepLog.BabyId,
-            sleepLog.CreatedAt,
-            sleepLog.UpdatedAt,
-            sleepLog.Timezone,
-            sleepLog.Location,
-            sleepLog.WakeReasons,
-            sleepLog.Notes,
-            sleepLog.StartTime,
-            sleepLog.EndTime
-        );
+        SleepLogResponse sleepLogResponse = SleepLogResponse.FromEntity(sleepLog);
 
         return Results.Created($"/babies/{babyId}/sleep-logs/{sleepLog.Id}", sleepLogResponse);
     }
@@ -117,27 +94,21 @@ public static class SleepLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = await dbContext.SleepLogs.FirstOrDefaultAsync(s =>
-            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
-        );
+        SleepLog? sleepLog = await dbContext
+            .SleepLogs.Include(s => s.Baby)
+            .FirstOrDefaultAsync(s =>
+                s.Id == id
+                && s.BabyId == babyId
+                && s.Baby.UserId == userId
+                && s.Baby.DeletedAt == null
+            );
 
         if (sleepLog is null)
         {
             return Results.NotFound();
         }
 
-        SleepLogResponse sleepLogResponse = new(
-            sleepLog.Id,
-            sleepLog.BabyId,
-            sleepLog.CreatedAt,
-            sleepLog.UpdatedAt,
-            sleepLog.Timezone,
-            sleepLog.Location,
-            sleepLog.WakeReasons,
-            sleepLog.Notes,
-            sleepLog.StartTime,
-            sleepLog.EndTime
-        );
+        SleepLogResponse sleepLogResponse = SleepLogResponse.FromEntity(sleepLog);
 
         return Results.Ok(sleepLogResponse);
     }
@@ -152,9 +123,14 @@ public static class SleepLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        SleepLog? sleepLog = await dbContext.SleepLogs.FirstOrDefaultAsync(s =>
-            s.Id == id && s.BabyId == babyId && s.Baby.UserId == userId && s.Baby.DeletedAt == null
-        );
+        SleepLog? sleepLog = await dbContext
+            .SleepLogs.Include(s => s.Baby)
+            .FirstOrDefaultAsync(s =>
+                s.Id == id
+                && s.BabyId == babyId
+                && s.Baby.UserId == userId
+                && s.Baby.DeletedAt == null
+            );
 
         if (sleepLog is null)
         {
@@ -170,18 +146,7 @@ public static class SleepLogsEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        SleepLogResponse sleepLogResponse = new(
-            sleepLog.Id,
-            sleepLog.BabyId,
-            sleepLog.CreatedAt,
-            sleepLog.UpdatedAt,
-            sleepLog.Timezone,
-            sleepLog.Location,
-            sleepLog.WakeReasons,
-            sleepLog.Notes,
-            sleepLog.StartTime,
-            sleepLog.EndTime
-        );
+        SleepLogResponse sleepLogResponse = SleepLogResponse.FromEntity(sleepLog);
 
         return Results.Ok(sleepLogResponse);
     }

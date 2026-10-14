@@ -37,25 +37,12 @@ public static class DiaperLogsEndpoints
         }
 
         List<DiaperLog> diaperLogs = await dbContext
-            .DiaperLogs.Where(d => d.BabyId == babyId && d.Baby.DeletedAt == null)
+            .DiaperLogs.Include(d => d.Baby)
+            .Where(d => d.BabyId == babyId && d.Baby.DeletedAt == null)
             .ToListAsync();
 
         List<DiaperLogResponse> diaperLogResponses = diaperLogs
-            .Select(d => new DiaperLogResponse(
-                d.Id,
-                d.BabyId,
-                d.CreatedAt,
-                d.UpdatedAt,
-                d.Timezone,
-                d.DiaperType,
-                d.PeeColor,
-                d.StoolColor,
-                d.StoolTexture,
-                d.Rash,
-                d.RashLocation,
-                d.Notes,
-                d.StartTime
-            ))
+            .Select(DiaperLogResponse.FromEntity)
             .ToList();
 
         return Results.Ok(diaperLogResponses);
@@ -81,7 +68,7 @@ public static class DiaperLogsEndpoints
 
         DiaperLog diaperLog = new()
         {
-            BabyId = babyId,
+            Baby = baby,
             Timezone = request.Timezone,
             DiaperType = request.DiaperType,
             PeeColor = request.PeeColor,
@@ -96,21 +83,7 @@ public static class DiaperLogsEndpoints
         dbContext.DiaperLogs.Add(diaperLog);
         await dbContext.SaveChangesAsync();
 
-        DiaperLogResponse diaperLogResponse = new(
-            diaperLog.Id,
-            diaperLog.BabyId,
-            diaperLog.CreatedAt,
-            diaperLog.UpdatedAt,
-            diaperLog.Timezone,
-            diaperLog.DiaperType,
-            diaperLog.PeeColor,
-            diaperLog.StoolColor,
-            diaperLog.StoolTexture,
-            diaperLog.Rash,
-            diaperLog.RashLocation,
-            diaperLog.Notes,
-            diaperLog.StartTime
-        );
+        DiaperLogResponse diaperLogResponse = DiaperLogResponse.FromEntity(diaperLog);
 
         return Results.Created($"/babies/{babyId}/diaper-logs/{diaperLog.Id}", diaperLogResponse);
     }
@@ -124,30 +97,21 @@ public static class DiaperLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        DiaperLog? diaperLog = await dbContext.DiaperLogs.FirstOrDefaultAsync(d =>
-            d.Id == id && d.BabyId == babyId && d.Baby.UserId == userId && d.Baby.DeletedAt == null
-        );
+        DiaperLog? diaperLog = await dbContext
+            .DiaperLogs.Include(d => d.Baby)
+            .FirstOrDefaultAsync(d =>
+                d.Id == id
+                && d.BabyId == babyId
+                && d.Baby.UserId == userId
+                && d.Baby.DeletedAt == null
+            );
 
         if (diaperLog is null)
         {
             return Results.NotFound();
         }
 
-        DiaperLogResponse diaperLogResponse = new(
-            diaperLog.Id,
-            diaperLog.BabyId,
-            diaperLog.CreatedAt,
-            diaperLog.UpdatedAt,
-            diaperLog.Timezone,
-            diaperLog.DiaperType,
-            diaperLog.PeeColor,
-            diaperLog.StoolColor,
-            diaperLog.StoolTexture,
-            diaperLog.Rash,
-            diaperLog.RashLocation,
-            diaperLog.Notes,
-            diaperLog.StartTime
-        );
+        DiaperLogResponse diaperLogResponse = DiaperLogResponse.FromEntity(diaperLog);
 
         return Results.Ok(diaperLogResponse);
     }
@@ -162,9 +126,14 @@ public static class DiaperLogsEndpoints
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        DiaperLog? diaperLog = await dbContext.DiaperLogs.FirstOrDefaultAsync(d =>
-            d.Id == id && d.BabyId == babyId && d.Baby.UserId == userId && d.Baby.DeletedAt == null
-        );
+        DiaperLog? diaperLog = await dbContext
+            .DiaperLogs.Include(d => d.Baby)
+            .FirstOrDefaultAsync(d =>
+                d.Id == id
+                && d.BabyId == babyId
+                && d.Baby.UserId == userId
+                && d.Baby.DeletedAt == null
+            );
 
         if (diaperLog is null)
         {
@@ -183,21 +152,7 @@ public static class DiaperLogsEndpoints
 
         await dbContext.SaveChangesAsync();
 
-        DiaperLogResponse diaperLogResponse = new(
-            diaperLog.Id,
-            diaperLog.BabyId,
-            diaperLog.CreatedAt,
-            diaperLog.UpdatedAt,
-            diaperLog.Timezone,
-            diaperLog.DiaperType,
-            diaperLog.PeeColor,
-            diaperLog.StoolColor,
-            diaperLog.StoolTexture,
-            diaperLog.Rash,
-            diaperLog.RashLocation,
-            diaperLog.Notes,
-            diaperLog.StartTime
-        );
+        DiaperLogResponse diaperLogResponse = DiaperLogResponse.FromEntity(diaperLog);
 
         return Results.Ok(diaperLogResponse);
     }
