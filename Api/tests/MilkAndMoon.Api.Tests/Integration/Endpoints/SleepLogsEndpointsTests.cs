@@ -57,6 +57,7 @@ public class SleepLogsEndpointsTests(ApiFactory factory)
         Assert.Equivalent(request, sleepLog);
         Assert.NotEqual(Guid.Empty, sleepLog.Id);
         Assert.NotEqual(default, sleepLog.CreatedAt);
+        Assert.Equal(baby.Name, sleepLog.BabyName);
         Assert.Equal(
             SleepLogsByIdUrl(baby.Id, sleepLog.Id),
             response.Headers.Location?.OriginalString
@@ -118,8 +119,8 @@ public class SleepLogsEndpointsTests(ApiFactory factory)
     public async Task GetSleepLogs_HasLogs_ReturnsAllLogs()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        BabyResponse baby = await client.CreateBabyAsync();
-        BabyResponse otherBaby = await client.CreateBabyAsync();
+        BabyResponse baby = await client.CreateBabyAsync("Oldest");
+        BabyResponse otherBaby = await client.CreateBabyAsync("Youngest");
         SleepLogResponse log1 = await client.CreateSleepLogAsync(
             baby.Id,
             TestRequests.SleepLog with
@@ -156,6 +157,7 @@ public class SleepLogsEndpointsTests(ApiFactory factory)
         >(TestCancellationToken);
         Assert.NotNull(logs);
         Assert.Equivalent(expected, logs, true);
+        Assert.All(logs, l => Assert.Equal(baby.Name, l.BabyName));
     }
 
     [Fact]

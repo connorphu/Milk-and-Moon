@@ -58,6 +58,7 @@ public class FeedLogsEndpointsTests(ApiFactory factory)
         Assert.Equivalent(request, feedLog);
         Assert.NotEqual(Guid.Empty, feedLog.Id);
         Assert.NotEqual(default, feedLog.CreatedAt);
+        Assert.Equal(baby.Name, feedLog.BabyName);
         Assert.Equal(
             FeedLogsByIdUrl(baby.Id, feedLog.Id),
             response.Headers.Location?.OriginalString
@@ -119,8 +120,8 @@ public class FeedLogsEndpointsTests(ApiFactory factory)
     public async Task GetFeedLogs_HasLogs_ReturnsAllLogs()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        BabyResponse baby = await client.CreateBabyAsync();
-        BabyResponse otherBaby = await client.CreateBabyAsync();
+        BabyResponse baby = await client.CreateBabyAsync("Oldest");
+        BabyResponse otherBaby = await client.CreateBabyAsync("Youngest");
         FeedLogResponse log1 = await client.CreateFeedLogAsync(
             baby.Id,
             TestRequests.FeedLog with
@@ -158,6 +159,7 @@ public class FeedLogsEndpointsTests(ApiFactory factory)
         >(TestCancellationToken);
         Assert.NotNull(logs);
         Assert.Equivalent(expected, logs, true);
+        Assert.All(logs, l => Assert.Equal(baby.Name, l.BabyName));
     }
 
     [Fact]
