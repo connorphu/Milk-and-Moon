@@ -62,6 +62,7 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
         Assert.Equivalent(request, diaperLog);
         Assert.NotEqual(Guid.Empty, diaperLog.Id);
         Assert.NotEqual(default, diaperLog.CreatedAt);
+        Assert.Equal(baby.Name, diaperLog.BabyName);
         Assert.Equal(
             DiaperLogsByIdUrl(baby.Id, diaperLog.Id),
             createdResponse.Headers.Location?.OriginalString
@@ -123,8 +124,8 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
     public async Task GetDiaperLogs_HasLogs_ReturnsAllLogs()
     {
         HttpClient client = await factory.CreateAuthenticatedClientAsync();
-        BabyResponse baby = await client.CreateBabyAsync();
-        BabyResponse otherBaby = await client.CreateBabyAsync();
+        BabyResponse baby = await client.CreateBabyAsync("Oldest");
+        BabyResponse otherBaby = await client.CreateBabyAsync("Youngest");
         DiaperLogResponse log1 = await client.CreateDiaperLogAsync(
             baby.Id,
             TestRequests.DiaperLog with
@@ -159,6 +160,7 @@ public class DiaperLogsEndpointsTests(ApiFactory factory)
         >(TestCancellationToken);
         Assert.NotNull(logs);
         Assert.Equivalent(expected, logs, true);
+        Assert.All(logs, l => Assert.Equal(baby.Name, l.BabyName));
     }
 
     [Fact]
