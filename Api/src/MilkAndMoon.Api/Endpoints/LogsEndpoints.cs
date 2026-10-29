@@ -27,10 +27,22 @@ public static class LogsEndpoints
     )
     {
         Guid userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(timezone);
+
+        if (startDate > endDate)
+        {
+            return Results.BadRequest("Invalid date range.");
+        }
+
+        if (!TimeZoneInfo.TryFindSystemTimeZoneById(timezone, out TimeZoneInfo? tz))
+        {
+            return Results.BadRequest($"Unknown timezone '{timezone}'.");
+        }
 
         DateTime startLocal = startDate.ToDateTime(TimeOnly.MinValue);
-        DateTimeOffset rangeStart = new DateTimeOffset(startLocal, tz.GetUtcOffset(startLocal));
+        DateTimeOffset rangeStart = new DateTimeOffset(
+            startLocal,
+            tz.GetUtcOffset(startLocal)
+        ).ToUniversalTime();
 
         DateTime endLocalExclusive = (endDate ?? startDate)
             .AddDays(1)
@@ -38,7 +50,7 @@ public static class LogsEndpoints
         DateTimeOffset rangeEnd = new DateTimeOffset(
             endLocalExclusive,
             tz.GetUtcOffset(endLocalExclusive)
-        );
+        ).ToUniversalTime();
 
         List<Guid> babyIds = await dbContext
             .Babies.Where(b => b.UserId == userId && b.DeletedAt == null)

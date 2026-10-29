@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.WebUtilities;
+
 namespace MilkAndMoon.Api.Tests.Infrastructure;
 
 public static class Routes
@@ -21,4 +23,17 @@ public static class Routes
     public const string PumpLogsUrl = "/pump-logs";
 
     public static string PumpLogsByIdUrl(Guid id) => $"{PumpLogsUrl}/{id}";
+
+    public const string LogsUrl = "/logs";
+
+    public static string LogsQueryUrl(DateOnly startDate, DateOnly? endDate, string? timezone) =>
+        QueryHelpers.AddQueryString(
+            LogsUrl,
+            new Dictionary<string, string?>
+            {
+                ["startDate"] = startDate.ToString("yyyy-MM-dd"),
+                ["endDate"] = endDate?.ToString("yyyy-MM-dd"),
+                ["timezone"] = timezone,
+            }
+        );
 }
