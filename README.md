@@ -220,6 +220,7 @@ Reducing taps isn't just a UI preference — it's part of the product requiremen
 * **TypeScript**
 * Standalone components
 * Angular Signals
+* Angular Material
 * Server-side rendering (SSR)
 * Responsive / mobile-first UI
 
@@ -228,7 +229,7 @@ Reducing taps isn't just a UI preference — it's part of the product requiremen
 * **ASP.NET Core / .NET 10**
 * REST APIs
 * Entity Framework Core
-* Relational data persistence
+* PostgreSQL
 
 ### Development
 
@@ -243,6 +244,7 @@ Reducing taps isn't just a UI preference — it's part of the product requiremen
 ```text
 Api/     ASP.NET Core Web API (MilkAndMoon.Api)
 Web/     Angular application (SSR-enabled)
+docs/    Design decisions and other project documentation
 ```
 
 The `Web` application is organized primarily by feature:
@@ -336,6 +338,20 @@ That means prioritizing:
 * Sensible defaults
 * Forgiving editing workflows
 * One-handed interaction
+
+---
+
+## ⚖️ Key Design Decisions
+
+A baby tracker looks like simple CRUD, but the data model hid more decisions than I expected. The highlights:
+
+* **One table per log type** — the database enforces each type's required fields, instead of one wide table full of nulls
+* **GUID keys** — every log type merges into a single timeline without ID collisions
+* **UTC timestamps plus a stored time zone** — every log keeps the exact moment and the local clock time, so a 3 a.m. feed still reads as 3 a.m. after travel
+* **Soft delete for babies** — a sleep-deprived parent's mistake shouldn't erase a baby's history (a 30-day restore window and purge are planned)
+* **Validation by layer** — allowed values enforced by the database with CHECK constraints, with API and frontend validation growing alongside
+
+The full reasoning, the alternatives I considered, and the known limitations are in [docs/design-decisions.md](docs/design-decisions.md).
 
 ---
 
