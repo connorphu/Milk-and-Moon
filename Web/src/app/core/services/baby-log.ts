@@ -3,10 +3,11 @@ import { BabyLogModel } from '../models/baby-log'
 import { HttpClient } from '@angular/common/http'
 import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs'
 import { DateTime } from 'luxon'
+import { environment } from '../../../environments/environment'
 
 @Service()
 export class BabyLog {
-  private readonly url = 'http://localhost:3000/logs'
+  private readonly url = `${environment.jsonServer}/logs`
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
@@ -26,7 +27,7 @@ export class BabyLog {
   }
 
   editData(data: BabyLogModel) {
-    return this.http.put(this.url, data).pipe(
+    return this.http.put(`${this.url}/${data.id}`, data).pipe(
       tap(() => this.refresh$.next()),
       map(() => true),
       catchError((error) => {

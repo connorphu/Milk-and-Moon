@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { PumpTrackerDialog } from './pump-tracker-dialog'
+import { MatDialogRef } from '@angular/material/dialog'
 
 describe('PumpTrackerDialog', () => {
   let component: PumpTrackerDialog
@@ -8,7 +9,8 @@ describe('PumpTrackerDialog', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PumpTrackerDialog]
+      imports: [PumpTrackerDialog],
+      providers: [{ provide: MatDialogRef, useValue: { close: () => {} } }]
     }).compileComponents()
 
     fixture = TestBed.createComponent(PumpTrackerDialog)
