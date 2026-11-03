@@ -23,6 +23,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<TokenService>();
 
+builder.Services.AddCors(options =>
+    options.AddPolicy(
+        "Frontend",
+        policy => policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()
+    )
+);
+
 string jwtSigningKey =
     builder.Configuration.GetValue<string>("Jwt:SigningKey")
     ?? throw new InvalidOperationException("Jwt:SigningKey not configured.");
@@ -53,6 +60,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
