@@ -45,6 +45,7 @@ builder
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
         };
     });
 
