@@ -146,9 +146,39 @@ The database's unique index on email is the real guarantee against duplicate acc
 
 ---
 
+## 🔌 4. Frontend Data: From json-server to the Real API
+
+### Where it started
+
+I started building the Angular app before the .NET API existed. To work on the UI without waiting for a backend, the frontend ran against [`json-server`](https://github.com/typicode/json-server), a mock REST API backed by a local `db.json` file.
+
+- **Seed data:** a `db.template.json` was copied to `db.json` on `npm install`, so every fresh clone had sample logs to work with.
+- **Shaped like the future API:** as the API design took shape, I [reshaped the template](https://github.com/connorphu/Milk-and-Moon/commit/9c2167d) to look more like the planned ASP.NET endpoints, so the switch would need fewer frontend changes.
+
+### The switch
+
+Once the API was running with PostgreSQL and JWT authentication, the frontend moved over in [`e09a53e`](https://github.com/connorphu/Milk-and-Moon/commit/e09a53eb7643b7e593894c5422a82261b8c6d3e2) ([PR #161](https://github.com/connorphu/Milk-and-Moon/pull/161)):
+
+- The log service's URL changed from the hard-coded `http://localhost:3000/logs` to `environment.apiUrl`, so each environment can point at its own API.
+- The API gained a CORS policy, so the Angular dev server can call it from another port.
+
+After that, `json-server` was no longer used, so I removed it along with `db.json`, its template, and the seeding script. To see how the mock setup worked, browse the repository at that commit.
+
+### What I took from it
+
+| Worked well | Cost |
+|---|---|
+| The UI and the API could move forward independently | The mock and the real API drifted apart; for example, the Today page still sends json-server's `createdAt_like` query syntax, which the real API rejects |
+| Real-looking data made UI decisions concrete early | Mock data hides real-world behaviour: no authentication, validation errors, or slow responses |
+| Shaping the mock like the planned API made the switch small | Keeping the mock accurate is manual work that never ends |
+
+If I needed a mock again, I'd reach for something that shares the real API's contract, such as handlers built from the API's OpenAPI document, so drift shows up as a type error instead of a surprise.
+
+---
+
 ## 🚧 Known Limitations & Next Steps
 
-- **The Angular app currently runs against `json-server`, not the real API.** Connecting the two is the next major milestone.
+- **The Today page still uses json-server's query syntax.** It sends `createdAt_like` instead of the `startDate` the timeline endpoint requires, so the API rejects the request with a `400`, and the log service's error handling turns that into an empty list. This is planned as part of the log service rewrite.
 - **Duplicate email signups return a 500.** The unique index correctly rejects them, but the API doesn't catch the error yet. It should return a `409 Conflict` with a clear message, and point soft-deleted users to restore.
 - **Emails aren't normalized.** `Connor@example.com` and `connor@example.com` are currently treated as different accounts. The fix is lowercasing in the API, enforced by the database.
 - **No frontend form validation yet.**
