@@ -1,0 +1,28 @@
+.register-container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  border: 4px var(--mat-sys-primary) solid;
+  width: min(400px, 100%);
+}
+
+.register-form mat-form-field {
+  width: 100%;
+}
+
+.register-title {
+  font-size: x-large;
+}
+
+.register-login-link {
+  padding-top: 20px;
+}
