@@ -1,0 +1,33 @@
+<div class="register-container">
+  <form class="register-form" (submit)="onCreateAccount($event)">
+    <div class="register-title">Milk & Moon</div>
+    <div>Create your account</div>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [formField]="registerForm.name" />
+      @for (error of registerForm.name().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formField]="registerForm.email" />
+      @for (error of registerForm.email().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [formField]="registerForm.password" />
+      @for (error of registerForm.password().errors(); track error.kind) {
+        <mat-error>{{ error.message }}</mat-error>
+      }
+    </mat-form-field>
+    <button matButton="filled">Create Account</button>
+    <div class="register-login-link">
+      Already have an account? <a routerLink="/login">log in</a>
+    </div>
+  </form>
+</div>

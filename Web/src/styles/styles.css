@@ -2,6 +2,12 @@
 
 @import 'tailwindcss';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Calm, soft accent colors for each tracker type, shared across the app */
 :root {
   --tracker-feed: #c97a4a;

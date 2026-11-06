@@ -5,7 +5,13 @@ export const routes: Routes = [
   {
     path: '',
     canMatch: [guestGuard],
-    children: []
+    children: [
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./features/auth/register-page/register-page').then((m) => m.RegisterPageComponent)
+      }
+    ]
   },
   {
     path: '',
