@@ -7,7 +7,6 @@
     "api:format": "cd Api && dotnet csharpier format .",
     "web": "npm start --prefix Web",
     "web:install": "npm install --prefix Web",
-    "web:format": "npm run format --prefix Web",
-    "json-server": "npm run db --prefix Web"
+    "web:format": "npm run format --prefix Web"
   }
 }

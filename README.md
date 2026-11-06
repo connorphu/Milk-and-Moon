@@ -70,23 +70,9 @@ In a separate terminal:
 npm run web
 ```
 
-### Run the Local Mock API
+With both running, the Angular app calls the API at `http://localhost:5006`, which is set in [`Web/src/environments/environment.development.ts`](Web/src/environments/environment.development.ts).
 
-The Angular application currently uses a local `json-server` instance for development.
-
-In another terminal:
-
-```bash
-npm run json-server
-```
-
-The mock data is backed by:
-
-```text
-Web/db.json
-```
-
-For the current frontend experience, you'll typically have the Angular app and `json-server` running together.
+> The frontend originally ran against a `json-server` mock API. See [Design Decisions](docs/DesignDecisions.md#-4-frontend-data-from-json-server-to-the-real-api) for how the project moved to the real API.
 
 ---
 
@@ -221,7 +207,6 @@ Reducing taps isn't just a UI preference — it's part of the product requiremen
 * Standalone components
 * Angular Signals
 * Angular Material
-* Server-side rendering (SSR)
 * Responsive / mobile-first UI
 
 ### Backend
@@ -234,7 +219,6 @@ Reducing taps isn't just a UI preference — it's part of the product requiremen
 ### Development
 
 * npm workspace scripts
-* `json-server` for local mock data
 * Git / GitHub
 
 ---
@@ -243,7 +227,7 @@ Reducing taps isn't just a UI preference — it's part of the product requiremen
 
 ```text
 Api/     ASP.NET Core Web API (MilkAndMoon.Api)
-Web/     Angular application (SSR-enabled)
+Web/     Angular application
 docs/    Design decisions and other project documentation
 ```
 
@@ -351,7 +335,7 @@ A baby tracker looks like simple CRUD, but the data model hid more decisions tha
 * **Soft delete for babies** — a sleep-deprived parent's mistake shouldn't erase a baby's history (a 30-day restore window and purge are planned)
 * **Validation by layer** — allowed values enforced by the database with CHECK constraints, with API and frontend validation growing alongside
 
-The full reasoning, the alternatives I considered, and the known limitations are in [docs/design-decisions.md](docs/design-decisions.md).
+The full reasoning, the alternatives I considered, and the known limitations are in [docs/DesignDecisions.md](docs/DesignDecisions.md).
 
 ---
 

@@ -2,5 +2,4 @@ node_modules/
 dist/
 .angular/
 coverage/
-db.json
 package-lock.json
