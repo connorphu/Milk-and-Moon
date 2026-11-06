@@ -1,0 +1,24 @@
+<div class="login-container">
+  <form class="login-form" (submit)="onLoginAccount($event)">
+    <div class="login-title">Milk & Moon</div>
+    <div>Log in to your account</div>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [formField]="loginForm.email" />
+    </mat-form-field>
+    @for (error of loginForm.email().errors(); track error.kind) {
+      <mat-error>{{ error.message }}</mat-error>
+    }
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formField]="loginForm.password" />
+    </mat-form-field>
+    @for (error of loginForm.password().errors(); track error.kind) {
+      <mat-error>{{ error.message }}</mat-error>
+    }
+    <button matButton="filled">Log in</button>
+    <div class="login-register-link">
+      Need an account? <a routerLink="/register">Create account</a>
+    </div>
+  </form>
+</div>
