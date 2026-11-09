@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core'
-import { BabyLogModel } from '../models/baby-log'
+import { LogResponse } from '../models/log-response'
 import { HttpClient } from '@angular/common/http'
 import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs'
 import { DateTime } from 'luxon'
@@ -11,12 +11,12 @@ export class BabyLog {
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
-  loadData(id?: string, params?: Record<string, any>): Observable<BabyLogModel[]> {
+  loadData(id?: string, params?: Record<string, any>): Observable<LogResponse[]> {
     const endpoint = id ? `${this.url}/${id}` : this.url
     return this.refresh$.pipe(
       startWith(undefined),
       switchMap(() =>
-        this.http.get<BabyLogModel[]>(endpoint, params).pipe(
+        this.http.get<LogResponse[]>(endpoint, params).pipe(
           catchError((error) => {
             console.log(error)
             return of([])
@@ -26,7 +26,7 @@ export class BabyLog {
     )
   }
 
-  editData(data: BabyLogModel) {
+  editData(data: LogResponse) {
     return this.http.put(this.url, data).pipe(
       tap(() => this.refresh$.next()),
       map(() => true),
@@ -38,12 +38,12 @@ export class BabyLog {
   }
 
   track(type: 'feed' | 'diaper' | 'pump' | 'sleep', data: any) {
-    const model: BabyLogModel = {
+    const model: LogResponse = {
       trackerType: type,
       createdAt: DateTime.utc().toISO(),
       updatedAt: DateTime.utc().toISO(),
       timezone: DateTime.local().zoneName,
-      data: data
+      ...data
     }
     return this.http.post(this.url, model).pipe(
       tap(() => this.refresh$.next()),

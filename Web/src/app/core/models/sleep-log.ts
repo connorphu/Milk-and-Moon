@@ -4,7 +4,7 @@ export interface SleepTrackerData {
   startTime: string
   endTime: string
   location: string
-  wakeReason: string[]
+  wakeReasons: string[]
   notes: string
 }
 
