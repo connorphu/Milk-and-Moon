@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input'
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log'
 import { QuickNote } from '../../../../core/models/model'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { TrackerService } from '../../../../core/services/tracker'
 
 @Component({
   selector: 'app-diaper-tracker-dialog',
@@ -64,7 +64,7 @@ export class DiaperTrackerDialog {
   protected diaperForm = form(this.diaperModel)
   protected allSteps: DiaperStep[] = []
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   goBack() {
     this.diaperStepper().previous()
@@ -133,7 +133,7 @@ export class DiaperTrackerDialog {
   }
 
   onSave() {
-    this.babyLogService.track('diaper', this.diaperForm().value()).subscribe((succeed) => {
+    this.trackerService.track('diaper', this.diaperForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

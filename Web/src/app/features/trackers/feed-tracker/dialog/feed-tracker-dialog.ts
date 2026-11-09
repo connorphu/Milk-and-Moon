@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { TemplateName } from '../../../../shared/directives/template-name'
 import { FeedStep, FeedTrackerData } from '../../../../core/models/feed-log'
 import { QuickNote } from '../../../../core/models/model'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { TrackerService } from '../../../../core/services/tracker'
 
 @Component({
   selector: 'app-feed-form-dialog',
@@ -70,7 +70,7 @@ export class FeedTrackerDialog {
   protected feedForm = form(this.feedModel)
   protected allSteps: FeedStep[] = []
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   goBack() {
     this.feedStepper().previous()
@@ -112,7 +112,7 @@ export class FeedTrackerDialog {
   }
 
   onSave() {
-    this.babyLogService.track('feed', this.feedForm().value()).subscribe((succeed) => {
+    this.trackerService.track('feed', this.feedForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

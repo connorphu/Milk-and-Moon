@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { TemplateName } from '../../../../shared/directives/template-name'
 import { QuickNote } from '../../../../core/models/model'
 import { PumpStep, PumpTrackerData } from '../../../../core/models/pump-log'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { TrackerService } from '../../../../core/services/tracker'
 
 @Component({
   selector: 'app-pump-tracker-dialog',
@@ -67,7 +67,7 @@ export class PumpTrackerDialog implements AfterViewInit {
 
   protected pumpForm = form(this.pumpModel)
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   ngAfterViewInit(): void {
     this.allSteps.forEach((step) => {
@@ -102,7 +102,7 @@ export class PumpTrackerDialog implements AfterViewInit {
   }
 
   onSave() {
-    this.babyLogService.track('pump', this.pumpForm().value()).subscribe((succeed) => {
+    this.trackerService.track('pump', this.pumpForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

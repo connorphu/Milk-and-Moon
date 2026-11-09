@@ -6,7 +6,7 @@ import { DateTime } from 'luxon'
 import { environment } from '../../../environments/environment'
 
 @Service()
-export class BabyLog {
+export class TrackerService {
   private readonly url = `${environment.apiUrl}/logs`
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)

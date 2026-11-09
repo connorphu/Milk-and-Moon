@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { TemplateName } from '../../../../shared/directives/template-name'
 import { QuickNote } from '../../../../core/models/model'
 import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { TrackerService } from '../../../../core/services/tracker'
 
 @Component({
   selector: 'app-sleep-tracker-dialog',
@@ -71,7 +71,7 @@ export class SleepTrackerDialog implements AfterViewInit {
 
   protected sleepForm = form(this.sleepModel)
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   ngAfterViewInit(): void {
     this.allSteps.forEach((step) => {
@@ -112,7 +112,7 @@ export class SleepTrackerDialog implements AfterViewInit {
   }
 
   onSave() {
-    this.babyLogService.track('sleep', this.sleepForm().value()).subscribe((succeed) => {
+    this.trackerService.track('sleep', this.sleepForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }
