@@ -5,8 +5,15 @@
   </header>
 
   <main class="page-content">
-    <app-daily-summary [data]="data()"></app-daily-summary>
-    <app-timeline-list [data]="data()"></app-timeline-list>
+    @let r = data();
+    @if (r.result === 'error') {
+      <div>{{ r.error }}</div>
+    } @else if (r.result === 'ok') {
+      <app-daily-summary [data]="r.logs"></app-daily-summary>
+      <app-timeline-list [data]="r.logs"></app-timeline-list>
+    } @else {
+      <mat-spinner></mat-spinner>
+    }
   </main>
 
   <app-log-panel />
