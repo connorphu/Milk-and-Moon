@@ -16,8 +16,8 @@ export class DailySummary {
 
   readonly feedData = computed(() => {
     const feedLogs: FeedLogResponse[] = this.data().filter((log) => log.trackerType === 'feed')
-    const bottles = feedLogs.filter((log) => log.feedType === 'bottle')
-    const breastFeeds = feedLogs.filter((log) => log.feedType === 'breast')
+    const bottles = feedLogs.filter((log) => log.feedType === 'bottle').length
+    const breastFeeds = feedLogs.filter((log) => log.feedType === 'breast').length
     return { bottles, breastFeeds }
   })
 
