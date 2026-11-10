@@ -17,6 +17,6 @@ export class TodayPage {
 
   readonly data = toSignal(
     this.trackerService.loadData('', { params: { createdAt: DateTime.utc().toISODate() } }),
-    { initialValue: [] }
+    { initialValue: { result: 'loading' } }
   )
 }
