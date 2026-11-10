@@ -16,7 +16,7 @@ export class TodayPage {
   private trackerService = inject(TrackerService)
 
   readonly data = toSignal(
-    this.trackerService.loadData('', { params: { createdAt_like: DateTime.utc().toISODate() } }),
+    this.trackerService.loadData('', { params: { createdAt: DateTime.utc().toISODate() } }),
     { initialValue: [] }
   )
 }

@@ -1,6 +1,6 @@
 import { inject, Service } from '@angular/core'
-import { LogResponse } from '../models/log-response'
-import { HttpClient } from '@angular/common/http'
+import { LogResponse, LogsResult } from '../models/log-response'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs'
 import { DateTime } from 'luxon'
 import { environment } from '../../../environments/environment'
@@ -11,16 +11,14 @@ export class TrackerService {
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
-  loadData(id?: string, params?: Record<string, any>): Observable<LogResponse[]> {
+  loadData(id?: string, params?: Record<string, any>): Observable<LogsResult> {
     const endpoint = id ? `${this.url}/${id}` : this.url
     return this.refresh$.pipe(
       startWith(undefined),
       switchMap(() =>
-        this.http.get<LogResponse[]>(endpoint, params).pipe(
-          catchError((error) => {
-            console.log(error)
-            return of([])
-          })
+        this.http.get<LogResponse[]>(endpoint, { params }).pipe(
+          map((logs) => ({ result: 'ok', logs }) as const),
+          catchError((error: HttpErrorResponse) => of({ result: 'error', error } as const))
         )
       )
     )

@@ -1,14 +1,11 @@
-import { TemplateRef } from '@angular/core'
+import { BaseBabyLog, BaseLogRequest, BaseLogResponse } from './base-log'
 
-export interface SleepTrackerData {
-  startTime: string
-  endTime: string
-  location: string
+export interface SleepLogRequest extends BaseLogRequest {
+  location: string | null
   wakeReasons: string[]
-  notes: string
+  endTime: string | null
 }
 
-export interface SleepStep {
-  name: string
-  templateRef?: TemplateRef<any>
+export interface SleepLogResponse extends SleepLogRequest, BaseLogResponse, BaseBabyLog {
+  trackerType: 'sleep'
 }

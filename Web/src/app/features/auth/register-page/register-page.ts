@@ -3,7 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { Router, RouterLink } from '@angular/router'
-import { RegisterData } from '../../../core/models/register'
+import { RegisterRequest } from '../../../core/models/register'
 import { email, form, FormField, minLength, required } from '@angular/forms/signals'
 import { AuthService } from '../../../core/services/auth'
 import { HttpErrorResponse } from '@angular/common/http'
@@ -19,7 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 export class RegisterPageComponent {
   private readonly destroyRef = inject(DestroyRef)
 
-  readonly registerModel = signal<RegisterData>({
+  readonly registerModel = signal<RegisterRequest>({
     name: '',
     email: '',
     password: ''

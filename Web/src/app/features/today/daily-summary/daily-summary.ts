@@ -2,7 +2,7 @@ import { Component, computed, input } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { DateTime, Duration } from 'luxon'
 import { LogResponse } from '../../../core/models/log-response'
-import { FeedTrackerData } from '../../../core/models/feed-log'
+import { FeedLogRequest } from '../../../core/models/feed-log'
 import { SleepTrackerData } from '../../../core/models/sleep-log'
 
 @Component({
@@ -20,7 +20,7 @@ export class DailySummary {
     const feedData: LogResponse[] = this.data().filter((log) => log.trackerType === 'feed')
 
     feedData.forEach((log) => {
-      const feedData = log as FeedTrackerData
+      const feedData = log as FeedLogRequest
       if (feedData.feedType === 'bottle') {
         bottles++
       } else {

@@ -1,14 +1,11 @@
-import { TemplateRef } from '@angular/core'
+import { BaseLogRequest, BaseLogResponse, BaseUserLog } from './base-log'
 
-export interface PumpTrackerData {
-  startTime: string
-  endTime: string
+export interface PumpLogRequest extends BaseLogRequest {
   leftAmount: number
   rightAmount: number
-  notes: string
+  endTime: string | null
 }
 
-export interface PumpStep {
-  name: string
-  templateRef?: TemplateRef<any>
+export interface PumpLogResponse extends PumpLogRequest, BaseLogResponse, BaseUserLog {
+  trackerType: 'pump'
 }

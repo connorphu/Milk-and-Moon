@@ -12,9 +12,9 @@ import { provideNativeDateAdapter } from '@angular/material/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { TemplateName } from '../../../../shared/directives/template-name'
-import { FeedStep, FeedTrackerData } from '../../../../core/models/feed-log'
-import { QuickNote } from '../../../../core/models/model'
+import { FeedLogRequest } from '../../../../core/models/feed-log'
 import { TrackerService } from '../../../../core/services/tracker'
+import { QuickNote, TrackerStep } from '../../tracker.model'
 
 @Component({
   selector: 'app-feed-form-dialog',
@@ -42,8 +42,12 @@ export class FeedTrackerDialog {
   readonly feedStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly breastSteps: FeedStep[] = [{ name: 'time' }, { name: 'breastSide' }, { name: 'notes' }]
-  readonly bottleSteps: FeedStep[] = [
+  readonly breastSteps: TrackerStep[] = [
+    { name: 'time' },
+    { name: 'breastSide' },
+    { name: 'notes' }
+  ]
+  readonly bottleSteps: TrackerStep[] = [
     { name: 'bottleSize' },
     { name: 'milkType' },
     { name: 'time' },
@@ -56,7 +60,7 @@ export class FeedTrackerDialog {
     { description: 'Spit up' },
     { description: 'No latch/refusal' }
   ]
-  readonly feedModel = signal<FeedTrackerData>({
+  readonly feedModel = signal<FeedLogRequest>({
     bottleSize: 0,
     feedType: null,
     breastSide: [],
@@ -65,10 +69,10 @@ export class FeedTrackerDialog {
     startTime: null,
     endTime: null,
     notes: ''
-  } as unknown as FeedTrackerData)
+  } as unknown as FeedLogRequest)
 
   protected feedForm = form(this.feedModel)
-  protected allSteps: FeedStep[] = []
+  protected allSteps: TrackerStep[] = []
 
   private trackerService = inject(TrackerService)
 
