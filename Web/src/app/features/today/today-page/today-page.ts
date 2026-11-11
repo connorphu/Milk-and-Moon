@@ -17,7 +17,10 @@ export class TodayPage {
   private trackerService = inject(TrackerService)
 
   readonly data = toSignal(
-    this.trackerService.getAllLogs({ params: { createdAt: DateTime.utc().toISODate() } }),
+    this.trackerService.getAllLogs({
+      startDate: DateTime.utc().toISODate(),
+      timezone: DateTime.local().zoneName
+    }),
     { initialValue: { result: 'loading' } }
   )
 }

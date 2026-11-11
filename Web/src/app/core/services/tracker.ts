@@ -5,6 +5,12 @@ import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } f
 import { DateTime } from 'luxon'
 import { environment } from '../../../environments/environment'
 
+type AllLogsParams = {
+  startDate: string
+  endDate?: string
+  timezone: string
+}
+
 @Service()
 export class TrackerService {
   private readonly logsUrl = `${environment.apiUrl}/logs`
@@ -13,7 +19,7 @@ export class TrackerService {
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
-  getAllLogs(params?: Record<string, any>): Observable<ApiResult<LogResponse[]>> {
+  getAllLogs(params: AllLogsParams): Observable<ApiResult<LogResponse[]>> {
     return this.refresh$.pipe(
       startWith(undefined),
       switchMap(() =>
@@ -37,7 +43,7 @@ export class TrackerService {
     )
   }
 
-  track(type: 'feed' | 'diaper' | 'pump' | 'sleep', babyId: string, data: LogRequest) {
+  track(type: 'feed' | 'diaper' | 'pump' | 'sleep', data: LogRequest, babyId?: string) {
     const endpoint = type === 'pump' ? this.pumpUrl : `${this.babyUrl}/${babyId}/${type}-logs`
     const request = { ...data, timezone: DateTime.local().zoneName }
     return this.http.post(endpoint, request).pipe(

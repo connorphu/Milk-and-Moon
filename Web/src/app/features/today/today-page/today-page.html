@@ -8,9 +8,9 @@
     @let r = data();
     @if (r.result === 'error') {
       <div>{{ r.error }}</div>
-    } @else if (r.result === 'ok') {
-      <app-daily-summary [data]="r.logs"></app-daily-summary>
-      <app-timeline-list [data]="r.logs"></app-timeline-list>
+    } @else if (r.result === 'ok' && r.data) {
+      <app-daily-summary [data]="r.data"></app-daily-summary>
+      <app-timeline-list [data]="r.data"></app-timeline-list>
     } @else {
       <mat-spinner></mat-spinner>
     }
