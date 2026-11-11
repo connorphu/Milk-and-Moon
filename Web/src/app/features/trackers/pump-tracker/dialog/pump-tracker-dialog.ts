@@ -20,9 +20,9 @@ import { MatTimepickerModule } from '@angular/material/timepicker'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatIconModule } from '@angular/material/icon'
 import { TemplateName } from '../../../../shared/directives/template-name'
-import { QuickNote } from '../../../../core/models/model'
-import { PumpStep, PumpTrackerData } from '../../../../core/models/pump-log'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { PumpLogRequest } from '../../../../core/models/pump-log'
+import { TrackerService } from '../../../../core/services/tracker'
+import { QuickNote, TrackerStep } from '../../tracker.model'
 
 @Component({
   selector: 'app-pump-tracker-dialog',
@@ -51,23 +51,23 @@ export class PumpTrackerDialog implements AfterViewInit {
   readonly pumpStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly allSteps: PumpStep[] = [{ name: 'time' }, { name: 'amount' }, { name: 'notes' }]
+  readonly allSteps: TrackerStep[] = [{ name: 'time' }, { name: 'amount' }, { name: 'notes' }]
   readonly quickNotes: QuickNote[] = [
     { description: 'Painful' },
     { description: 'Low amount' },
     { description: 'High amount' }
   ]
-  readonly pumpModel = signal<PumpTrackerData>({
+  readonly pumpModel = signal<PumpLogRequest>({
     startTime: null,
     endTime: null,
     leftAmount: 0,
     rightAmount: 0,
     notes: ''
-  } as unknown as PumpTrackerData)
+  } as unknown as PumpLogRequest)
 
   protected pumpForm = form(this.pumpModel)
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   ngAfterViewInit(): void {
     this.allSteps.forEach((step) => {
@@ -102,7 +102,7 @@ export class PumpTrackerDialog implements AfterViewInit {
   }
 
   onSave() {
-    this.babyLogService.track('pump', this.pumpForm().value()).subscribe((succeed) => {
+    this.trackerService.track('pump', this.pumpForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

@@ -11,9 +11,9 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTimepickerModule } from '@angular/material/timepicker'
 import { MatInputModule } from '@angular/material/input'
 import { provideNativeDateAdapter } from '@angular/material/core'
-import { DiaperStep, DiaperTrackerData } from '../../../../core/models/diaper-log'
-import { QuickNote } from '../../../../core/models/model'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { DiaperLogRequest } from '../../../../core/models/diaper-log'
+import { TrackerService } from '../../../../core/services/tracker'
+import { QuickNote, TrackerStep } from '../../tracker.model'
 
 @Component({
   selector: 'app-diaper-tracker-dialog',
@@ -41,16 +41,16 @@ export class DiaperTrackerDialog {
   readonly diaperStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly wetSteps: DiaperStep[] = [{ name: 'peeColor' }]
-  readonly poopySteps: DiaperStep[] = [{ name: 'stoolColor' }, { name: 'stoolTexture' }]
-  readonly bothTypeSteps: DiaperStep[] = [...this.wetSteps, ...this.poopySteps]
-  readonly staticSteps: DiaperStep[] = [{ name: 'rash' }, { name: 'startTime' }, { name: 'notes' }]
+  readonly wetSteps: TrackerStep[] = [{ name: 'peeColor' }]
+  readonly poopySteps: TrackerStep[] = [{ name: 'stoolColor' }, { name: 'stoolTexture' }]
+  readonly bothTypeSteps: TrackerStep[] = [...this.wetSteps, ...this.poopySteps]
+  readonly staticSteps: TrackerStep[] = [{ name: 'rash' }, { name: 'startTime' }, { name: 'notes' }]
   readonly quickNotes: QuickNote[] = [
     { description: 'Weird smell' },
     { description: 'Weird mark/bruise' },
     { description: 'Bleeding ' }
   ]
-  readonly diaperModel = signal<DiaperTrackerData>({
+  readonly diaperModel = signal<DiaperLogRequest>({
     diaperType: null,
     peeColor: null,
     stoolColor: [],
@@ -59,12 +59,12 @@ export class DiaperTrackerDialog {
     rashLocation: [],
     startTime: null,
     notes: ''
-  } as unknown as DiaperTrackerData)
+  } as unknown as DiaperLogRequest)
 
   protected diaperForm = form(this.diaperModel)
-  protected allSteps: DiaperStep[] = []
+  protected allSteps: TrackerStep[] = []
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   goBack() {
     this.diaperStepper().previous()
@@ -133,7 +133,7 @@ export class DiaperTrackerDialog {
   }
 
   onSave() {
-    this.babyLogService.track('diaper', this.diaperForm().value()).subscribe((succeed) => {
+    this.trackerService.track('diaper', this.diaperForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core'
 import { AuthService } from '../../../core/services/auth'
-import { LoginData } from '../../../core/models/login'
+import { LoginRequest } from '../../../core/models/login'
 import { email, form, FormField, required } from '@angular/forms/signals'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -19,7 +19,7 @@ export class LoginPageComponent {
   private authService = inject(AuthService)
   private router = inject(Router)
 
-  readonly loginData = signal<LoginData>({
+  readonly loginData = signal<LoginRequest>({
     email: '',
     password: ''
   })

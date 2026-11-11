@@ -1,17 +1,14 @@
-import { TemplateRef } from '@angular/core'
+import { BaseBabyLog, BaseLogRequest, BaseLogResponse } from './base-log'
 
-export interface DiaperTrackerData {
+export interface DiaperLogRequest extends BaseLogRequest {
   diaperType: string
-  peeColor: string
+  peeColor: string | null
   stoolColor: string[]
   stoolTexture: string[]
-  rash: string
+  rash: string | null
   rashLocation: string[]
-  startTime: string
-  notes: string
 }
 
-export interface DiaperStep {
-  name: string
-  templateRef?: TemplateRef<any>
+export interface DiaperLogResponse extends DiaperLogRequest, BaseLogResponse, BaseBabyLog {
+  trackerType: 'diaper'
 }

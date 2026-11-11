@@ -20,9 +20,9 @@ import { MatTimepickerModule } from '@angular/material/timepicker'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatIconModule } from '@angular/material/icon'
 import { TemplateName } from '../../../../shared/directives/template-name'
-import { QuickNote } from '../../../../core/models/model'
-import { SleepStep, SleepTrackerData } from '../../../../core/models/sleep-log'
-import { BabyLog } from '../../../../core/services/baby-log'
+import { SleepLogRequest } from '../../../../core/models/sleep-log'
+import { TrackerService } from '../../../../core/services/tracker'
+import { QuickNote, TrackerStep } from '../../tracker.model'
 
 @Component({
   selector: 'app-sleep-tracker-dialog',
@@ -51,7 +51,7 @@ export class SleepTrackerDialog implements AfterViewInit {
   readonly sleepStepper = viewChild.required<MatStepper>('stepper')
 
   // step order matters
-  readonly allSteps: SleepStep[] = [
+  readonly allSteps: TrackerStep[] = [
     { name: 'time' },
     { name: 'location' },
     { name: 'wakeReason' },
@@ -61,17 +61,17 @@ export class SleepTrackerDialog implements AfterViewInit {
     { description: 'Frequent wakes' },
     { description: 'Slept all night' }
   ]
-  readonly sleepModel = signal<SleepTrackerData>({
+  readonly sleepModel = signal<SleepLogRequest>({
     startTime: null,
     endTime: null,
     location: null,
     wakeReason: [],
     notes: ''
-  } as unknown as SleepTrackerData)
+  } as unknown as SleepLogRequest)
 
   protected sleepForm = form(this.sleepModel)
 
-  private babyLogService = inject(BabyLog)
+  private trackerService = inject(TrackerService)
 
   ngAfterViewInit(): void {
     this.allSteps.forEach((step) => {
@@ -112,7 +112,7 @@ export class SleepTrackerDialog implements AfterViewInit {
   }
 
   onSave() {
-    this.babyLogService.track('sleep', this.sleepForm().value()).subscribe((succeed) => {
+    this.trackerService.track('sleep', this.sleepForm().value()).subscribe((succeed) => {
       // TODO: add toasts?
     })
   }

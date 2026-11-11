@@ -1,17 +1,14 @@
-import { TemplateRef } from '@angular/core'
+import { BaseBabyLog, BaseLogRequest, BaseLogResponse } from './base-log'
 
-export interface FeedTrackerData {
+export interface FeedLogRequest extends BaseLogRequest {
   bottleSize: number
   feedType: string
   breastSide: string[]
   milkType: string[]
   milkConsumed: number
-  startTime: string
-  endTime: string
-  notes: string
+  endTime: string | null
 }
 
-export interface FeedStep {
-  name: string
-  templateRef?: TemplateRef<any>
+export interface FeedLogResponse extends FeedLogRequest, BaseLogResponse, BaseBabyLog {
+  trackerType: 'feed'
 }
