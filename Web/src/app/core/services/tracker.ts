@@ -19,6 +19,12 @@ export class TrackerService {
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
+  private url(log: LogResponse) {
+    return log.trackerType === 'pump'
+      ? `${this.pumpUrl}/${log.id}`
+      : `${this.babyUrl}/${log.babyId}/${log.trackerType}-logs/${log.id}`
+  }
+
   getAllLogs(params: AllLogsParams): Observable<LogsResult> {
     return this.refresh$.pipe(
       startWith(undefined),
@@ -32,10 +38,7 @@ export class TrackerService {
   }
 
   editLog(log: LogResponse): Observable<ApiResult<LogResponse>> {
-    const endpoint =
-      log.trackerType === 'pump'
-        ? `${this.pumpUrl}/${log.id}`
-        : `${this.babyUrl}/${log.babyId}/${log.trackerType}-logs/${log.id}`
+    const endpoint = this.url(log)
     return this.http.put<LogResponse>(endpoint, log).pipe(
       tap(() => this.refresh$.next()),
       map((data) => ({ result: 'ok', data }) as const),
@@ -50,7 +53,7 @@ export class TrackerService {
   ): Observable<ApiResult<LogResponse>> {
     const endpoint = type === 'pump' ? this.pumpUrl : `${this.babyUrl}/${babyId}/${type}-logs`
     const body = { ...request, timezone: DateTime.local().zoneName }
-    return this.http.post<LogResponse>(endpoint, request).pipe(
+    return this.http.post<LogResponse>(endpoint, body).pipe(
       tap(() => this.refresh$.next()),
       map((data) => ({ result: 'ok', data }) as const),
       catchError((error: HttpErrorResponse) => of({ result: 'error', error } as const))
@@ -58,10 +61,7 @@ export class TrackerService {
   }
 
   deleteLog(log: LogResponse): Observable<ApiResult<void>> {
-    const endpoint =
-      log.trackerType === 'pump'
-        ? `${this.pumpUrl}/${log.id}`
-        : `${this.babyUrl}/${log.babyId}/${log.trackerType}-logs/${log.id}`
+    const endpoint = this.url(log)
     return this.http.delete(endpoint).pipe(
       tap(() => this.refresh$.next()),
       map(() => ({ result: 'ok', data: undefined }) as const),
