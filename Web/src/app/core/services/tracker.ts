@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core'
-import { ApiResult, LogRequest, LogResponse } from '../models/log-contracts'
+import { ApiResult, LogRequest, LogResponse, LogsResult } from '../models/log-contracts'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { catchError, map, Observable, of, startWith, Subject, switchMap, tap } from 'rxjs'
 import { DateTime } from 'luxon'
@@ -19,7 +19,7 @@ export class TrackerService {
   private readonly refresh$ = new Subject<void>()
   private http = inject(HttpClient)
 
-  getAllLogs(params: AllLogsParams): Observable<ApiResult<LogResponse[]>> {
+  getAllLogs(params: AllLogsParams): Observable<LogsResult> {
     return this.refresh$.pipe(
       startWith(undefined),
       switchMap(() =>
@@ -43,12 +43,16 @@ export class TrackerService {
     )
   }
 
-  track(type: 'feed' | 'diaper' | 'pump' | 'sleep', data: LogRequest, babyId?: string) {
+  track(
+    type: 'feed' | 'diaper' | 'pump' | 'sleep',
+    request: LogRequest,
+    babyId?: string
+  ): Observable<ApiResult<LogResponse>> {
     const endpoint = type === 'pump' ? this.pumpUrl : `${this.babyUrl}/${babyId}/${type}-logs`
-    const request = { ...data, timezone: DateTime.local().zoneName }
-    return this.http.post(endpoint, request).pipe(
+    const body = { ...request, timezone: DateTime.local().zoneName }
+    return this.http.post<LogResponse>(endpoint, request).pipe(
       tap(() => this.refresh$.next()),
-      map((log) => ({ result: 'ok', log }) as const),
+      map((data) => ({ result: 'ok', data }) as const),
       catchError((error: HttpErrorResponse) => of({ result: 'error', error } as const))
     )
   }
@@ -60,7 +64,7 @@ export class TrackerService {
         : `${this.babyUrl}/${log.babyId}/${log.trackerType}-logs/${log.id}`
     return this.http.delete(endpoint).pipe(
       tap(() => this.refresh$.next()),
-      map(() => ({ result: 'ok' }) as const),
+      map(() => ({ result: 'ok', data: undefined }) as const),
       catchError((error: HttpErrorResponse) => of({ result: 'error', error } as const))
     )
   }

@@ -8,7 +8,7 @@
     @let r = data();
     @if (r.result === 'error') {
       <div>{{ r.error }}</div>
-    } @else if (r.result === 'ok' && r.data) {
+    } @else if (r.result === 'ok') {
       <app-daily-summary [data]="r.data"></app-daily-summary>
       <app-timeline-list [data]="r.data"></app-timeline-list>
     } @else {

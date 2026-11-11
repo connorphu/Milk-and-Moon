@@ -8,5 +8,6 @@ export type LogRequest = FeedLogRequest | DiaperLogRequest | SleepLogRequest | P
 
 export type LogResponse = FeedLogResponse | DiaperLogResponse | SleepLogResponse | PumpLogResponse
 
-export type ApiResult<T> =
-  { result: 'ok'; data?: T } | { result: 'error'; error: HttpErrorResponse } | { result: 'loading' }
+export type ApiResult<T> = { result: 'ok'; data: T } | { result: 'error'; error: HttpErrorResponse }
+
+export type LogsResult = ApiResult<LogResponse[]> | { result: 'loading' }
