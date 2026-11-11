@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-import { LogResponse } from '../../../core/models/log-response'
+import { LogResponse } from '../../../core/models/log-contracts'
 import { DateTime } from 'luxon'
 
 @Component({
